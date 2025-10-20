@@ -5,12 +5,34 @@
   --foreground: #171717;
 }
 
+@font-face {
+  font-family: 'SONGER SemiExpanded';
+  src: url('/fonts/songer.semiexpanded-medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work-Sans';
+  src: url('/fonts/WorkSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-dark-blue: #245383;
+  --color-light-blue: #F5FAFF; 
+  --color-bold-blue: #378CE7;
+  --font-songer: "SONGER SemiExpanded";
+  --font-work-sans: "Work-Sans";
 }
+
 
 /* @media (prefers-color-scheme: dark) {
   :root {
