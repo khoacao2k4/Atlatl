@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import HomeTeam from './components/HomeTeam';
 
 export default function Home() {
   return (
@@ -76,6 +77,10 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section>
+        <HomeTeam />
       </section>
     </div>
   );
