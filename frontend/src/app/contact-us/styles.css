@@ -16,6 +16,7 @@
 
 button {
     background-color: #378CE7;
+    font-size: 24px !important; 
 }
 
 button:hover {
@@ -81,6 +82,30 @@ button:hover {
     background-color: #C6E2FF;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-content: flex-start;     
     border-radius: 10px;
+    font-size: 18px;
+}
+
+.name-field {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-field {
+    margin: 8px 20px; 
+}
+
+.input-field input {
+    background-color: white;
+    border-radius: 8px;
+    padding: 5px 10px; 
+    align-content: baseline;
+}
+
+.input-field textarea {
+    background-color: white;
+    border-radius: 8px;
+    padding: 5px 10px; 
+    align-content: baseline;
 }

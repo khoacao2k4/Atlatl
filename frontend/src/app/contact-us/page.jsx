@@ -3,6 +3,24 @@
 import Link from 'next/link'; 
 import "./styles.css"
 
+function InputField({prompt, id, width, placeholder}) {
+  return (
+    <div className="input-field">
+      <label for={id}>{prompt}</label>
+      <input id={id} style={{  width: width  }} placeholder={placeholder}></input>
+    </div>
+  )
+}
+
+function MultilineInputField({prompt, id, width, height, placeholder}) {
+  return (
+    <div className="input-field">
+      <label for={id}>{prompt}</label>
+      <textarea id={id} style={{  width: width   }} rows={height} placeholder={placeholder}></textarea>
+    </div>
+  )
+}
+
 export default function ContactUsPage() {
   return (<div className="contact-us-page">
 
@@ -23,22 +41,16 @@ export default function ContactUsPage() {
         <button>SCHEDULE A MEETING</button>
       </div>
       <div className="contact-form">
-        <div>
-          <div>
-            First Name 
-            <input></input>
-          </div>
-          <div>
-            Last Name
-            <input></input>
-          </div>
+        <div className="name-field">
+          <InputField prompt={"First Name"} id={"first-name-input"} width={"100%"} />
+          <InputField prompt={"Last Name"} id={"last-name-input"} width={"100%"} />
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <InputField prompt={"Email"} id={"email-input"} width={"100%"} />
+        <InputField prompt={"Phone"} id={"phone-input"} width={"100%"} />
+        <InputField prompt={"What services are you inquiring about?"} id={"services-input"} width={"100%"} />
+        <MultilineInputField prompt={"Message"} id={"message-input"} width={"100%"} height={"6"} placeholder={"Type your message here..."}/>
 
-        <button>SUBMIT</button>
+        <button style={{  margin: "10px 30% 20px 30%"   }}>SUBMIT</button>
       </div>
     </div>
     
