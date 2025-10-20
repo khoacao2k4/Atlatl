@@ -61,7 +61,7 @@ export default function Footer() {
             </div>
         </div>
 
-        <div class="footer-bottom">
+        <div className="footer-bottom">
             <p>© 2025 Atlatl Advisers. All Rights Reserved.</p>
         </div>
     </footer>

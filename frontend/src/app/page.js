@@ -1,4 +1,4 @@
-"use client";
+import Image from 'next/image';
 
 
 export default function Home() {
@@ -20,10 +20,10 @@ export default function Home() {
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-                <button className="w-auto bg-bold-blue text-white font-bold py-3 px-8 rounded-lg shadow-md">
+                <button className="w-auto bg-bold-blue text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-white hover:text-bold-blue">
                   Explore Services
                 </button>
-                <button className="w-auto bg-white text-bold-blue border-2 border-bold-blue font-bold py-3 px-8 rounded-lg shadow-sm">
+                <button className="w-auto bg-white text-bold-blue border-2 border-bold-blue font-bold py-3 px-8 rounded-lg shadow-sm hover:bg-bold-blue hover:text-white">
                   Button
                 </button>
               </div>
@@ -33,6 +33,9 @@ export default function Home() {
             <div className="flex items-center justify-center">
               <img
                 src="https://placehold.co/600x600/378CE7/ffffff?text=Family"
+                width={600}
+                height={600}
+                alt="Family"
                 className="rounded-[100px] w-full h-auto max-w-md shadow-2xl object-cover"
               />
             </div>
@@ -52,6 +55,8 @@ export default function Home() {
               <div className="justify-center col-[1]">
                 <img
                   src="https://placehold.co/800x600/EAEAEA/333?text=Adviser"
+                  width={800}
+                  height={600}
                   alt="A financial adviser meeting with a client."
                   className="rounded-3xl w-full h-auto max-w-md shadow-2xl object-cover"
                 />
