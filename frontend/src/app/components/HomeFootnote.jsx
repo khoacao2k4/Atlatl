@@ -12,9 +12,9 @@ function Flashcard({title, children}) {
         <div className="flashcard">
             <div className="flashcard-title">
             <h2>{title}</h2>
-            <div className="flashcard-button"><FiPlusCircle /></div>
+            <div className={`flashcard-button ${hide? "collapsed" : "expanded"}`} onClick={() => { setHide(!hide); }}><FiPlusCircle /></div>
             </div>
-            <div>{children}</div>
+            <div className={`flashcard-content ${hide? "collapsed" : "expanded"}`}>{children}</div>
         </div>
     )
 }

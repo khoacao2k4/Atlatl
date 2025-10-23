@@ -36,11 +36,32 @@
 }
 
 .flashcard-button { 
-    font-size: 42px; 
+    font-size: 42px;
+    transform: rotate(0deg); 
+    transition: transform 0.4s ease-in-out; 
+}
+
+.flashcard-button.expanded {
+    transform: rotate(-45deg); 
 }
 
 .flashcard-button:hover {
     cursor: pointer;
+}
+
+.flashcard-content {
+    transform-origin: top;
+    transform: scaleY(0);
+    overflow: hidden; 
+    opacity: 0; 
+    max-height: 0; 
+    transition: transform 1s ease-in-out, opacity 0.2s ease-in-out, max-height 0.4s ease-in-out; 
+}
+
+.flashcard-content.expanded {
+    max-height: 100%; 
+    transform: scaleY(1);
+    opacity: 1;
 }
 
 .word-board .flashcard:last-child {
@@ -51,4 +72,28 @@
     font-family: 'SONGER SemiExpanded', sans-serif;
     font-size: 42px; 
     font-weight: heavy;
+}
+
+.ad-board {
+    background-color: #1667B9;
+    color: #FFFFFF; 
+    border-radius: 30px;
+    padding: 56px 56px; 
+}
+
+.ad-board h1 {
+    font-family: "SONGER SemiExpanded", sans-serif;
+    font-size: 60px;
+    border-bottom: 2px white solid;
+}
+
+.ad-board h3 {
+    font-family: "SONGER SemiExpanded", sans-serif;
+    font-size: 30px;
+    margin: 28px 0; 
+}
+
+.ad-board p {
+    font-size: 20px; 
+    margin: 28px 0; 
 }

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import HomeTeam from './components/HomeTeam';
+import HomeFootnote from './components/HomeFootnote';
 
 export default function Home() {
   return (
@@ -81,6 +82,10 @@ export default function Home() {
 
       <section>
         <HomeTeam />
+      </section>
+
+      <section>
+        <HomeFootnote />
       </section>
     </div>
   );
