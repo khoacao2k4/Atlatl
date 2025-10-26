@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * author service.
+ * about-us service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::author.author');
+module.exports = createCoreService('api::about-us.about-us');
