@@ -32,9 +32,9 @@ export default async function HomeTeam() {
                 alt={teamMember.name}
               />
               <h2 className="font-songer text-lg font-bold">
-                {teamMember.name}
+                {teamMember.suffix ? teamMember.name + ", " + teamMember.suffix : teamMember.name}
               </h2>
-              <div>{teamMember.role}</div>
+              <div>{teamMember.position}</div>
             </div>
           )
         })}

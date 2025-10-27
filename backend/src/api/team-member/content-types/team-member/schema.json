@@ -16,7 +16,7 @@
       "required": true,
       "unique": true
     },
-    "role": {
+    "position": {
       "type": "string",
       "required": true
     },
@@ -37,6 +37,9 @@
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "suffix": {
+      "type": "string"
     }
   }
 }
