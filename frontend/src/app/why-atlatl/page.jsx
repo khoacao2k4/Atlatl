@@ -70,7 +70,7 @@ export default function WhyAtlatlPage() {
                 <div className="info-box">
                     <h2>HEADER TEXT</h2>
                     <p>
-                        The name offers not only a nice metaphor for how we view ourselves as a resource, but it also has a personal family connection. A beloved relative of one of our employees was a skilled artisan by hobby and crafted wooden atlatls and other items, some of which can be found in our office. Upon his passing, and as the firm was expanding, it felt only appropriate to pay homage to this special person.                     
+                        The name offers not only a nice metaphor for how we view ourselves as a resource, but it also has a personal family connection. A beloved relative of one of our employees was a skilled artisan by hobby and crafted wooden atlatls and other items, some of which can be found in our office. Upon his passing, and as the firm was expanding, it felt only appropriate to pay homage to this special person.
                     </p>
                 </div>
 
@@ -95,7 +95,7 @@ export default function WhyAtlatlPage() {
                 <div className="info-box">
                     <h2>HEADER TEXT</h2>
                     <p>
-                        Perhaps it is unsurprising that family and relationships are at the center of our business. We’ve built up a group that includes some of our own family members, and also those who have come to be seen as family.  Our team is composed of individuals who bring different perspectives from their personal and professional histories to create an approach to wealth management that goes beyond the numbers. We strive for a balance that allows our employees to spend time with family and to pursue their passions, so that they come to work every day feeling fulfilled and ready to help clients achieve a level of success as they define it.                    
+                        Perhaps it is unsurprising that family and relationships are at the center of our business. We’ve built up a group that includes some of our own family members, and also those who have come to be seen as family.  Our team is composed of individuals who bring different perspectives from their personal and professional histories to create an approach to wealth management that goes beyond the numbers. We strive for a balance that allows our employees to spend time with family and to pursue their passions, so that they come to work every day feeling fulfilled and ready to help clients achieve a level of success as they define it.
                     </p>
                 </div>
             </section>
@@ -106,12 +106,12 @@ export default function WhyAtlatlPage() {
                 <div className="commitment-box-layout">
 
                     <div className="commitment-box">
-                        <Image 
-                            src="/compass.svg" 
-                            alt="Quality Logo" 
-                            width={50} 
-                            height={50} 
-                            className="commitment-logo" 
+                        <Image
+                            src="/compass.svg"
+                            alt="Quality Logo"
+                            width={50}
+                            height={50}
+                            className="commitment-logo"
                         />
                         <h3>Client Stewardship</h3>
                         <p>
@@ -120,12 +120,12 @@ export default function WhyAtlatlPage() {
                     </div>
 
                     <div className="commitment-box">
-                        <Image 
-                            src="/shield-half.svg" 
-                            alt="Innovation Logo" 
-                            width={50} 
-                            height={50} 
-                            className="commitment-logo" 
+                        <Image
+                            src="/shield-half.svg"
+                            alt="Innovation Logo"
+                            width={50}
+                            height={50}
+                            className="commitment-logo"
                         />
                         <h3>Integrity as the standard</h3>
                         <p>
@@ -134,12 +134,12 @@ export default function WhyAtlatlPage() {
                     </div>
 
                     <div className="commitment-box">
-                        <Image 
-                            src="/book.svg" 
-                            alt="Support Logo" 
-                            width={50} 
-                            height={50} 
-                            className="commitment-logo" 
+                        <Image
+                            src="/book.svg"
+                            alt="Support Logo"
+                            width={50}
+                            height={50}
+                            className="commitment-logo"
                         />
                         <h3>Education</h3>
                         <p>
@@ -150,7 +150,59 @@ export default function WhyAtlatlPage() {
                 </div>
             </section>
 
-                
+            <section className="our-purpose-section">
+                <div className="our-purpose-left">
+                    <video
+                        src="/our-purpose.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="our-purpose-video"
+                    />
+                </div>
+
+                <div className="our-purpose-right">
+                    <div className="our-purpose-right-header">
+                        <h1>Your Goals, Our Purpose</h1>
+                        <p>
+                            We exist to empower individuals and families to navigate the complexities of wealth with trust, integrity, and personalized guidance.
+                        </p>
+                    </div>
+
+                    <div className="our-purpose-right-body">
+                        <div className="our-purpose-right-body-header">
+                            <Image
+                                src="/compass.svg"
+                                alt="Quality Logo"
+                                width={50}
+                                height={50}
+                                className="commitment-logo"
+                            />
+                            <h2>Vision</h2>
+                        </div>
+                        <p>
+                            To be trusted advisers in navigating the complexities of multi-generational wealth for families and individuals. We tailor our services around our clients and their dynamic family needs.
+                        </p>
+                    </div>
+
+                    <div className="our-purpose-right-body">
+                        <div className="our-purpose-right-body-header">
+                            <Image
+                                src="/compass.svg"
+                                alt="Quality Logo"
+                                width={50}
+                                height={50}
+                                className="commitment-logo"
+                            />
+                            <h2>Our Mission</h2>
+                        </div>
+                        <p>
+                            We aspire to redefine and elevate the financial services experience through exceptional client service and a commitment to excellence in all that we do. Our name was chosen with intent—the atlatl is leveraged to provide greater accuracy, precision, and velocity over long distances.​ The cornerstone to our service is the client experience. We empower individuals, families, business owners, and institutions to realize their aspirations and achieve some of life’s most important goals.
+                        </p>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }
