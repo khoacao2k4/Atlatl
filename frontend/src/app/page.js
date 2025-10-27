@@ -1,8 +1,11 @@
-import Image from 'next/image';
-import HomeTeam from './components/HomeTeam';
-import HomeFootnote from './components/HomeFootnote';
+import Image from "next/image";
+import HomeTeam from "./components/HomeTeam";
+import HomeFootnote from "./components/HomeFootnote";
+import { getHomepageContent } from "@/lib/strapi";
 
-export default function Home() {
+export default async function Home() {
+  const homepageContent = await getHomepageContent();
+  console.log(homepageContent);
   return (
     <div>
       {/* Hero Section */}
@@ -25,20 +28,64 @@ export default function Home() {
                   Explore Services
                 </button>
                 <button className="w-auto bg-white text-bold-blue border-2 border-bold-blue font-bold py-3 px-8 rounded-lg shadow-sm hover:bg-bold-blue hover:text-white">
-                  Button
+                  Schedule a Call
                 </button>
               </div>
             </div>
 
             {/* Right Column: Image */}
             <div className="flex items-center justify-center">
-              <img
-                src="https://placehold.co/600x600/378CE7/ffffff?text=Family"
-                width={600}
-                height={600}
-                alt="Family"
-                className="rounded-[100px] w-full h-auto max-w-md shadow-2xl object-cover"
-              />
+              {
+                // Case 1: No homepageContent or no homepageContent.heroImage
+                !homepageContent?.heroImage ? (
+                  <img
+                    src="https://placehold.co/600x600/378CE7/ffffff?text=Family"
+                    width={600}
+                    height={600}
+                    alt="Family placeholder"
+                    className="rounded-[100px] max-w-md shadow-2xl object-cover"
+                  />
+                ) : (
+                  (() => {
+                    // Content exists, proceed to determine if it's a video or image
+                    const heroImage = homepageContent.heroImage;
+                    const imageUrl = heroImage.url;
+                    const isVideo = heroImage?.ext === ".mp4"; // Check if the extension is '.mp4'
+
+                    // Determine the full URL
+                    const fullImageUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
+                      ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}`
+                      : `http://localhost:1337${imageUrl}`;
+
+                    // Case 2: Video (.mp4)
+                    if (isVideo) {
+                      return (
+                        <video
+                          src={fullImageUrl}
+                          alt="Family video"
+                          className="rounded-[100px] w-[400px] h-[400px] max-w-md shadow-2xl object-cover"
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        />
+                      );
+                    }
+                    // Case 3: Image (default)
+                    else {
+                      return (
+                        <img
+                          src={fullImageUrl} // Use the full URL
+                          width={600}
+                          height={600}
+                          alt="Family image"
+                          className="rounded-[100px] w-full h-auto max-w-md shadow-2xl object-cover"
+                        />
+                      );
+                    }
+                  })()
+                ) // Immediately invoke the inner function
+              }
             </div>
           </div>
         </div>
@@ -49,7 +96,8 @@ export default function Home() {
         <div className="container mx-auto px-10">
           <div className="rounded-2xl p-8">
             <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-12 text-left font-songer">
-              ABOUT <br />ATLATL ADVISERS
+              ABOUT <br />
+              ATLATL ADVISERS
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
               {/* Left Column: Image */}
@@ -66,13 +114,13 @@ export default function Home() {
               {/* Right Column: Text Content */}
               <div className="h-full flex flex-col justify-start gap-6 font-work-sans">
                 <p className="text-xl font-bold">
-                  Atlatl Advisers is a multi-family office wealth manager and a fully
-                  independent, fee-only SEC Registered Investment Adviser.
+                  Atlatl Advisers is a multi-family office wealth manager and a
+                  fully independent, fee-only SEC Registered Investment Adviser.
                 </p>
                 <p className="text-xl">
-                  We help qualified individuals and families comprehensively manage
-                  their financial wellness with a focus on fiduciary responsibility,
-                  personalized service, and holistic planning.
+                  We help qualified individuals and families comprehensively
+                  manage their financial wellness with a focus on fiduciary
+                  responsibility, personalized service, and holistic planning.
                 </p>
               </div>
             </div>
@@ -91,7 +139,7 @@ export default function Home() {
   );
 }
 
-// Run the code below instead for sample integration with backend, 
+// Run the code below instead for sample integration with backend,
 // Make sure that backend is up and running before frontend
 /*
 export default async function Home() {

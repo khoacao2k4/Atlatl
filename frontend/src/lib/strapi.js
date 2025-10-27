@@ -54,3 +54,18 @@ export async function getFeaturedTeamMembers() {
   
   return json.data;
 }
+
+export async function getHomepageContent() {
+  const path = "/api/homepage";
+  const params = "?populate=*";
+  const options = { cache: "no-store" };
+
+  const json = await fetchStrapiData(path, params, options);
+
+  if (!json || !json.data) {
+    console.warn("No homepage content found or API error.");
+    return null;
+  }
+  
+  return json.data;
+}
