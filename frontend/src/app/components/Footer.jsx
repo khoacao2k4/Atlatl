@@ -31,7 +31,7 @@ export default function Footer() {
             <nav>
                 <div className="footer-list">
                 <Link href="/ ">Home</Link>
-                <Link href="/">Why Atlatl</Link>
+                <Link href="/why-atlatl">Why Atlatl</Link>
                 <Link href="/">Our Services</Link>
                 <Link href="/">Meet The Team</Link>
                 <Link href="/">Client Experience</Link>

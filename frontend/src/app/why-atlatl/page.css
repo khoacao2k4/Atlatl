@@ -1,0 +1,327 @@
+.why-atlatl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'SONGER SemiExpanded', sans-serif;
+    color: #07315C;
+    background-color: #C6E2FF;
+    overflow-x: hidden;
+}
+
+/* Intro Section */
+.intro-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: #07315C;
+    color: #C6E2FF;
+}
+
+/* Title at top center */
+.title {
+    font-size: 6rem;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+/* Below title: text on left, logo on right */
+.definition-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 0 5rem 5rem 10rem;
+}
+
+/* Text column */
+.definition {
+    flex: 1;
+    min-width: 280px;
+}
+
+/* Phonetic */
+.phonetic {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    line-height: 3rem;
+}
+
+/* Description */
+.description {
+    font-family: 'Tenorite', sans-serif;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    font-weight: 400;
+    letter-spacing: 0%;
+    vertical-align: middle;
+}
+
+/* Logo on right */
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: clamp(350px, 25vw, 300px);
+    height: auto;
+    opacity: 1;
+    color: #C6E2FF;
+}
+
+/* Video Section */
+.video-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background: linear-gradient(to bottom, #07315C 0%, #07315C 50%, #C6E2FF 50%, #C6E2FF 100%);
+    margin-bottom: 4rem;
+}
+
+.baby-video {
+    width: min(90%, 1200px);
+    aspect-ratio: 16/9;
+    border-radius: 30px;
+    box-shadow: 0px 18px 30px 0px #00000029;
+    object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .definition-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .definition {
+        margin-bottom: 2rem;
+    }
+
+    .logo {
+        transform: rotate(-90deg);
+        width: 180px;
+    }
+}
+
+
+/* CTA Section */
+.cta-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    width: 100%;
+}
+
+.cta-text h2 {
+    font-family: 'SONGER SemiExpanded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 3vw, 64px);
+    max-width: 1000px;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.cta-text p {
+    font-family: 'Tenorite', sans-serif;
+    font-size: clamp(16px, 2vw, 24px);
+}
+
+/* Info Section */
+.info-section {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-bottom: 3rem;
+}
+
+.info-box {
+    background-color: #074B8F;
+    color: #FFFFFF;
+    width: 35vw;
+    height: 105vh;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 3rem;
+    text-align: left;
+    line-height: 1.6;
+    box-sizing: border-box;
+    margin: 3.5vw;
+}
+
+.info-box h2 {
+    font-size: 3rem;
+    font-family: 'SONGER SemiExpanded', sans-serif;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.info-box p {
+    font-size: 1.5rem;
+    font-family: sans-serif;
+}
+
+.info-image {
+    width: 35vw;
+    height: 105vh;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    margin: 3.5vw;
+}
+
+.commitment-title {
+    font-family: 'SONGER SemiExpanded', sans-serif;
+    font-size: 5rem;
+}
+
+.commitment-section {
+  width: 100%;
+  text-align: center;
+  padding: 3rem 0;
+  background: linear-gradient(to bottom, #C6E2FF 50%, #07315C 50%);
+}
+
+.commitment-box-layout {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+
+/* Each box */
+.commitment-box {
+  width: 25rem;
+  height: 32rem;
+  background-color: #074B8F;
+  border-radius: 30px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  color: #fff;
+  text-align: left;
+}
+
+/* Logo inside box */
+.commitment-logo {
+  width: clamp(4vw, 5vw, 6vw);
+  height: auto;
+  opacity: 1;
+  color: #C6E2FF;
+  margin-bottom: 1rem;
+}
+
+/* Heading */
+.commitment-box h3 {
+  font-family: 'SONGER SemiExpanded', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-align: center;
+  width: 100%;
+  min-height: 5rem;
+  margin-bottom: 1rem;
+}
+
+/* Paragraph */
+.commitment-box p {
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: left;
+  width: 100%;
+  margin-top: 0;
+  padding-left: 0.5rem;
+  padding-right: 0.25rem;
+}
+
+.our-purpose-section {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #07315C;
+  color: #FFFFFF;
+  font-family: 'SONGER SemiExpanded', sans-serif;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+/* Left: video container */
+.our-purpose-left {
+  width: 50%;
+  height: 53.5rem;
+  padding-top: 5rem;
+  padding-left: 5.5rem;
+}
+
+.our-purpose-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 30px;
+}
+
+/* Right: text column */
+.our-purpose-right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 3rem;
+  box-sizing: border-box;
+  border-radius: 0 30px 30px 0;
+}
+
+/* Header text */
+.our-purpose-right-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.our-purpose-right-header p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Each body section */
+.our-purpose-right-body {
+  margin-bottom: 2.5rem;
+}
+
+.our-purpose-right-body-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.our-purpose-right-body-header h2 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.our-purpose-right-body p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: 0.75rem;
+}
+
