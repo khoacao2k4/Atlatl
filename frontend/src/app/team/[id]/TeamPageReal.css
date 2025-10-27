@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'SONGER SemiExpanded';
+  src: url('/fonts/songer.semiexpanded-bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+.teammate-card {
+    font-family: "Work-Sans", sans-serif;
+    color: #245383; 
+    display: flex; 
+    font-size: 20px; 
+    width: 100%;
+}
+
+
+.teammate-card img {
+    border-radius: 30px; 
+    box-shadow: 0px 18px 30px 0px #00000029;
+    height: 600px; 
+    width: 420px; 
+    object-fit: cover;
+    object-position: center;
+}
+
+.teammate-card h1 {
+    font-family: "SONGER SemiExpanded", sans-serif;
+    font-weight: bold;
+    font-size: 48px; 
+}
+
+.teammate-card h2 {
+    font-size: 30px; 
+}
+
+.description {
+    width: 100%; 
+}
+
+ul {
+  list-style-type: disc;   /* circle, square, none, etc. */
+  list-style-position: inside; /* or outside */
+  padding-left: 20px;      /* add spacing */
+}
