@@ -2,10 +2,10 @@ import Image from "next/image";
 import HomeTeam from "./components/HomeTeam";
 import HomeFootnote from "./components/HomeFootnote";
 import { getHomepageContent } from "@/lib/strapi";
+import { getMediaComponent } from "@/lib/helper";
 
 export default async function Home() {
   const homepageContent = await getHomepageContent();
-  console.log(homepageContent);
   return (
     <div>
       {/* Hero Section */}
@@ -35,57 +35,7 @@ export default async function Home() {
 
             {/* Right Column: Image */}
             <div className="flex items-center justify-center">
-              {
-                // Case 1: No homepageContent or no homepageContent.heroImage
-                !homepageContent?.heroImage ? (
-                  <img
-                    src="https://placehold.co/600x600/378CE7/ffffff?text=Family"
-                    width={600}
-                    height={600}
-                    alt="Family placeholder"
-                    className="rounded-[100px] max-w-md shadow-2xl object-cover"
-                  />
-                ) : (
-                  (() => {
-                    // Content exists, proceed to determine if it's a video or image
-                    const heroImage = homepageContent.heroImage;
-                    const imageUrl = heroImage.url;
-                    const isVideo = heroImage?.ext === ".mp4"; // Check if the extension is '.mp4'
-
-                    // Determine the full URL
-                    const fullImageUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL
-                      ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}`
-                      : `http://localhost:1337${imageUrl}`;
-
-                    // Case 2: Video (.mp4)
-                    if (isVideo) {
-                      return (
-                        <video
-                          src={fullImageUrl}
-                          alt="Family video"
-                          className="rounded-[100px] w-[400px] h-[400px] max-w-md shadow-2xl object-cover"
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                        />
-                      );
-                    }
-                    // Case 3: Image (default)
-                    else {
-                      return (
-                        <img
-                          src={fullImageUrl} // Use the full URL
-                          width={600}
-                          height={600}
-                          alt="Family image"
-                          className="rounded-[100px] w-full h-auto max-w-md shadow-2xl object-cover"
-                        />
-                      );
-                    }
-                  })()
-                ) // Immediately invoke the inner function
-              }
+              {getMediaComponent(homepageContent?.heroImage, "Hero")}
             </div>
           </div>
         </div>
