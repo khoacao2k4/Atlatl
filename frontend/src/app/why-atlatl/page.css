@@ -341,3 +341,129 @@ html, body {
   margin-top: 0.75rem;
 }
 
+.people-purpose {
+  background: #07315C;
+  width: 100%;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.people-purpose-title {
+  font-size: clamp(1.5rem, 4vw, 5rem);
+  margin-top: clamp(0.5rem, 2vw, 2rem);
+  margin-bottom: clamp(0.5rem, 2vw, 2rem);
+
+}
+
+.people-purpose-description {
+  width: 80vw;
+  font-size: clamp(0.75rem, 1vw, 2rem);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .people-purpose-description {
+    width: 50vw;
+  }
+}
+
+.people-purpose-images {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-top: clamp(2.5rem, 5vw, 5rem);
+  padding-left: clamp(1rem, 8vw, 10rem);
+  padding-right: clamp(1rem, 8vw, 10rem);
+}
+
+.people-purpose-images-each {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.people-purpose-images-each img{
+  width: clamp(5rem, 15vw, 15rem);
+}
+
+.people-purpose-images-each h1{
+  font-size: clamp(0.25rem, 2.5vw, 1.8rem);
+}
+
+.people-purpose-images-each p{
+  font-size: clamp(0.25rem, 1.5vw, 1rem);
+}
+
+.people-purpose button {
+  margin-top: clamp(2.5rem, 10vw, 10rem);
+  font-size: clamp(0.25rem, 1.5vw, 1.8rem);
+  margin-bottom: clamp(2.5rem, 3.5vw, 5rem);
+  font-weight: 0;
+  background: #378CE7;
+  padding: clamp(0.4rem, 1vw, 0.8rem) clamp(1rem, 3vw, 2.5rem);
+  border-radius: clamp(20px, 10vw, 100px);
+  cursor: pointer;
+}
+
+.final {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  height: clamp(50vh, 40vw, 75vh);
+  overflow: hidden;
+}
+
+.final-image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: clamp(150px, 25vw, 300px);
+  height: auto;
+  z-index: 1;
+  opacity: 1;
+}
+
+.final-title,
+.final-body {
+  position: relative;
+  z-index: 5;
+}
+
+.final-title {
+  font-family: 'SONGER SemiExpanded', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 4vw, 3rem);
+  max-width: clamp(300px, 75vw, 1000px);
+  line-height: 1;
+  text-align: center;
+  margin-bottom: clamp(1rem, 4vw, 2rem);
+  margin-top: clamp(5rem, 10vw, 10rem);
+}
+
+.final-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.final-description {
+  font-size: clamp(0.75rem, 1.5vw, 4rem);
+}
+
+.final-body button {
+  margin-top: clamp(2.5rem, 7.5vw, 10rem);
+  font-size: clamp(0.25rem, 1.5vw, 1.8rem);
+  font-weight: 0;
+  background: #378CE7;
+  padding: clamp(0.4rem, 0.8vw, 0.8rem) clamp(1rem, 2vw, 2.5rem);
+  border-radius: clamp(20px, 10vw, 100px);
+  cursor: pointer;
+  color: #FFFFFF;
+}
