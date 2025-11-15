@@ -19,7 +19,7 @@ export default async function HomeTeam() {
       </div>
       <div className="w-full flex flex-col lg:flex-row items-center lg:items-start lg:justify-between px-6 lg:px-[15%] gap-12 lg:gap-8">
         {teamMembers.map((teamMember, index) => {
-          const imageUrl = teamMember.photo.url;
+          const imageUrl = teamMember.avatar.url;
           const fullImageUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}` : "localhost:1337" + imageUrl;
           return (
             <div

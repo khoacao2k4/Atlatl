@@ -35,7 +35,7 @@ export default async function Home() {
 
             {/* Right Column: Image */}
             <div className="flex items-center justify-center">
-              {getMediaComponent(homepageContent?.heroImage, "Hero", true, "rounded-[100px] w-full h-auto max-w-[360px] lg:max-w-md shadow-2xl object-cover")}
+              {getMediaComponent(homepageContent?.heroMedia, "Hero", true, "rounded-[100px] w-full h-auto max-w-[360px] lg:max-w-md shadow-2xl object-cover")}
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default async function Home() {
               {/* Left Column: Image */}
               <div className="flex justify-center col-[1]">
                 {getMediaComponent(
-                  homepageContent?.aboutUsImage,
+                  homepageContent?.aboutUsMedia,
                   "About Us",
                   false,
                   "aspect-4/3 w-full max-w-[400px] lg:max-w-none rounded-[30px] shadow-2xl object-cover"
