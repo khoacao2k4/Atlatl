@@ -79,7 +79,7 @@ export default async function Home() {
         <HomeTeam />
       </section>
 
-      <section>
+      <section className="py-16 md:py-24 text-white">
         <HomeFootnote />
       </section>
     </div>
