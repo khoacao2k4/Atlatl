@@ -16,11 +16,16 @@ export default function Hero({ media }) {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-            <button className="w-auto bg-bold-blue text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-white hover:text-bold-blue">
+            <button className="bg-bold-blue text-white font-bold py-3 px-8 shadow-md rounded-full
+                hover:bg-white hover:text-bold-blue hover:shadow-xl 
+                transition-all duration-300 transform hover:-translate-y-0.5 hover:cursor-pointer">
               Explore Services
             </button>
-            <button className="w-auto bg-white text-bold-blue border-2 border-bold-blue font-bold py-3 px-8 rounded-lg shadow-sm hover:bg-bold-blue hover:text-white">
-              Schedule a Call
+            <button className="bg-white text-bold-blue font-bold py-3 px-8 rshadow-md rounded-full border-2 border-bold-blue
+                hover:bg-bold-blue hover:text-white hover:shadow-xl 
+                transition-all duration-300 transform hover:-translate-y-0.5 hover:cursor-pointer
+                ">
+               Schedule a Call
             </button>
           </div>
         </div>

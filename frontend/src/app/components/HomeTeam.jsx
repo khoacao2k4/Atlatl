@@ -39,10 +39,10 @@ export default async function HomeTeam() {
           )
         })}
       </div>
-
-      <button
-        className="font-songer text-white bg-bold-blue rounded-full py-1.5 px-8 my-8 cursor-pointer "
-      >
+      
+      <button className="font-songer bg-bold-blue text-white font-bold py-3 px-8 mt-8 shadow-md rounded-full
+          hover:bg-white hover:text-bold-blue hover:shadow-xl 
+          transition-all duration-300 transform hover:-translate-y-0.5 hover:cursor-pointer">
         VIEW MORE TEAM MEMBERS
       </button>
     </div>
