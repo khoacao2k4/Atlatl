@@ -129,8 +129,13 @@ export default function Footer() {
         className="
         text-white text-base mt-8 text-center
         lg:absolute lg:bottom-2.5 lg:right-5 lg:mt-0
+        flex flex-col gap-2
         "
       >
+        <div className="flex justify-center gap-5">
+          <img src="/app-store.svg" alt="App Store" className="w-[150px]" />
+          <img src="/google-play.svg" alt="Google Play" className="w-[200px]" />
+        </div>
         <p>© 2025 Atlatl Advisers. All Rights Reserved.</p>
       </div>
     </footer>

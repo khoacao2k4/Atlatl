@@ -32,10 +32,6 @@ const flashcardData = [
   },
 ];
 
-/**
- * Flashcard Component
- * This is now a "dumb" component. Its open state is controlled by its parent.
- */
 function Flashcard({ title, children, isOpen, onToggle }) {
   return (
     // .flashcard
@@ -54,7 +50,7 @@ function Flashcard({ title, children, isOpen, onToggle }) {
         <h2 className="font-songer text-4xl sm:text-5xl font-bold">
           {title}
         </h2>
-        {/* .flashcard-button (shows + or X) */}
+        {/* .flashcard-button*/}
         <div
           className="text-4xl sm:text-5xl"
         >
@@ -117,7 +113,6 @@ export default function ProcessTable() {
         </div>
       </div>
 
-      {/* .ad-board (This remains the same) */}
       <div
         className="
         w-full max-w-[600px] lg:max-w-[550px] 

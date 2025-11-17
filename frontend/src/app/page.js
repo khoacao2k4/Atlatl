@@ -19,7 +19,7 @@ export default async function Home() {
         <AboutUs media={homepageContent?.aboutUsMedia} />
       </section>
 
-      <section className="py-16 md:py-24 bg-gradient-to-b from-dark-blue from-50% to-white to-50% text-text-light-blue">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-dark-blue from-55% to-white to-55% text-text-light-blue">
         <HomeTeam />
       </section>
 
@@ -29,7 +29,6 @@ export default async function Home() {
 
       <section className="bg-darker-light-blue">
         <CtaSection />
-        
       </section>
     </div>
   );
