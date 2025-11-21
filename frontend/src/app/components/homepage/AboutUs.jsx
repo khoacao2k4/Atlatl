@@ -4,8 +4,7 @@ export default function AboutUs({ media }) {
   return (
     <div className="container mx-auto rounded-2xl px-10">
       <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-12 text-left font-songer">
-        ABOUT <br />
-        ATLATL ADVISERS
+        ABOUT ATLATL ADVISERS
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
         {/* Left Column: Image */}

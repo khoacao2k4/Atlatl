@@ -38,7 +38,7 @@ export default function Navbar() {
   }, []);
 
   const menuItems = [
-    { name: "ABOUT US", href: "/about-us" },
+    { name: "ABOUT US", href: "/why-atlatl" },
     { name: "SERVICES", href: "/services" },
     { name: "RESOURCES", href: "/resources" },
     { name: "CONTACT US", href: "/contact-us" },
