@@ -26,6 +26,7 @@ export const getMediaComponent = (
   const mediaURL = getFullMediaUrl(media?.url);
   const isVideo = media?.ext === ".mp4";
 
+  console.log(mediaURL);
   if (isVideo) {
     // If 'forceSquare' is true, the component adds 'aspect-square' and 'overflow-hidden'.
     if (forceSquare) {

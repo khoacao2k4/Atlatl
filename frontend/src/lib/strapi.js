@@ -40,11 +40,10 @@ async function fetchStrapiData(path, urlParams = "", options = {}) {
 /**
  * Gets all featured team members.
  */
-export async function getFeaturedTeamMembers() {
+export async function getFeaturedTeamMembers(isFeatured = true) {
   const path = "/api/team-members";
-  const params = "?filters[featured][$eq]=true&populate=*";
+  const params = isFeatured ? "?filters[featured][$eq]=true&populate=*" : "?populate=*";
   const options = { cache: "no-store" };
-
   const json = await fetchStrapiData(path, params, options);
 
   if (!json || !json.data) {
@@ -61,7 +60,6 @@ export async function getHomepageContent() {
   const options = { cache: "no-store" };
 
   const json = await fetchStrapiData(path, params, options);
-
   if (!json || !json.data) {
     console.warn("No homepage content found or API error.");
     return null;
