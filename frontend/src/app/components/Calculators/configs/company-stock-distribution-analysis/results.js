@@ -10,6 +10,18 @@ export const results = [
     format: 'text'
   },
   { 
+    key: 'pvNuaTotalTax',
+    label: 'NUA Strategy: Total Taxes (PV)', 
+    format: 'currency',
+    description: 'Immediate taxes + present value of future taxes'
+  },
+  { 
+    key: 'pvIraTax',
+    label: 'IRA Rollover: Total Taxes (PV)', 
+    format: 'currency',
+    description: 'Present value of all taxes'
+  },
+  { 
     key: 'advantage', 
     label: 'NUA Strategy Advantage (Future Value)', 
     format: 'currency',
