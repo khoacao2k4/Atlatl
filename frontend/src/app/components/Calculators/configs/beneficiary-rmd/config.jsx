@@ -2,8 +2,8 @@ import { schema } from './schema';
 import { defaults } from './defaults';
 import { inputs } from './inputs';
 import { results } from './results';
-import { singleLifeTable } from '../tables/singleLifeTable';
-import { uniformLifeTable } from '../tables/uniformLifeTable';
+import { singleLifeTable } from './singleLifeTable';
+import { uniformLifeTable } from './uniformLifeTable';
 
 export const config = {
   title: 'Beneficiary Required Minimum Distributions (RMD)',
