@@ -116,7 +116,7 @@ export default function ProcessTable() {
       <div
         className="
         w-full max-w-[600px] lg:max-w-[550px] 
-        bg-[#1667B9] text-white rounded-[30px] 
+        bg-dark-blue text-white rounded-[30px] 
         p-5 sm:p-10 order-first lg:order-last 
         "
       >

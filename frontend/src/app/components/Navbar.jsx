@@ -64,7 +64,7 @@ export default function Navbar() {
   `;
 
   return (
-    <nav className="w-full h-[100px] bg-light-blue flex items-center justify-between px-6 lg:px-12 border-b border-[#e5e5e5] z-50">
+    <nav className="w-full h-[100px] bg-white flex items-center justify-between px-6 lg:px-12 border-b border-[#e5e5e5] z-50">
       {/* 1. Logo */}
       <div className="z-50">
         <Link href="/">

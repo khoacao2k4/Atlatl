@@ -26,11 +26,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-dark-blue: #245383;
+  --color-dark-blue: #07315C;
   --color-light-blue: #F5FAFF; 
   --color-bold-blue: #378CE7;
   --color-darker-light-blue: #C6E2FF;
-  --color-text-light-blue: #07315C;
   --font-songer: "SONGER SemiExpanded";
   --font-work-sans: "Work-Sans";
 }

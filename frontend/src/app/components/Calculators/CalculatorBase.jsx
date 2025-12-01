@@ -87,7 +87,7 @@ export const CalculatorBase = ({ config }) => {
 
                                 {/* Optional hint/instructions */}
                                 {input.hint && (
-                                    <p className="text-text-light-blue text-xs mt-1 font-work-sans">{input.hint}</p>
+                                    <p className="text-dark-blue text-xs mt-1 font-work-sans">{input.hint}</p>
                                 )}
                             </div>
                         ))}
@@ -114,7 +114,7 @@ export const CalculatorBase = ({ config }) => {
                     <h2 className="text-2xl font-bold mb-6 text-dark-blue font-songer">Results</h2>
                     {/* If no calculation yet, show empty state */}
                     {!results ? (
-                        <div className="text-center py-12 text-text-light-blue">
+                        <div className="text-center py-12 text-dark-blue">
                             <div className="text-6xl mb-4 opacity-50">📈</div>
                             <p className="font-work-sans">Enter values and click Calculate to see results</p>
                         </div>
@@ -123,12 +123,12 @@ export const CalculatorBase = ({ config }) => {
                             {/* Render each result row */}
                             {config.results.map(result => (
                                 <div key={result.key} className="border-b border-bold-blue pb-4 last:border-b-0">
-                                    <p className="text-sm text-text-light-blue mb-1 font-work-sans">{result.label}</p>
+                                    <p className="text-sm text-dark-blue mb-1 font-work-sans">{result.label}</p>
                                     <p className="text-2xl font-bold text-dark-blue font-songer">
                                         {formatValue(results[result.key], result.format)}
                                     </p>
                                     {result.description && (
-                                        <p className="text-xs text-text-light-blue mt-1 font-work-sans">{result.description}</p>
+                                        <p className="text-xs text-dark-blue mt-1 font-work-sans">{result.description}</p>
                                     )}
                                 </div>
                             ))}
@@ -140,7 +140,7 @@ export const CalculatorBase = ({ config }) => {
                                     <div className="space-y-2 text-sm font-work-sans">
                                         {results.breakdown.map((item, idx) => (
                                             <div key={idx} className="flex justify-between">
-                                                <span className="text-text-light-blue">{item.label}</span>
+                                                <span className="text-dark-blue">{item.label}</span>
                                                 <span className="font-medium text-black">{formatValue(item.value, item.format)}</span>
                                             </div>
                                         ))}

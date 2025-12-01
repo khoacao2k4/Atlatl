@@ -28,12 +28,12 @@ export default async function HomeTeam() {
                 />
               </div>
               {/* Name & Suffix */}
-              <h2 className="font-songer text-2xl font-bold uppercase tracking-wider mb-1 group-hover:text-bold-blue transition-colors duration-300">
+              <h2 className="font-songer text-dark-blue text-2xl font-bold uppercase tracking-wider mb-1 group-hover:text-bold-blue transition-colors duration-300">
                 {teamMember.name}
                 {teamMember.suffix && <span className="text-2xl">, {teamMember.suffix}</span>}
               </h2>
               {/* Position */}
-              <p className="font-work-sans font-medium text-sm md:text-xl tracking-wide group-hover:text-dark-blue transition-colors duration-300">
+              <p className="font-work-sans text-dark-blue font-medium text-sm md:text-xl tracking-wide group-hover:text-bold-blue transition-colors duration-300">
                 {teamMember.position}
               </p>
             </Link>

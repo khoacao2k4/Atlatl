@@ -122,7 +122,7 @@ export const AutoChart = ({ config, results }) => {
 
                     {/* Optional description below chart */}
                     {config.description && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">{config.description}</p>
+                        <p className="text-sm text-dark-blue mt-2 text-center font-work-sans">{config.description}</p>
                     )}
                 </div>
             );
@@ -158,7 +158,7 @@ export const AutoChart = ({ config, results }) => {
                         </AreaChart>
                     </ResponsiveContainer>
                     {config.description && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">{config.description}</p>
+                        <p className="text-sm text-dark-blue mt-2 text-center font-work-sans">{config.description}</p>
                     )}
                 </div>
             );
@@ -195,7 +195,7 @@ export const AutoChart = ({ config, results }) => {
                         </BarChart>
                     </ResponsiveContainer>
                     {config.description && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">{config.description}</p>
+                        <p className="text-sm text-dark-blue mt-2 text-center font-work-sans">{config.description}</p>
                     )}
                 </div>
             );
@@ -234,7 +234,7 @@ export const AutoChart = ({ config, results }) => {
                                     />
                                     <div>
                                         <p className="font-medium text-black">{item.name}</p>
-                                        <p className="text-sm text-text-light-blue">{formatValue(item.value, config.format)}</p>
+                                        <p className="text-sm text-dark-blue">{formatValue(item.value, config.format)}</p>
                                     </div>
                                 </div>
                             ))}

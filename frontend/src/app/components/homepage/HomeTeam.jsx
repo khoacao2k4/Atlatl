@@ -24,7 +24,7 @@ export default async function HomeTeam() {
           return (
             <div
               key={teamMember.id}
-              className={`flex flex-col items-center font-work-sans text-center lg:w-[30%] ${index < Math.floor(teamMembers.length / 2) ? "text-white lg:text-text-light-blue" : ""}`}
+              className={`flex flex-col items-center font-work-sans text-center lg:w-[30%] ${index < Math.floor(teamMembers.length / 2) ? "text-white lg:text-dark-blue" : ""}`}
             >
               <img
                 src={fullImageUrl}
