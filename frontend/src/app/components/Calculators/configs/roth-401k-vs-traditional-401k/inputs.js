@@ -1,100 +1,81 @@
 export const inputs = [
-  { 
-    name: 'balanceAtDistribution', 
-    label: 'Balance at Time of Distribution (FMV)', 
-    type: 'number',
-    format: 'currency',
-    required: true, 
-    hint: 'Fair market value of company stock to be distributed' 
-  },
-  { 
-    name: 'costBasis', 
-    label: 'Total Stock Purchases (Cost Basis)', 
-    type: 'number',
-    format: 'currency',
-    required: true, 
-    hint: 'Total amount paid for the stock (you and/or employer contributions)' 
-  },
-  { 
-    name: 'rateOfReturn', 
-    label: 'Rate of Return', 
-    type: 'number',
-    format: 'percentage',
-    step: 0.1, 
-    hint: 'Expected annual return on company stock' 
-  },
-  { 
-    name: 'holdingPeriodYears', 
-    label: 'Holding Period (Years)', 
+  {
+    name: 'currentAge',
+    label: 'Current age',
     type: 'number',
     required: true,
-    hint: 'Years you expect to hold the stock after distribution' 
+    hint: 'Your current age'
   },
-  { 
-    name: 'holdingPeriodMonths', 
-    label: 'Holding Period (Additional Months)', 
+  {
+    name: 'retirementAge',
+    label: 'Age at retirement',
     type: 'number',
-    hint: 'Additional months beyond full years (0-11)' 
+    required: true,
+    hint: 'Age you wish to retire (last contribution at age retirement-1)'
   },
-  { 
-    name: 'capitalGainsRate', 
-    label: 'Capital Gains Tax Rate', 
+  {
+    name: 'annualContribution',
+    label: 'Annual contribution',
     type: 'number',
-    format: 'percentage',
-    step: 0.1, 
-    hint: 'Long-term capital gains tax rate (typically 0%, 15%, or 20%)' 
+    format: 'currency',
+    required: true,
+    hint: 'Amount you contribute to your 401(k) each year (12 equal monthly contributions)'
   },
-  { 
-    name: 'marginalTaxRate', 
-    label: 'Marginal Income Tax Rate', 
+  {
+    name: 'currentBalance',
+    label: 'Current 401(k) balance',
     type: 'number',
-    format: 'percentage',
-    step: 0.1, 
-    hint: 'Your ordinary income tax rate' 
+    format: 'currency',
+    required: true,
+    hint: 'Your current 401(k) account balance'
   },
-  { 
-    name: 'inflationRate', 
-    label: 'Expected Inflation Rate', 
+  {
+    name: 'annualRateOfReturn',
+    label: 'Expected rate of return',
     type: 'number',
     format: 'percentage',
     step: 0.1,
-    hint: 'Long-term average inflation rate for present value calculations' 
-  },
-  { 
-    name: 'currentAge', 
-    label: 'Current Age', 
-    type: 'number',
     required: true,
-    hint: 'Your current age' 
+    hint: 'Expected annual investment return (compounded monthly)'
   },
-  { 
-    name: 'separatedAtAge55', 
-    label: 'Separated from Service at Age 55 or Older', 
-    type: 'select',
-    options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
-    ],
-    hint: 'Check if you separated in/after the year you turned 55 (no 10% penalty)' 
+  {
+    name: 'currentTaxRate',
+    label: 'Current tax rate',
+    type: 'number',
+    format: 'percentage',
+    step: 0.1,
+    required: true,
+    hint: 'Your current marginal income tax rate'
   },
-  { 
-    name: 'retirementDistributionAfter59Half', 
-    label: 'Retirement Plan Distribution at Age 59½ or Older', 
-    type: 'select',
-    options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
-    ],
-    hint: 'Check if distribution occurs at/after age 59½ (no 10% penalty)' 
+  {
+    name: 'retirementTaxRate',
+    label: 'Retirement tax rate',
+    type: 'number',
+    format: 'percentage',
+    step: 0.1,
+    required: true,
+    hint: 'Expected marginal tax rate at retirement'
   },
-  { 
-    name: 'iraDistributionAfter59Half', 
-    label: 'IRA Distribution at Age 59½ or Older', 
+  {
+    name: 'investTaxSavings',
+    label: 'Invest traditional tax-savings',
     type: 'select',
+    required: true,
     options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
+      { label: 'Yes', value: true },
+      { label: 'No', value: false }
     ],
-    hint: 'Check if IRA distribution occurs at/after age 59½ (no 10% penalty)' 
+    hint: 'Invest tax savings from Traditional contributions in a taxable account'
+  },
+  {
+    name: 'maximizeContributions',
+    label: 'Maximize contributions',
+    type: 'select',
+    required: true,
+    options: [
+      { label: 'Yes', value: true },
+      { label: 'No', value: false }
+    ],
+    hint: 'Increase contributions to maximum allowed ($23,500 base, $31,000 with catch-up at age 50+)'
   },
 ];

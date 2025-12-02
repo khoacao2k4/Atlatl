@@ -4,242 +4,202 @@ import { inputs } from './inputs';
 import { results } from './results';
 
 export const config = {
-  title: 'Company Stock Distribution Analysis Calculator',
-  description: 'Compare NUA (Net Unrealized Appreciation) strategy versus IRA rollover for company stock distributions from your retirement plan',
+  title: 'Roth 401(k) vs Traditional 401(k) Calculator',
+  description: 'Compare Roth 401(k) and Traditional 401(k) to see which saves you more money in retirement',
   schema,
   defaultValues: defaults,
   inputs,
   results,
 
   calculate: (data) => {
-    /*
-    Dinkytown-style implementation:
-     - NUA = FMV at distribution - cost basis
-     - At distribution (NUA strategy): pay ordinary income tax on cost basis now (and 10% penalty on cost basis if not qualified)
-     - NUA portion is taxed as long-term capital gain when sold (even if sold immediately)
-     - Appreciation AFTER distribution: taxed as short-term (ordinary) if sold within 1 year, otherwise long-term capital gain
-     - IRA rollover: entire amount taxed as ordinary income when withdrawn (plus 10% penalty if applicable)
-     - Present value calculations: discount FUTURE taxes to present using inflationRate
-    */
+  // Inputs
+  const currentAge = Number(data.currentAge);
+  const retirementAge = Number(data.retirementAge);
+  const years = Math.max(0, retirementAge - currentAge);
 
-    const nua = data.balanceAtDistribution - data.costBasis;
+  const annualContribution = Number(data.annualContribution) || 0;
+  const currentBalance = Number(data.currentBalance) || 0;
 
-    // Convert holding period to decimal years
-    const holdingYears = data.holdingPeriodYears + (data.holdingPeriodMonths || 0) / 12;
+  const rAnnual = Number(data.annualRateOfReturn) / 100;      // e.g. 7%
+  const tNow = Number(data.currentTaxRate) / 100;             // current marginal tax
+  const tRet = Number(data.retirementTaxRate) / 100;          // retirement tax
+  const investTaxSavings = !!data.investTaxSavings;
 
-    // Future FMV after holding period (applies equally for both strategies)
-    const fmvAtSale = data.balanceAtDistribution * Math.pow(1 + data.rateOfReturn / 100, holdingYears);
+  const monthlyRate = Math.pow(1 + rAnnual, 1 / 12) - 1;
 
-    // Appreciation that occurs AFTER the distribution event
-    const appreciationAfterDistribution = fmvAtSale - data.balanceAtDistribution;
+  const months = years * 12;
+  const monthlyContribution = annualContribution / 12;
+  const monthlyTaxSavings = (annualContribution * tNow) / 12;
 
-    // Penalty conditions:
-    // For cost-basis taxation at distribution (NUA initial tax), penalty applies unless separatedAtAge55 OR distribution is at/after 59.5
-    const penaltyOnRetirementDist = !(data.separatedAtAge55 || data.retirementDistributionAfter59Half);
-    // For IRA distributions (rolled-over funds), penalty applies if IRA distribution occurs before 59.5
-    const penaltyOnIraDist = !data.iraDistributionAfter59Half;
+  const capitalGainsTaxRate = 0.4125710615531908;
 
-    // ===== NUA STRATEGY =====
-    // Initial tax at distribution: cost basis taxed at ordinary marginal tax rate now
-    const nuaInitialTax = data.costBasis * (data.marginalTaxRate / 100);
-    const nuaInitialPenalty = penaltyOnRetirementDist ? data.costBasis * 0.10 : 0;
-    const nuaTotalInitialTax = nuaInitialTax + nuaInitialPenalty;
+  // Accounts
+  let roth = currentBalance;
+  let trad = currentBalance;
+  let side = 0; // invested tax savings in a taxable account
 
-    // Future taxes when stock is sold:
-    // - NUA portion taxed at long-term capital gains rate (per Dinkytown: treated as long-term cap gain even if sold immediately)
-    const nuaPortionTaxAtSale = Math.max(0, nua) * (data.capitalGainsRate / 100);
+  const yearlySeries = [];
 
-    // - Appreciation after distribution taxed as:
-    //     * ordinary income (marginal tax rate) if holding < 1 year
-    //     * long-term capital gains if holding >= 1 year
-    const appreciationTaxRate = holdingYears >= 1 ? (data.capitalGainsRate / 100) : (data.marginalTaxRate / 100);
-    const appreciationTaxAtSale = Math.max(0, appreciationAfterDistribution) * appreciationTaxRate;
+  // Simulate month by month
+  for (let y = 0; y < years; y++) {
+    for (let m = 0; m < 12; m++) {
+      // Contributions at beginning of month (annuity-due)
+      roth += monthlyContribution;
+      trad += monthlyContribution;
 
-    const nuaTotalFutureTax = nuaPortionTaxAtSale + appreciationTaxAtSale;
+      if (investTaxSavings && monthlyTaxSavings > 0) {
+        side += monthlyTaxSavings;
+      }
 
-    // Total taxes (initial + future)
-    const nuaTotalTax = nuaTotalInitialTax + nuaTotalFutureTax;
+      // Growth over the month
+      roth *= 1 + monthlyRate;
+      trad *= 1 + monthlyRate;
 
-    // Net proceeds at sale (future value basis): FMV at sale minus ALL taxes paid (initial taxes were paid now, but for "future value" comparison we subtract all taxes)
-    const nuaNetProceeds = fmvAtSale - nuaTotalFutureTax - nuaTotalInitialTax; // taxes already removed
+      if (investTaxSavings && monthlyTaxSavings > 0) {
+        side *= 1 + monthlyRate;
+      }
+    }
 
-    // Present value calculations:
-    // Discount only FUTURE taxes to present using inflationRate (per Dinkytown: discount future tax distributions).
-    const discountRate = data.inflationRate / 100;
-    const pvNuaFutureTax = nuaTotalFutureTax / Math.pow(1 + discountRate, holdingYears);
-    const pvNuaTotalTax = nuaTotalInitialTax + pvNuaFutureTax; // initial tax is "now" (no discount)
-    const pvNuaNetProceeds = data.balanceAtDistribution - pvNuaTotalTax;
+    // End of year y: build yearlySeries entry
+    const monthsSoFar = (y + 1) * 12;
 
-    // ===== IRA ROLLOVER STRATEGY =====
-    // If rolled over to IRA, the whole balance grows and when withdrawn later it's taxed as ordinary income (marginal)
-    const iraFmvAtSale = fmvAtSale;
-    const iraTotalTaxAtSale = iraFmvAtSale * (data.marginalTaxRate / 100);
-    const iraPenaltyAtSale = penaltyOnIraDist ? iraFmvAtSale * 0.10 : 0;
-    const iraTotalTaxWithPenalty = iraTotalTaxAtSale + iraPenaltyAtSale;
+    // Side account after-tax at this point
+    const totalSideContributed = monthlyTaxSavings * monthsSoFar;
+    const sideGains = Math.max(0, side - totalSideContributed);
+    const sideTax = sideGains * capitalGainsTaxRate;
+    const sideAfterTaxYear = totalSideContributed + (sideGains - sideTax);
 
-    const iraNetProceeds = iraFmvAtSale - iraTotalTaxWithPenalty;
+    // Traditional after retirement tax at this point
+    const tradTaxesYear = trad * tRet;
+    const tradAfterTaxYear = trad - tradTaxesYear;
 
-    // Present value for IRA: discount future tax (all taxed at withdrawal) to present
-    const pvIraTax = iraTotalTaxWithPenalty / Math.pow(1 + discountRate, holdingYears);
-    const pvIraNetProceeds = data.balanceAtDistribution - pvIraTax;
+    const tradPlusInvestedTaxSavingsMinusTaxes =
+      tradAfterTaxYear + (investTaxSavings ? sideAfterTaxYear : 0);
 
-    // ===== Comparison & summary metrics =====
-    const advantage = nuaNetProceeds - iraNetProceeds;
-    const advantagePercent = iraNetProceeds !== 0 ? (advantage / Math.abs(iraNetProceeds)) * 100 : 0;
+    yearlySeries.push({
+      age: currentAge + y,
+      traditional: Math.round(trad),
+      roth: Math.round(roth),
+      traditionalPlusInvestedTaxSavingsMinusTaxes: Math.round(
+        tradPlusInvestedTaxSavingsMinusTaxes
+      ),
+    });
+  }
 
-    const pvAdvantage = pvNuaNetProceeds - pvIraNetProceeds;
-    const pvAdvantagePercent = pvIraNetProceeds !== 0 ? (pvAdvantage / Math.abs(pvIraNetProceeds)) * 100 : 0;
+  // Final values at retirement
 
-    // Recommendation: compare present-value advantage (gives 'today' basis)
-    const betterStrategy = pvAdvantage > 0 ? 'NUA Strategy' : 'IRA Rollover';
+  // Final side account after-tax
+  const totalSideContributedAll = monthlyTaxSavings * months;
+  const sideGainsAll = Math.max(0, side - totalSideContributedAll);
+  const sideTaxAll = sideGainsAll * capitalGainsTaxRate;
+  const sideAfterTax = totalSideContributedAll + (sideGainsAll - sideTaxAll);
 
-    return {
-      // Basic metrics
-      nua,
-      fmvAtSale,
-      appreciationAfterDistribution,
+  // Traditional 401(k) taxes
+  const traditionalTaxes = trad * tRet;
+  const traditionalAfterTaxNoSavings = trad - traditionalTaxes;
 
-      // NUA Strategy breakdown
-      nuaInitialTax,
-      nuaInitialPenalty,
-      nuaTotalInitialTax,
-      nuaPortionTaxAtSale,
-      appreciationTaxAtSale,
-      nuaTotalFutureTax,
-      nuaTotalTax,
-      nuaNetProceeds,
-      pvNuaFutureTax,
-      pvNuaTotalTax,
-      pvNuaNetProceeds,
+  const totalTraditional =
+    traditionalAfterTaxNoSavings + (investTaxSavings ? sideAfterTax : 0);
+  const totalRoth = roth; // Roth is already after-tax
 
-      // IRA Rollover breakdown
-      iraTotalTaxAtSale,
-      iraPenaltyAtSale,
-      iraTotalTaxWithPenalty,
-      iraNetProceeds,
-      pvIraTax,
-      pvIraNetProceeds,
+  const advantage = totalRoth - totalTraditional;
+  const advantagePercent =
+    totalTraditional !== 0 ? (advantage / totalTraditional) * 100 : 0;
 
-      // Comparison
-      advantage,
-      advantagePercent,
-      pvAdvantage,
-      pvAdvantagePercent,
-      betterStrategy,
+  return {
+    // Pre-tax balances
+    rothBalance: roth,
+    traditionalBalance: trad,
 
-      // Detailed breakdown for display
-      breakdown: [
-        { label: 'NUA Amount', value: nua, format: 'currency' },
-        { label: 'Cost Basis', value: data.costBasis, format: 'currency' },
-        { label: 'Initial Distribution FMV', value: data.balanceAtDistribution, format: 'currency' },
-        { label: 'Projected FMV at Sale', value: fmvAtSale, format: 'currency' },
-        { label: 'Post-Distribution Appreciation', value: appreciationAfterDistribution, format: 'currency' },
-      ],
+    // Spendable after-tax values
+    rothAfterTax: totalRoth,
+    traditionalAfterTax: totalTraditional,
 
-      nuaBreakdown: [
-        { label: 'Tax on Cost Basis (Ordinary Income)', value: nuaInitialTax, format: 'currency' },
-        { label: 'Penalty on Cost Basis (if applicable)', value: nuaInitialPenalty, format: 'currency' },
-        { label: 'Total Initial Tax', value: nuaTotalInitialTax, format: 'currency' },
-        { label: 'Tax on NUA (Capital Gains)', value: nuaPortionTaxAtSale, format: 'currency' },
-        { label: 'Tax on Appreciation (At Sale)', value: appreciationTaxAtSale, format: 'currency' },
-        { label: 'Total Future Tax', value: nuaTotalFutureTax, format: 'currency' },
-        { label: 'Total Tax (All)', value: nuaTotalTax, format: 'currency' },
-        { label: 'Net Proceeds (Future Value)', value: nuaNetProceeds, format: 'currency' },
-      ],
+    // Comparison
+    advantage,
+    advantagePercent,
+    betterChoice: advantage > 0 ? "Roth 401(k)" : "Traditional 401(k)",
+    yearsToRetirement: years,
 
-      iraBreakdown: [
-        { label: 'Tax on Full Amount (Ordinary Income)', value: iraTotalTaxAtSale, format: 'currency' },
-        { label: 'Early Withdrawal Penalty (if applicable)', value: iraPenaltyAtSale, format: 'currency' },
-        { label: 'Total Tax', value: iraTotalTaxWithPenalty, format: 'currency' },
-        { label: 'Net Proceeds (Future Value)', value: iraNetProceeds, format: 'currency' },
-      ],
+    // Tax-savings side account
+    futureValueOfTaxSavings: side,
+    taxSavingsAfterTax: sideAfterTax,
 
-      // Notes (human friendly)
-      notes: [
-        `Holding period: ${data.holdingPeriodYears} years and ${data.holdingPeriodMonths} months`,
-        penaltyOnRetirementDist ? 'Early withdrawal penalty (10%) applied to NUA initial distribution (cost basis)' : 'No early withdrawal penalty on NUA initial distribution',
-        penaltyOnIraDist ? 'Early withdrawal penalty (10%) will apply to IRA distribution' : 'No early withdrawal penalty on IRA distribution',
-        `NUA portion is treated as long-term capital gain (taxed at ${data.capitalGainsRate}%).`,
-        holdingYears < 1
-          ? 'Appreciation after distribution will be taxed as ordinary income (short-term) because holding period is under 1 year.'
-          : 'Appreciation after distribution will be taxed as long-term capital gain because holding period is at least 1 year.',
-        `The ${betterStrategy} provides ${Math.abs(pvAdvantagePercent).toFixed(2)}% ${pvAdvantage > 0 ? 'more' : 'less'} net proceeds on a present-value basis.`,
-      ],
-    };
-  },
+    // Traditional breakdown
+    traditionalTaxes,
+    traditionalAfterTaxNoSavings,
+
+    // Yearly series for charts/tables (matches Dinkytown’s shape)
+    yearlySeries,
+  };
+},
 
   charts: [
     {
-      title: 'Strategy Comparison: Net Proceeds',
+      title: 'Account Balance at Retirement',
       type: 'bar',
       height: 350,
-      xKey: 'strategy',
+      xKey: 'account',
       format: 'currency',
       showLegend: false,
       data: (results) => [
-        { 
-          strategy: 'NUA Strategy', 
-          value: results.nuaNetProceeds,
-          color: '#378CE7'
+        {
+          account: 'Roth 401(k)',
+          value: results.rothBalance || 0,
+          color: '#10B981',
         },
-        { 
-          strategy: 'IRA Rollover', 
-          value: results.iraNetProceeds,
-          color: '#245383'
+        {
+          account: 'Traditional 401(k)',
+          value: results.traditionalBalance || 0,
+          color: '#3B82F6',
         },
       ],
-      bars: [
-        { key: 'value', name: 'Net Proceeds', color: '#378CE7' }
-      ],
-      description: 'Future value comparison of net proceeds after all taxes'
+      bars: [{ key: 'value', name: 'Balance', fill: 'color' }],
+      description: 'Both accounts grow to the same balance (before taxes)',
     },
     {
-      title: 'Total Tax Comparison',
+      title: 'After-Tax Value at Retirement',
       type: 'bar',
       height: 350,
-      xKey: 'strategy',
+      xKey: 'account',
       format: 'currency',
       showLegend: false,
       data: (results) => [
-        { 
-          strategy: 'NUA Strategy', 
-          value: results.nuaTotalTax,
-          color: '#F87171'
+        {
+          account: 'Roth 401(k)',
+          value: results.rothAfterTax || 0,
+          color: '#10B981',
         },
-        { 
-          strategy: 'IRA Rollover', 
-          value: results.iraTotalTaxWithPenalty,
-          color: '#DC2626'
+        {
+          account: 'Traditional 401(k)',
+          value: results.traditionalAfterTax || 0,
+          color: '#3B82F6',
         },
       ],
-      bars: [
-        { key: 'value', name: 'Total Tax', color: '#F87171' }
-      ],
-      description: 'Total tax liability for each strategy'
+      bars: [{ key: 'value', name: 'After-Tax Value', fill: 'color' }],
+      description: 'What you actually get to spend (includes invested tax savings for Traditional)',
     },
     {
-      title: 'Present Value Comparison',
+      title: 'Tax Impact Comparison',
       type: 'bar',
       height: 350,
-      xKey: 'strategy',
+      xKey: 'account',
       format: 'currency',
       showLegend: false,
       data: (results) => [
-        { 
-          strategy: 'NUA Strategy', 
-          value: results.pvNuaNetProceeds,
-          color: '#378CE7'
+        {
+          account: 'Roth 401(k)',
+          value: null,
+          color: '#10B981',
         },
-        { 
-          strategy: 'IRA Rollover', 
-          value: results.pvIraNetProceeds,
-          color: '#245383'
+        {
+          account: 'Traditional 401(k)',
+          value: results.traditionalTaxes || 0,
+          color: '#EF4444',
         },
       ],
-      bars: [
-        { key: 'value', name: 'Present Value Net Proceeds', color: '#378CE7' }
-      ],
-      description: `Net proceeds adjusted for ${defaults.inflationRate}% inflation rate`
+      bars: [{ key: 'value', name: 'Taxes Paid', fill: 'color' }],
+      description: 'Taxes owed on 401(k) withdrawals at retirement',
     },
-  ]
+  ],
 };

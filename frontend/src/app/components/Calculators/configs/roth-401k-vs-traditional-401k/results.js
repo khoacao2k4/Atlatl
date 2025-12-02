@@ -1,34 +1,62 @@
 export const results = [
-  { 
-    key: 'nua', 
-    label: 'Net Unrealized Appreciation (NUA)', 
-    format: 'currency'
+  {
+    key: 'rothBalance',
+    label: 'Roth 401(k) balance at retirement',
+    format: 'currency',
+    description: 'Total account value (tax-free withdrawals)'
   },
-  { 
-    key: 'betterStrategy', 
-    label: 'Recommended Strategy', 
+  {
+    key: 'traditionalBalance',
+    label: 'Traditional 401(k) balance at retirement',
+    format: 'currency',
+    description: 'Total account value (taxable withdrawals)'
+  },
+  {
+    key: 'rothAfterTax',
+    label: 'Roth 401(k) after-tax value',
+    format: 'currency',
+    description: 'Amount you can spend (no taxes owed)'
+  },
+  {
+    key: 'traditionalAfterTax',
+    label: 'Traditional 401(k) after-tax value',
+    format: 'currency',
+    description: 'Amount after paying retirement taxes (including invested tax savings if selected)'
+  },
+  {
+    key: 'advantage',
+    label: 'Roth advantage',
+    format: 'currency',
+    description: 'Additional after-tax value from Roth 401(k)'
+  },
+  {
+    key: 'advantagePercent',
+    label: 'Advantage percentage',
+    format: 'percentage'
+  },
+  {
+    key: 'betterChoice',
+    label: 'Better choice',
     format: 'text'
   },
-  { 
-    key: 'advantage', 
-    label: 'NUA Strategy Advantage (Future Value)', 
-    format: 'currency',
-    description: 'How much more you would have with NUA vs IRA rollover'
+  {
+    key: 'yearsToRetirement',
+    label: 'Years to retirement',
+    format: 'number'
   },
-  { 
-    key: 'advantagePercent', 
-    label: 'Advantage %', 
-    format: 'percentage'
+  {
+    key: 'rothTotalTaxesPaid',
+    label: 'Taxes paid on Roth contributions (working years)',
+    format: 'currency'
   },
-  { 
-    key: 'pvAdvantage', 
-    label: 'NUA Strategy Advantage (Present Value)', 
-    format: 'currency',
-    description: 'Advantage adjusted for inflation'
+  {
+    key: 'traditionalTaxSavings',
+    label: 'Tax savings during working years (total)',
+    format: 'currency'
   },
-  { 
-    key: 'pvAdvantagePercent', 
-    label: 'Advantage % (PV)', 
-    format: 'percentage'
+  {
+    key: 'futureValueOfTaxSavings',
+    label: 'Future value of invested tax savings',
+    format: 'currency'
   },
 ];
