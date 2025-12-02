@@ -62,7 +62,7 @@ export default function CalculatorsPage() {
                 </div>
             </div>
 
-            <CalculatorBase config={calculators[selectedCalc]} />
+            <CalculatorBase key={selectedCalc} config={calculators[selectedCalc]} />
         </div>
     );
 }
