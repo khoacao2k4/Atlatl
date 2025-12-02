@@ -1,8 +1,7 @@
 import { getFeaturedTeamMembers } from "@/lib/strapi";
 
-export default async function HomeTeam() {
+export default async function HomeTeam({ half_toggle = true }) {
   const teamMembers = await getFeaturedTeamMembers();
-
   return (
     <div className="flex flex-col items-center w-full">
       <div className="flex flex-col justify-center items-center w-full font-work-sans bg-dark-blue text-white text-center">
@@ -24,7 +23,7 @@ export default async function HomeTeam() {
           return (
             <div
               key={teamMember.id}
-              className={`flex flex-col items-center font-work-sans text-center lg:w-[30%] ${index < Math.floor(teamMembers.length / 2) ? "text-white lg:text-dark-blue" : ""}`}
+              className={`flex flex-col items-center font-work-sans text-center lg:w-[30%] ${index < Math.floor(teamMembers.length / 2) && half_toggle ? "text-white lg:text-dark-blue" : ""}`}
             >
               <img
                 src={fullImageUrl}

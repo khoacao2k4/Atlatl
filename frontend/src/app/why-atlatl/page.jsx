@@ -1,6 +1,7 @@
-"use client";
 import "./page.css";
 import Image from "next/image";
+import HomeTeam from "../components/homepage/HomeTeam";
+import CtaSection from "../components/homepage/CtaSection";
 
 export default function WhyAtlatlPage() {
     return (
@@ -204,85 +205,12 @@ export default function WhyAtlatlPage() {
                 </div>
             </section>
 
-            <section className="people-purpose">
-                <div className="people-purpose-title">
-                    People with a purpose
-                </div>
-                <div className="people-purpose-description">
-                    We strive to hire, inspire, and invest in the best talent across our respective disciplines and empower our team to thrive in an environment of respect. Our ability to celebrate different perspectives and foster a culture of inclusion leads to an exceptional client experience.
-                </div>
-                <div className="people-purpose-images">
-                    <div className="people-purpose-images-each">
-                        <Image
-                            src="/images/ross.webp"
-                            alt="Ross Fedenia"
-                            width={50}
-                            height={50}
-                            className="commitment-logo"
-                        />
-                        <h1>
-                            Ross Fedenia, CFP
-                        </h1>
-                        <p>
-                            Founder and CEO
-                        </p>
-                    </div>
-                    <div className="people-purpose-images-each">
-                        <Image
-                            src="/images/mark.jpg"
-                            alt="Mark Fedenia"
-                            width={50}
-                            height={50}
-                            className="commitment-logo"
-                        />
-                        <h1>
-                            Mark Fedenia, PH.D
-                        </h1>
-                        <p>
-                            Director of Investments
-                        </p>
-                    </div>
-                    <div className="people-purpose-images-each">
-                        <Image
-                            src="/images/Steph1.jpg"
-                            alt="Stephanie Kaminski"
-                            width={50}
-                            height={50}
-                            className="commitment-logo"
-                        />
-                        <h1>
-                            Stephanie Kaminski
-                        </h1>
-                        <p>
-                            Director of Operations
-                        </p>
-                    </div>
-                </div>
-                <button>
-                    View More Team Members
-                </button>
+            <section className="py-16 md:py-24 bg-dark-blue text-white">
+                <HomeTeam half_toggle={false}/>
             </section>
 
-            <section className="final">
-                <Image
-                    src="/images/logo_blue.svg"
-                    alt="Logo"
-                    className="final-image"
-                    width={300}
-                    height={300}
-                />
-                <div className="final-title">
-                    Ready to take the next step toward your financial future?
-                </div>
-
-                <div className="final-body">
-                    <div className="final-description">
-                        Let's build your plan together.
-                    </div>
-                    <button>
-                        Schedule a Call Now
-                    </button>         
-                </div>
+            <section className="w-full bg-darker-light-blue">
+                <CtaSection />
             </section>
         </main>
     );
