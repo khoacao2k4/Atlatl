@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTeamMemberDetails } from "@/lib/strapi";
-import ReactMarkdown from 'react-markdown';
+import Markdown from "@/app/components/Markdown";
 
 export default async function TeamPage({ params }) {
   const { slug } = params;
@@ -11,12 +11,12 @@ export default async function TeamPage({ params }) {
   const imageUrl = memberInfo.avatar.url;
   const fullImageUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}` : "localhost:1337" + imageUrl;
   const fullName = memberInfo.suffix ? memberInfo.name + ", " + memberInfo.suffix : memberInfo.name;
-  
+
   return (
     <div className="w-full bg-white font-work-sans text-dark-blue">
       {/* Main Container */}
       <div className="container mx-auto px-6 py-12 lg:py-20 flex flex-col lg:flex-row gap-12 lg:gap-20">
-        
+
         {/* Left Column: Image */}
         <div className="w-full lg:w-[420px] flex-shrink-0 flex justify-center lg:justify-start">
           <div className="w-full mb-6 justify-center flex">
@@ -44,10 +44,10 @@ export default async function TeamPage({ params }) {
           <hr className="border-t border-dark-blue opacity-30 my-8 w-full" />
 
           {/* Bio Description */}
-          <div className="text-lg text-dark-blue font-work-sans leading-relaxed prose">
-            <ReactMarkdown>
+          <div className="text-lg text-dark-blue font-work-sans leading-relaxed">
+            <Markdown>
               {memberInfo.description}
-            </ReactMarkdown>
+            </Markdown>
           </div>
         </div>
       </div>
