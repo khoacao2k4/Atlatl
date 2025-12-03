@@ -34,23 +34,15 @@ export const AutoChart = ({ config, results }) => {
         return new Intl.NumberFormat('en-US').format(value);
     };
 
-    /**
-     * Custom tooltip component used for all chart types.
-     * Displays a styled hover box with label + values.
-     * It is the small box that appears on hovering datapoints on the graph.
-     */
     const CustomTooltip = ({ active, payload }) => {
         if (active && payload && payload.length) {
             return (
                 <div className="bg-white border-2 border-bold-blue rounded-xl shadow-2xl p-4 font-work-sans">
-                    {/* Tooltip label (if provided in data) */}
                     {payload[0].payload.label && (
                         <p className="font-bold text-black mb-2">
                             {payload[0].payload.label}
                         </p>
                     )}
-
-                    {/* Render each data entry (line, bar, etc.) */}
                     {payload.map((entry, index) => (
                         <p
                             key={index}
@@ -66,23 +58,27 @@ export const AutoChart = ({ config, results }) => {
         return null;
     };
 
-    // Generate data based on config
     const prepareData = () => {
         if (typeof config.data === 'function') {
             return config.data(results);
         }
         return config.data;
     };
-    const data = prepareData();
 
-    // Default color palette (fallback if config does not provide colors)
+    const data = prepareData();
     const colors = config.colors || ['#378CE7', '#245383', '#07315C', '#F5FAFF', '#8b5cf6', '#ec4899'];
 
-    /**
-     * Main Chart Renderer
-     * Uses config.type to determine which chart to draw.
-     */
+    // Handle description safely
+    const getDescription = () => {
+        if (!config.description) return null;
+        return typeof config.description === "function"
+            ? config.description(results)
+            : config.description;
+    };
+
+    /* Main Chart Renderer */
     switch (config.type) {
+
         case 'line':
             return (
                 <div>
@@ -99,12 +95,9 @@ export const AutoChart = ({ config, results }) => {
                                 label={config.yLabel ? { value: config.yLabel, angle: -90, position: 'insideLeft' } : undefined}
                                 stroke="#245383"
                             />
-
-                            {/* Tooltip + Legend */}
                             <Tooltip content={<CustomTooltip />} />
                             <Legend />
 
-                            {/* Render all configured line series */}
                             {config.lines.map((line, idx) => (
                                 <Line
                                     key={idx}
@@ -120,13 +113,13 @@ export const AutoChart = ({ config, results }) => {
                         </LineChart>
                     </ResponsiveContainer>
 
-                    {/* Optional description below chart */}
-                    {config.description && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">{config.description}</p>
+                    {getDescription() && (
+                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">
+                            {getDescription()}
+                        </p>
                     )}
                 </div>
             );
-
 
         case 'area':
             return (
@@ -134,16 +127,14 @@ export const AutoChart = ({ config, results }) => {
                     <ResponsiveContainer width="100%" height={config.height || 300}>
                         <AreaChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#378CE7" />
-                            <XAxis
-                                dataKey={config.xKey}
-                                stroke="#245383"
-                            />
+                            <XAxis dataKey={config.xKey} stroke="#245383" />
                             <YAxis
                                 tickFormatter={(val) => formatValue(val, config.format)}
                                 stroke="#245383"
                             />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend />
+
                             {config.areas.map((area, idx) => (
                                 <Area
                                     key={idx}
@@ -157,12 +148,14 @@ export const AutoChart = ({ config, results }) => {
                             ))}
                         </AreaChart>
                     </ResponsiveContainer>
-                    {config.description && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">{config.description}</p>
+
+                    {getDescription() && (
+                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">
+                            {getDescription()}
+                        </p>
                     )}
                 </div>
             );
-
 
         case 'bar':
             return (
@@ -170,16 +163,14 @@ export const AutoChart = ({ config, results }) => {
                     <ResponsiveContainer width="100%" height={config.height || 300}>
                         <BarChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#378CE7" />
-                            <XAxis
-                                dataKey={config.xKey}
-                                stroke="#245383"
-                            />
+                            <XAxis dataKey={config.xKey} stroke="#245383" />
                             <YAxis
                                 tickFormatter={(val) => formatValue(val, config.format)}
                                 stroke="#245383"
                             />
                             <Tooltip content={<CustomTooltip />} />
                             {config.showLegend !== false && <Legend />}
+
                             {config.bars ? (
                                 config.bars.map((bar, idx) => (
                                     <Bar
@@ -194,12 +185,14 @@ export const AutoChart = ({ config, results }) => {
                             )}
                         </BarChart>
                     </ResponsiveContainer>
-                    {config.description && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">{config.description}</p>
+
+                    {getDescription() && (
+                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">
+                            {getDescription()}
+                        </p>
                     )}
                 </div>
             );
-
 
         case 'pie':
             return (
@@ -211,13 +204,18 @@ export const AutoChart = ({ config, results }) => {
                                 cx="50%"
                                 cy="50%"
                                 labelLine={false}
-                                label={config.showLabels !== false ? ({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%` : false}
+                                label={config.showLabels !== false ? ({ name, percent }) =>
+                                    `${name}: ${(percent * 100).toFixed(1)}%`
+                                    : false
+                                }
                                 outerRadius={config.outerRadius || 100}
-                                fill="#8884d8"
                                 dataKey={config.valueKey}
                             >
                                 {data.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.color || colors[index % colors.length]} />
+                                    <Cell
+                                        key={`cell-${index}`}
+                                        fill={entry.color || colors[index % colors.length]}
+                                    />
                                 ))}
                             </Pie>
                             <Tooltip formatter={(val) => formatValue(val, config.format)} />
@@ -234,16 +232,22 @@ export const AutoChart = ({ config, results }) => {
                                     />
                                     <div>
                                         <p className="font-medium text-black">{item.name}</p>
-                                        <p className="text-sm text-text-light-blue">{formatValue(item.value, config.format)}</p>
+                                        <p className="text-sm text-text-light-blue">
+                                            {formatValue(item.value, config.format)}
+                                        </p>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     )}
+
+                    {getDescription() && (
+                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">
+                            {getDescription()}
+                        </p>
+                    )}
                 </div>
             );
-
-            {/* Incase Ross needs more charts, specify case and write logic here */ }
 
         default:
             return <p className="text-red-500 font-work-sans">Unknown chart type: {config.type}</p>;
