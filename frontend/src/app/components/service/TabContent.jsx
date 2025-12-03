@@ -9,7 +9,7 @@ export default function TabContent({ tabContent }) {
 
     return (
         <section className="bg-white py-16 md:py-24">
-            <div className="container mx-auto px-20 font-work-sans">
+            <div className="container mx-auto px-10 lg:px-20 font-work-sans">
                 {/* --- Main Heading --- */}
                 <h1 className="text-4xl lg:text-5xl xl:text-6xl font-songer text-darker-bold-blue
                             font-bold text-center uppercase tracking-wide mb-16">
@@ -26,13 +26,17 @@ export default function TabContent({ tabContent }) {
                                     <button
                                         key={"keyword " + keyword_info.id}
                                         onClick={() => setActiveTab(idx)}
-                                        className={`text-xl pb-3 transition-all duration-300 relative 
+                                        className={`text-xl pb-3 transition-all font-bold duration-300 relative 
                                         ${activeTab === idx
-                                                ? 'text-bold-blue font-semibold underline underline-offset-5'
+                                                ? 'text-bold-blue font-semibold'
                                                 : 'text-darker-bold-blue hover:text-black cursor-pointer'
                                             }`}
                                     >
                                         {keyword_info.name}
+                                        <span
+                                            className={`absolute bottom-2.5 left-0 w-full h-[3px] bg-bold-blue transform transition-transform duration-300 origin-left
+                                            ${activeTab === idx ? "scale-x-100" : "scale-x-0"}`}
+                                        />
                                     </button>
                                 ))}
                             </div>
