@@ -16,6 +16,7 @@
       "component": "service.service-text-pair",
       "repeatable": true,
       "required": true,
+      "min": 1,
       "max": 3
     }
   },

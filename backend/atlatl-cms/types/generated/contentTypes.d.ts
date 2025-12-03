@@ -462,7 +462,7 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
 export interface ApiServicepageServicepage extends Struct.SingleTypeSchema {
   collectionName: 'servicepages';
   info: {
-    displayName: 'servicepage';
+    displayName: 'service-page';
     pluralName: 'servicepages';
     singularName: 'servicepage';
   };

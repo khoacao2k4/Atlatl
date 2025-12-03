@@ -83,3 +83,17 @@ export async function getHomepageContent() {
   
   return json.data;
 }
+
+export async function getServicepageContent() {
+  const path = "/api/servicepage";
+  const params = "?populate[0]=serviceblock&populate[1]=serviceblock.keywords&populate[2]=serviceblock.keywords.image";
+  const options = { cache: "no-store" };
+
+  const json = await fetchStrapiData(path, params, options);
+  if (!json || !json.data) {
+    console.warn("No service content found or API error.");
+    return null;
+  }
+  
+  return json.data;
+}

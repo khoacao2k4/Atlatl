@@ -12,6 +12,7 @@ export interface ServiceServiceBlock extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMax<
         {
           max: 3;
+          min: 1;
         },
         number
       >;
