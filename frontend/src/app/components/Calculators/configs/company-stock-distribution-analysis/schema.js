@@ -10,7 +10,7 @@ export const schema = z.object({
   marginalTaxRate: z.number().min(0, 'Must be 0 or greater').max(100, 'Must be 100% or less'),
   inflationRate: z.number().min(0, 'Must be 0 or greater').max(100, 'Must be 100% or less'),
   currentAge: z.number().min(0, 'Must be 0 or greater').max(120, 'Must be 120 or less'),
-  separatedAtAge55: z.boolean(),
-  retirementDistributionAfter59Half: z.boolean(),
-  iraDistributionAfter59Half: z.boolean(),
+  separatedAtAge55: z.string().transform(val => val === 'true'),
+  retirementDistributionAfter59Half: z.string().transform(val => val === 'true'),
+  iraDistributionAfter59Half: z.string().transform(val => val === 'true'),
 });

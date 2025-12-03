@@ -8,7 +8,7 @@ export const defaults = {
   marginalTaxRate: 25,
   inflationRate: 3,
   currentAge: 60,
-  separatedAtAge55: true,
-  retirementDistributionAfter59Half: true,
-  iraDistributionAfter59Half: true,
+  separatedAtAge55: 'true',
+  retirementDistributionAfter59Half: 'true',
+  iraDistributionAfter59Half: 'true',
 };
