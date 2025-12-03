@@ -4,242 +4,458 @@ import { inputs } from './inputs';
 import { results } from './results';
 
 export const config = {
-  title: 'Company Stock Distribution Analysis Calculator',
-  description: 'Compare NUA (Net Unrealized Appreciation) strategy versus IRA rollover for company stock distributions from your retirement plan',
+  title: 'Mortgage Refinance Calculator',
+  description: 'Determine if refinancing your mortgage makes financial sense by comparing break-even points and savings',
   schema,
   defaultValues: defaults,
   inputs,
   results,
 
   calculate: (data) => {
-    /*
-    Dinkytown-style implementation:
-     - NUA = FMV at distribution - cost basis
-     - At distribution (NUA strategy): pay ordinary income tax on cost basis now (and 10% penalty on cost basis if not qualified)
-     - NUA portion is taxed as long-term capital gain when sold (even if sold immediately)
-     - Appreciation AFTER distribution: taxed as short-term (ordinary) if sold within 1 year, otherwise long-term capital gain
-     - IRA rollover: entire amount taxed as ordinary income when withdrawn (plus 10% penalty if applicable)
-     - Present value calculations: discount FUTURE taxes to present using inflationRate
-    */
+    const currentRate = data.currentInterestRate / 100;
+    const currentMonthlyRate = currentRate / 12;
+    const newRate = data.newInterestRate / 100;
+    const newMonthlyRate = newRate / 12;
+    const taxRate = data.incomeTaxRate / 100;
 
-    const nua = data.balanceAtDistribution - data.costBasis;
+    // Parse boolean values
+    const calculateBalance = typeof data.calculateBalance === 'string' 
+      ? data.calculateBalance === 'true' 
+      : Boolean(data.calculateBalance);
+    
+    const includePMI = typeof data.includePMI === 'string' 
+      ? data.includePMI === 'true' 
+      : Boolean(data.includePMI);
 
-    // Convert holding period to decimal years
-    const holdingYears = data.holdingPeriodYears + (data.holdingPeriodMonths || 0) / 12;
+    // Calculate loan balance
+    let loanBalance;
+    if (calculateBalance) {
+      const totalMonths = data.currentTermYears * 12;
+      const remainingMonths = data.yearsRemaining * 12;
+      
+      if (remainingMonths > 0 && remainingMonths <= totalMonths) {
+        const monthlyPayment = data.originalMortgageAmount * 
+          (currentMonthlyRate * Math.pow(1 + currentMonthlyRate, totalMonths)) / 
+          (Math.pow(1 + currentMonthlyRate, totalMonths) - 1);
+        
+        loanBalance = monthlyPayment * 
+          (Math.pow(1 + currentMonthlyRate, remainingMonths) - 1) /
+          (currentMonthlyRate * Math.pow(1 + currentMonthlyRate, remainingMonths));
+      } else if (remainingMonths <= 0) {
+        loanBalance = 0;
+      } else {
+        loanBalance = data.originalMortgageAmount;
+      }
+    } else {
+      loanBalance = data.loanBalance;
+    }
 
-    // Future FMV after holding period (applies equally for both strategies)
-    const fmvAtSale = data.balanceAtDistribution * Math.pow(1 + data.rateOfReturn / 100, holdingYears);
+    // Calculate closing costs
+    const originationFee = loanBalance * (data.loanOriginationRate / 100);
+    const pointsCost = loanBalance * (data.pointsPaid / 100);
+    const totalClosingCosts = originationFee + pointsCost + data.otherClosingCosts;
 
-    // Appreciation that occurs AFTER the distribution event
-    const appreciationAfterDistribution = fmvAtSale - data.balanceAtDistribution;
+    // Current mortgage calculations
+    const currentRemainingMonths = data.yearsRemaining * 12;
+    let currentPIPayment = 0;
+    if (currentRemainingMonths > 0 && loanBalance > 0) {
+      currentPIPayment = loanBalance * 
+        (currentMonthlyRate * Math.pow(1 + currentMonthlyRate, currentRemainingMonths)) / 
+        (Math.pow(1 + currentMonthlyRate, currentRemainingMonths) - 1);
+    }
 
-    // Penalty conditions:
-    // For cost-basis taxation at distribution (NUA initial tax), penalty applies unless separatedAtAge55 OR distribution is at/after 59.5
-    const penaltyOnRetirementDist = !(data.separatedAtAge55 || data.retirementDistributionAfter59Half);
-    // For IRA distributions (rolled-over funds), penalty applies if IRA distribution occurs before 59.5
-    const penaltyOnIraDist = !data.iraDistributionAfter59Half;
+    // PMI Logic: includePMI = true means "Include PMI", false means "Do NOT include PMI"
+    const currentEquityPercent = ((data.currentAppraisedValue - loanBalance) / data.currentAppraisedValue) * 100;
+    const shouldCalculatePMI = includePMI;
+    
+    const currentPMI = (shouldCalculatePMI && currentEquityPercent < 20) 
+      ? (loanBalance * 0.005) / 12 
+      : 0;
+    
+    const currentPayment = currentPIPayment + currentPMI;
 
-    // ===== NUA STRATEGY =====
-    // Initial tax at distribution: cost basis taxed at ordinary marginal tax rate now
-    const nuaInitialTax = data.costBasis * (data.marginalTaxRate / 100);
-    const nuaInitialPenalty = penaltyOnRetirementDist ? data.costBasis * 0.10 : 0;
-    const nuaTotalInitialTax = nuaInitialTax + nuaInitialPenalty;
+    // New mortgage calculations
+    const newTermMonths = data.newTermYears * 12;
+    const newPIPayment = loanBalance * 
+      (newMonthlyRate * Math.pow(1 + newMonthlyRate, newTermMonths)) / 
+      (Math.pow(1 + newMonthlyRate, newTermMonths) - 1);
 
-    // Future taxes when stock is sold:
-    // - NUA portion taxed at long-term capital gains rate (per Dinkytown: treated as long-term cap gain even if sold immediately)
-    const nuaPortionTaxAtSale = Math.max(0, nua) * (data.capitalGainsRate / 100);
+    const newEquityPercent = currentEquityPercent;
+    const newPMI = (shouldCalculatePMI && newEquityPercent < 20) 
+      ? (loanBalance * 0.005) / 12 
+      : 0;
+    
+    const newPayment = newPIPayment + newPMI;
+    const monthlyPaymentSavings = currentPayment - newPayment;
 
-    // - Appreciation after distribution taxed as:
-    //     * ordinary income (marginal tax rate) if holding < 1 year
-    //     * long-term capital gains if holding >= 1 year
-    const appreciationTaxRate = holdingYears >= 1 ? (data.capitalGainsRate / 100) : (data.marginalTaxRate / 100);
-    const appreciationTaxAtSale = Math.max(0, appreciationAfterDistribution) * appreciationTaxRate;
+    // Amortization simulation for break-even calculations
+    let currentBalance = loanBalance;
+    let newBalance = loanBalance;
+    let prepayBalance = Math.max(0, loanBalance - totalClosingCosts);
+    
+    let totalCurrentInterest = 0;
+    let totalCurrentPMI = 0;
+    let totalNewInterest = 0;
+    let totalNewPMI = 0;
+    let totalPrepayInterest = 0;
+    let cumulativePaymentSavings = 0;
+    
+    let breakEvenMonthlyPayment = null;
+    let breakEvenInterestPMI = null;
+    let breakEvenAfterTax = null;
+    let breakEvenVsPrepayment = null;
 
-    const nuaTotalFutureTax = nuaPortionTaxAtSale + appreciationTaxAtSale;
+    const maxMonths = Math.max(currentRemainingMonths, newTermMonths, 600);
 
-    // Total taxes (initial + future)
-    const nuaTotalTax = nuaTotalInitialTax + nuaTotalFutureTax;
+    for (let month = 1; month <= maxMonths; month++) {
+      // Simulate current loan
+      if (month <= currentRemainingMonths && currentBalance > 0.01) {
+        const interest = currentBalance * currentMonthlyRate;
+        totalCurrentInterest += interest;
+        
+        const equity = ((data.currentAppraisedValue - currentBalance) / data.currentAppraisedValue) * 100;
+        if (shouldCalculatePMI && equity < 20) {
+          totalCurrentPMI += (currentBalance * 0.005) / 12;
+        }
+        
+        const principal = currentPIPayment - interest;
+        currentBalance = Math.max(0, currentBalance - principal);
+      }
 
-    // Net proceeds at sale (future value basis): FMV at sale minus ALL taxes paid (initial taxes were paid now, but for "future value" comparison we subtract all taxes)
-    const nuaNetProceeds = fmvAtSale - nuaTotalFutureTax - nuaTotalInitialTax; // taxes already removed
+      // Simulate new loan
+      if (month <= newTermMonths && newBalance > 0.01) {
+        const interest = newBalance * newMonthlyRate;
+        totalNewInterest += interest;
+        
+        const equity = ((data.currentAppraisedValue - newBalance) / data.currentAppraisedValue) * 100;
+        if (shouldCalculatePMI && equity < 20) {
+          totalNewPMI += (newBalance * 0.005) / 12;
+        }
+        
+        const principal = newPIPayment - interest;
+        newBalance = Math.max(0, newBalance - principal);
+      }
 
-    // Present value calculations:
-    // Discount only FUTURE taxes to present using inflationRate (per Dinkytown: discount future tax distributions).
-    const discountRate = data.inflationRate / 100;
-    const pvNuaFutureTax = nuaTotalFutureTax / Math.pow(1 + discountRate, holdingYears);
-    const pvNuaTotalTax = nuaTotalInitialTax + pvNuaFutureTax; // initial tax is "now" (no discount)
-    const pvNuaNetProceeds = data.balanceAtDistribution - pvNuaTotalTax;
+      // Simulate prepayment alternative
+      if (month <= currentRemainingMonths && prepayBalance > 0.01) {
+        const interest = prepayBalance * currentMonthlyRate;
+        totalPrepayInterest += interest;
+        const principal = currentPIPayment - interest;
+        prepayBalance = Math.max(0, prepayBalance - principal);
+      }
 
-    // ===== IRA ROLLOVER STRATEGY =====
-    // If rolled over to IRA, the whole balance grows and when withdrawn later it's taxed as ordinary income (marginal)
-    const iraFmvAtSale = fmvAtSale;
-    const iraTotalTaxAtSale = iraFmvAtSale * (data.marginalTaxRate / 100);
-    const iraPenaltyAtSale = penaltyOnIraDist ? iraFmvAtSale * 0.10 : 0;
-    const iraTotalTaxWithPenalty = iraTotalTaxAtSale + iraPenaltyAtSale;
+      // Calculate cumulative savings
+      cumulativePaymentSavings += monthlyPaymentSavings;
 
-    const iraNetProceeds = iraFmvAtSale - iraTotalTaxWithPenalty;
+      // Break-even #1: Monthly payment savings
+      if (breakEvenMonthlyPayment === null && cumulativePaymentSavings >= totalClosingCosts) {
+        breakEvenMonthlyPayment = month;
+      }
 
-    // Present value for IRA: discount future tax (all taxed at withdrawal) to present
-    const pvIraTax = iraTotalTaxWithPenalty / Math.pow(1 + discountRate, holdingYears);
-    const pvIraNetProceeds = data.balanceAtDistribution - pvIraTax;
+      // Break-even #2: Interest + PMI savings
+      const interestPMISavings = (totalCurrentInterest + totalCurrentPMI) - 
+                                  (totalNewInterest + totalNewPMI);
+      if (breakEvenInterestPMI === null && interestPMISavings >= totalClosingCosts) {
+        breakEvenInterestPMI = month;
+      }
 
-    // ===== Comparison & summary metrics =====
-    const advantage = nuaNetProceeds - iraNetProceeds;
-    const advantagePercent = iraNetProceeds !== 0 ? (advantage / Math.abs(iraNetProceeds)) * 100 : 0;
+      // Break-even #3: After-tax savings
+      const currentAfterTaxCost = totalCurrentInterest * (1 - taxRate) + totalCurrentPMI;
+      const newAfterTaxCost = totalNewInterest * (1 - taxRate) + totalNewPMI;
+      const afterTaxSavings = currentAfterTaxCost - newAfterTaxCost;
+      
+      if (breakEvenAfterTax === null && afterTaxSavings >= totalClosingCosts) {
+        breakEvenAfterTax = month;
+      }
 
-    const pvAdvantage = pvNuaNetProceeds - pvIraNetProceeds;
-    const pvAdvantagePercent = pvIraNetProceeds !== 0 ? (pvAdvantage / Math.abs(pvIraNetProceeds)) * 100 : 0;
+      // Break-even #4: Most conservative - vs prepayment
+      const prepayAfterTaxCost = totalPrepayInterest * (1 - taxRate);
+      const interestSavedByPrepaying = currentAfterTaxCost - prepayAfterTaxCost;
+      const netAdvantage = afterTaxSavings - interestSavedByPrepaying;
+      
+      if (breakEvenVsPrepayment === null && netAdvantage >= 0) {
+        breakEvenVsPrepayment = month;
+      }
+    }
 
-    // Recommendation: compare present-value advantage (gives 'today' basis)
-    const betterStrategy = pvAdvantage > 0 ? 'NUA Strategy' : 'IRA Rollover';
+    // Format break-even results
+    const formatBreakEven = (months) => {
+      if (months === null) return 'Never';
+      return months;
+    };
+
+    // Generate balance over time data for chart
+    const balanceOverTime = [];
+    let chartCurrentBalance = loanBalance;
+    let chartNewBalance = loanBalance;
+    let totalCurrentPayments = 0;
+    let totalNewPayments = 0;
+    
+    const maxYears = Math.max(
+      Math.ceil(currentRemainingMonths / 12),
+      Math.ceil(newTermMonths / 12)
+    );
+    
+    for (let year = 0; year <= maxYears; year++) {
+      const dataPoint = { year };
+      
+      if (year === 0) {
+        dataPoint.currentBalance = loanBalance;
+        dataPoint.newBalance = loanBalance;
+      } else {
+        const monthsIntoLoan = year * 12;
+        
+        // Calculate current loan balance
+        if (monthsIntoLoan <= currentRemainingMonths && chartCurrentBalance > 0.01) {
+          for (let m = 0; m < 12 && monthsIntoLoan - 12 + m + 1 <= currentRemainingMonths; m++) {
+            const interest = chartCurrentBalance * currentMonthlyRate;
+            const principal = currentPIPayment - interest;
+            chartCurrentBalance = Math.max(0, chartCurrentBalance - principal);
+            totalCurrentPayments += currentPayment;
+          }
+          dataPoint.currentBalance = chartCurrentBalance;
+        } else {
+          dataPoint.currentBalance = 0;
+        }
+        
+        // Calculate new loan balance
+        if (monthsIntoLoan <= newTermMonths && chartNewBalance > 0.01) {
+          for (let m = 0; m < 12 && monthsIntoLoan - 12 + m + 1 <= newTermMonths; m++) {
+            const interest = chartNewBalance * newMonthlyRate;
+            const principal = newPIPayment - interest;
+            chartNewBalance = Math.max(0, chartNewBalance - principal);
+            totalNewPayments += newPayment;
+          }
+          dataPoint.newBalance = chartNewBalance;
+        } else {
+          dataPoint.newBalance = 0;
+        }
+      }
+      
+      balanceOverTime.push(dataPoint);
+    }
 
     return {
       // Basic metrics
-      nua,
-      fmvAtSale,
-      appreciationAfterDistribution,
+      loanBalance,
+      currentEquityPercent,
+      newEquityPercent,
+      
+      // Current loan
+      currentPIPayment,
+      currentPMI,
+      currentPayment,
+      
+      // New loan
+      newPIPayment,
+      newPMI,
+      newPayment,
+      
+      // Savings
+      monthlyPaymentSavings,
+      
+      // Closing costs
+      originationFee,
+      pointsCost,
+      totalClosingCosts,
+      
+      // Break-even analysis
+      breakEvenMonthlyPayment: formatBreakEven(breakEvenMonthlyPayment),
+      breakEvenInterestPMI: formatBreakEven(breakEvenInterestPMI),
+      breakEvenAfterTax: formatBreakEven(breakEvenAfterTax),
+      breakEvenVsPrepayment: formatBreakEven(breakEvenVsPrepayment),
+      
+      // Chart data
+      balanceOverTime,
+      totalCurrentPayments,
+      totalNewPayments,
+      
+      // Recommendation
+      recommendation: breakEvenVsPrepayment !== null && breakEvenVsPrepayment < 60 
+        ? 'Refinancing appears beneficial' 
+        : breakEvenVsPrepayment !== null && breakEvenVsPrepayment < 120 
+          ? 'Refinancing may be beneficial if you plan to stay long-term'
+          : 'Refinancing may not be worthwhile',
 
-      // NUA Strategy breakdown
-      nuaInitialTax,
-      nuaInitialPenalty,
-      nuaTotalInitialTax,
-      nuaPortionTaxAtSale,
-      appreciationTaxAtSale,
-      nuaTotalFutureTax,
-      nuaTotalTax,
-      nuaNetProceeds,
-      pvNuaFutureTax,
-      pvNuaTotalTax,
-      pvNuaNetProceeds,
-
-      // IRA Rollover breakdown
-      iraTotalTaxAtSale,
-      iraPenaltyAtSale,
-      iraTotalTaxWithPenalty,
-      iraNetProceeds,
-      pvIraTax,
-      pvIraNetProceeds,
-
-      // Comparison
-      advantage,
-      advantagePercent,
-      pvAdvantage,
-      pvAdvantagePercent,
-      betterStrategy,
-
-      // Detailed breakdown for display
+      // Detailed breakdowns
       breakdown: [
-        { label: 'NUA Amount', value: nua, format: 'currency' },
-        { label: 'Cost Basis', value: data.costBasis, format: 'currency' },
-        { label: 'Initial Distribution FMV', value: data.balanceAtDistribution, format: 'currency' },
-        { label: 'Projected FMV at Sale', value: fmvAtSale, format: 'currency' },
-        { label: 'Post-Distribution Appreciation', value: appreciationAfterDistribution, format: 'currency' },
+        { label: 'Loan Balance', value: loanBalance, format: 'currency' },
+        { label: 'Current Home Value', value: data.currentAppraisedValue, format: 'currency' },
+        { label: 'Current Equity', value: currentEquityPercent, format: 'percentage' },
+        { label: 'Total Closing Costs', value: totalClosingCosts, format: 'currency' },
       ],
 
-      nuaBreakdown: [
-        { label: 'Tax on Cost Basis (Ordinary Income)', value: nuaInitialTax, format: 'currency' },
-        { label: 'Penalty on Cost Basis (if applicable)', value: nuaInitialPenalty, format: 'currency' },
-        { label: 'Total Initial Tax', value: nuaTotalInitialTax, format: 'currency' },
-        { label: 'Tax on NUA (Capital Gains)', value: nuaPortionTaxAtSale, format: 'currency' },
-        { label: 'Tax on Appreciation (At Sale)', value: appreciationTaxAtSale, format: 'currency' },
-        { label: 'Total Future Tax', value: nuaTotalFutureTax, format: 'currency' },
-        { label: 'Total Tax (All)', value: nuaTotalTax, format: 'currency' },
-        { label: 'Net Proceeds (Future Value)', value: nuaNetProceeds, format: 'currency' },
+      currentLoanBreakdown: [
+        { label: 'Monthly P&I Payment', value: currentPIPayment, format: 'currency' },
+        { label: 'Monthly PMI', value: currentPMI, format: 'currency' },
+        { label: 'Total Monthly Payment', value: currentPayment, format: 'currency' },
+        { label: 'Years Remaining', value: data.yearsRemaining, format: 'number' },
       ],
 
-      iraBreakdown: [
-        { label: 'Tax on Full Amount (Ordinary Income)', value: iraTotalTaxAtSale, format: 'currency' },
-        { label: 'Early Withdrawal Penalty (if applicable)', value: iraPenaltyAtSale, format: 'currency' },
-        { label: 'Total Tax', value: iraTotalTaxWithPenalty, format: 'currency' },
-        { label: 'Net Proceeds (Future Value)', value: iraNetProceeds, format: 'currency' },
+      newLoanBreakdown: [
+        { label: 'Monthly P&I Payment', value: newPIPayment, format: 'currency' },
+        { label: 'Monthly PMI', value: newPMI, format: 'currency' },
+        { label: 'Total Monthly Payment', value: newPayment, format: 'currency' },
+        { label: 'New Loan Term', value: data.newTermYears, format: 'number' },
       ],
 
-      // Notes (human friendly)
+      closingCostsBreakdown: [
+        { label: 'Loan Origination Fee', value: originationFee, format: 'currency' },
+        { label: 'Points Cost', value: pointsCost, format: 'currency' },
+        { label: 'Other Closing Costs', value: data.otherClosingCosts, format: 'currency' },
+        { label: 'Total Closing Costs', value: totalClosingCosts, format: 'currency' },
+      ],
+
+      breakEvenBreakdown: [
+        { 
+          label: 'Monthly Payment Savings', 
+          value: typeof breakEvenMonthlyPayment === 'number' ? `${breakEvenMonthlyPayment} months` : breakEvenMonthlyPayment, 
+          format: 'text' 
+        },
+        { 
+          label: 'Interest & PMI Savings', 
+          value: typeof breakEvenInterestPMI === 'number' ? `${breakEvenInterestPMI} months` : breakEvenInterestPMI, 
+          format: 'text' 
+        },
+        { 
+          label: 'After-Tax Total Savings', 
+          value: typeof breakEvenAfterTax === 'number' ? `${breakEvenAfterTax} months` : breakEvenAfterTax, 
+          format: 'text' 
+        },
+        { 
+          label: 'Savings vs. Prepayment', 
+          value: typeof breakEvenVsPrepayment === 'number' ? `${breakEvenVsPrepayment} months` : breakEvenVsPrepayment, 
+          format: 'text' 
+        },
+      ],
+
       notes: [
-        `Holding period: ${data.holdingPeriodYears} years and ${data.holdingPeriodMonths} months`,
-        penaltyOnRetirementDist ? 'Early withdrawal penalty (10%) applied to NUA initial distribution (cost basis)' : 'No early withdrawal penalty on NUA initial distribution',
-        penaltyOnIraDist ? 'Early withdrawal penalty (10%) will apply to IRA distribution' : 'No early withdrawal penalty on IRA distribution',
-        `NUA portion is treated as long-term capital gain (taxed at ${data.capitalGainsRate}%).`,
-        holdingYears < 1
-          ? 'Appreciation after distribution will be taxed as ordinary income (short-term) because holding period is under 1 year.'
-          : 'Appreciation after distribution will be taxed as long-term capital gain because holding period is at least 1 year.',
-        `The ${betterStrategy} provides ${Math.abs(pvAdvantagePercent).toFixed(2)}% ${pvAdvantage > 0 ? 'more' : 'less'} net proceeds on a present-value basis.`,
+        `Monthly payment will ${monthlyPaymentSavings >= 0 ? 'decrease' : 'increase'} by ${formatCurrency(Math.abs(monthlyPaymentSavings))}`,
+        `Loan balance: ${formatCurrency(loanBalance)} (${currentEquityPercent.toFixed(1)}% equity)`,
+        `Current: ${data.yearsRemaining} years at ${data.currentInterestRate}%`,
+        `New: ${data.newTermYears} years at ${data.newInterestRate}%`,
+        shouldCalculatePMI ? `PMI included in calculations (${currentEquityPercent.toFixed(1)}% equity)` : 'PMI excluded from calculations',
+        typeof breakEvenVsPrepayment === 'number' 
+          ? `Most conservative break-even: ${breakEvenVsPrepayment} months`
+          : 'Refinancing never breaks even under conservative analysis',
       ],
     };
   },
 
   charts: [
     {
-      title: 'Strategy Comparison: Net Proceeds',
-      type: 'bar',
-      height: 350,
-      xKey: 'strategy',
+      title: 'Remaining Balance Over Time',
+      type: 'line',
+      height: 400,
+      xKey: 'year',
       format: 'currency',
-      showLegend: false,
-      data: (results) => [
-        { 
-          strategy: 'NUA Strategy', 
-          value: results.nuaNetProceeds,
-          color: '#378CE7'
-        },
-        { 
-          strategy: 'IRA Rollover', 
-          value: results.iraNetProceeds,
-          color: '#245383'
-        },
+      showLegend: true,
+      data: (results) => results.balanceOverTime || [],
+      lines: [
+        { key: 'currentBalance', name: 'Current', color: '#1E40AF' },
+        { key: 'newBalance', name: 'New', color: '#16A34A' }
       ],
-      bars: [
-        { key: 'value', name: 'Net Proceeds', color: '#378CE7' }
-      ],
-      description: 'Future value comparison of net proceeds after all taxes'
+      description: (results) => `Total Remaining Payments: Current ${formatCurrency(results.totalCurrentPayments || 0)}, New ${formatCurrency(results.totalNewPayments || 0)}`
     },
     {
-      title: 'Total Tax Comparison',
+      title: 'Monthly Payment Comparison',
       type: 'bar',
       height: 350,
-      xKey: 'strategy',
+      xKey: 'loan',
       format: 'currency',
-      showLegend: false,
+      showLegend: true,
       data: (results) => [
         { 
-          strategy: 'NUA Strategy', 
-          value: results.nuaTotalTax,
-          color: '#F87171'
+          loan: 'Current', 
+          'P&I': results.currentPIPayment,
+          'PMI': results.currentPMI,
         },
         { 
-          strategy: 'IRA Rollover', 
-          value: results.iraTotalTaxWithPenalty,
-          color: '#DC2626'
+          loan: 'New', 
+          'P&I': results.newPIPayment,
+          'PMI': results.newPMI,
         },
       ],
       bars: [
-        { key: 'value', name: 'Total Tax', color: '#F87171' }
+        { key: 'P&I', name: 'Principal & Interest', color: '#3B82F6' },
+        { key: 'PMI', name: 'PMI', color: '#F59E0B' }
       ],
-      description: 'Total tax liability for each strategy'
+      description: 'Comparison of monthly payments'
     },
     {
-      title: 'Present Value Comparison',
+      title: 'Break-Even Analysis (Months)',
       type: 'bar',
       height: 350,
-      xKey: 'strategy',
+      xKey: 'scenario',
+      format: 'number',
+      showLegend: false,
+      data: (results) => {
+        const getValue = (val) => {
+          if (val === 'Never' || val === null) return 0;
+          if (typeof val === 'string' && val.includes('months')) {
+            return parseInt(val);
+          }
+          return val;
+        };
+        
+        return [
+          { 
+            scenario: 'Payment Savings', 
+            value: getValue(results.breakEvenMonthlyPayment),
+          },
+          { 
+            scenario: 'Interest & PMI', 
+            value: getValue(results.breakEvenInterestPMI),
+          },
+          { 
+            scenario: 'After-Tax', 
+            value: getValue(results.breakEvenAfterTax),
+          },
+          { 
+            scenario: 'vs. Prepayment', 
+            value: getValue(results.breakEvenVsPrepayment),
+          },
+        ];
+      },
+      bars: [
+        { key: 'value', name: 'Months to Break Even', color: '#3B82F6' }
+      ],
+      description: 'Time to recover closing costs under different scenarios'
+    },
+    {
+      title: 'Total Closing Costs',
+      type: 'bar',
+      height: 350,
+      xKey: 'cost',
       format: 'currency',
       showLegend: false,
       data: (results) => [
         { 
-          strategy: 'NUA Strategy', 
-          value: results.pvNuaNetProceeds,
-          color: '#378CE7'
+          cost: 'Origination Fee', 
+          value: results.originationFee,
         },
         { 
-          strategy: 'IRA Rollover', 
-          value: results.pvIraNetProceeds,
-          color: '#245383'
+          cost: 'Points', 
+          value: results.pointsCost,
+        },
+        { 
+          cost: 'Other Costs', 
+          value: results.closingCostsBreakdown[2].value,
         },
       ],
       bars: [
-        { key: 'value', name: 'Present Value Net Proceeds', color: '#378CE7' }
+        { key: 'value', name: 'Amount', color: '#3B82F6' }
       ],
-      description: `Net proceeds adjusted for ${defaults.inflationRate}% inflation rate`
+      description: 'Breakdown of closing costs'
     },
   ]
 };
+
+function formatCurrency(value) {
+  return new Intl.NumberFormat('en-US', { 
+    style: 'currency', 
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+}

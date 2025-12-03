@@ -1,100 +1,189 @@
 export const inputs = [
+  // ------------------------------
+  // Current Mortgage Information
+  // ------------------------------
   { 
-    name: 'balanceAtDistribution', 
-    label: 'Balance at Time of Distribution (FMV)', 
+    name: 'originalMortgageAmount', 
+    label: 'Original Mortgage Amount', 
     type: 'number',
     format: 'currency',
     required: true, 
-    hint: 'Fair market value of company stock to be distributed' 
+    section: 'Current Mortgage Information',
+    hint: 'Original amount of your mortgage' 
   },
   { 
-    name: 'costBasis', 
-    label: 'Total Stock Purchases (Cost Basis)', 
+    name: 'originalAppraisedValue', 
+    label: 'Original Appraised Value', 
     type: 'number',
     format: 'currency',
     required: true, 
-    hint: 'Total amount paid for the stock (you and/or employer contributions)' 
+    section: 'Current Mortgage Information',
+    hint: 'The appraised value of your home when purchased' 
   },
   { 
-    name: 'rateOfReturn', 
-    label: 'Rate of Return', 
+    name: 'currentInterestRate', 
+    label: 'Current Interest Rate', 
     type: 'number',
     format: 'percentage',
-    step: 0.1, 
-    hint: 'Expected annual return on company stock' 
+    step: 0.01, 
+    required: true,
+    section: 'Current Mortgage Information',
+    hint: 'Annual interest rate for the original loan' 
   },
   { 
-    name: 'holdingPeriodYears', 
-    label: 'Holding Period (Years)', 
+    name: 'currentTermYears', 
+    label: 'Current Term (Years)', 
     type: 'number',
     required: true,
-    hint: 'Years you expect to hold the stock after distribution' 
+    section: 'Current Mortgage Information',
+    hint: 'Total length of your current mortgage in years' 
   },
   { 
-    name: 'holdingPeriodMonths', 
-    label: 'Holding Period (Additional Months)', 
-    type: 'number',
-    hint: 'Additional months beyond full years (0-11)' 
-  },
-  { 
-    name: 'capitalGainsRate', 
-    label: 'Capital Gains Tax Rate', 
-    type: 'number',
-    format: 'percentage',
-    step: 0.1, 
-    hint: 'Long-term capital gains tax rate (typically 0%, 15%, or 20%)' 
-  },
-  { 
-    name: 'marginalTaxRate', 
-    label: 'Marginal Income Tax Rate', 
-    type: 'number',
-    format: 'percentage',
-    step: 0.1, 
-    hint: 'Your ordinary income tax rate' 
-  },
-  { 
-    name: 'inflationRate', 
-    label: 'Expected Inflation Rate', 
-    type: 'number',
-    format: 'percentage',
-    step: 0.1,
-    hint: 'Long-term average inflation rate for present value calculations' 
-  },
-  { 
-    name: 'currentAge', 
-    label: 'Current Age', 
+    name: 'yearsRemaining', 
+    label: 'Years Remaining', 
     type: 'number',
     required: true,
-    hint: 'Your current age' 
+    section: 'Current Mortgage Information',
+    hint: 'Years remaining on your current mortgage' 
   },
   { 
-    name: 'separatedAtAge55', 
-    label: 'Separated from Service at Age 55 or Older', 
-    type: 'select',
-    options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
-    ],
-    hint: 'Check if you separated in/after the year you turned 55 (no 10% penalty)' 
+    name: 'incomeTaxRate', 
+    label: 'Income Tax Rate', 
+    type: 'number',
+    format: 'percentage',
+    step: 0.1, 
+    required: true,
+    section: 'Current Mortgage Information',
+    hint: 'Your current income tax rate' 
   },
   { 
-    name: 'retirementDistributionAfter59Half', 
-    label: 'Retirement Plan Distribution at Age 59½ or Older', 
+    name: 'calculateBalance', 
+    label: 'Calculate Balance from Loan Info', 
     type: 'select',
     options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
+      { value: 'true', label: 'Yes - Calculate from loan info' },
+      { value: 'false', label: 'No - I will enter my own balance' }
     ],
-    hint: 'Check if distribution occurs at/after age 59½ (no 10% penalty)' 
+    section: 'Current Mortgage Information',
+    hint: 'Check to let calculator determine remaining balance',
+    // Generic trigger function that runs when this field changes
+    onChangeTrigger: (formData, setValue, newValue) => {
+      const shouldAutoCalc = newValue === 'true';
+      
+      if (shouldAutoCalc) {
+        // Calculate loan balance
+        const currentRate = (formData.currentInterestRate || 0) / 100;
+        const currentMonthlyRate = currentRate / 12;
+        const totalMonths = (formData.currentTermYears || 0) * 12;
+        const remainingMonths = (formData.yearsRemaining || 0) * 12;
+        
+        if (remainingMonths > 0 && remainingMonths <= totalMonths && formData.originalMortgageAmount) {
+          const monthlyPayment = formData.originalMortgageAmount * 
+            (currentMonthlyRate * Math.pow(1 + currentMonthlyRate, totalMonths)) / 
+            (Math.pow(1 + currentMonthlyRate, totalMonths) - 1);
+          
+          const loanBalance = monthlyPayment * 
+            (Math.pow(1 + currentMonthlyRate, remainingMonths) - 1) /
+            (currentMonthlyRate * Math.pow(1 + currentMonthlyRate, remainingMonths));
+          
+          setValue('loanBalance', Math.round(loanBalance));
+        } else if (remainingMonths <= 0) {
+          setValue('loanBalance', 0);
+        } else if (formData.originalMortgageAmount) {
+          setValue('loanBalance', formData.originalMortgageAmount);
+        }
+      }
+    }
+  },
+
+  // ------------------------------
+  // New Mortgage Information
+  // ------------------------------
+  { 
+    name: 'currentAppraisedValue', 
+    label: 'Current Appraised Value', 
+    type: 'number',
+    format: 'currency',
+    required: true, 
+    section: 'New Mortgage Information',
+    hint: 'The current appraised value of your home' 
   },
   { 
-    name: 'iraDistributionAfter59Half', 
-    label: 'IRA Distribution at Age 59½ or Older', 
+    name: 'loanBalance', 
+    label: 'Loan Balance', 
+    type: 'number',
+    format: 'currency',
+    required: false,
+    section: 'New Mortgage Information',
+    hint: 'Balance of your mortgage to refinance (auto-calculated when "Calculate Balance" is Yes)',
+    // Disable when calculateBalance is 'true'
+    disabled: (data) => {
+      const calc = typeof data.calculateBalance === 'string' 
+        ? data.calculateBalance === 'true' 
+        : Boolean(data.calculateBalance);
+      return calc;
+    }
+  },
+  { 
+    name: 'newInterestRate', 
+    label: 'New Interest Rate', 
+    type: 'number',
+    format: 'percentage',
+    step: 0.01, 
+    required: true,
+    section: 'New Mortgage Information',
+    hint: 'Annual interest rate for the new loan' 
+  },
+  { 
+    name: 'newTermYears', 
+    label: 'New Term (Years)', 
+    type: 'number',
+    required: true,
+    section: 'New Mortgage Information',
+    hint: 'Number of years for your new loan' 
+  },
+
+  // ------------------------------
+  // Closing Costs
+  // ------------------------------
+  { 
+    name: 'loanOriginationRate', 
+    label: 'Loan Origination Fee (%)', 
+    type: 'number',
+    format: 'percentage',
+    step: 0.1, 
+    section: 'Closing Costs',
+    hint: 'Typical origination fee is around 1%' 
+  },
+  { 
+    name: 'pointsPaid', 
+    label: 'Points Paid', 
+    type: 'number',
+    step: 0.125,
+    section: 'Closing Costs',
+    hint: 'Each point = 1% of loan' 
+  },
+  { 
+    name: 'otherClosingCosts', 
+    label: 'Other Closing Costs', 
+    type: 'number',
+    format: 'currency',
+    section: 'Closing Costs',
+    hint: 'Filing fees, appraisal, misc costs' 
+  },
+
+  // ------------------------------
+  // PMI Options
+  // ------------------------------
+  { 
+    name: 'includePMI', 
+    label: 'PMI Settings', 
     type: 'select',
     options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
+      { value: 'true', label: 'Include PMI if less than 20% equity (default)' },
+      { value: 'false', label: 'Do NOT include PMI (Freddie/Fannie refinance exception)' }
     ],
-    hint: 'Check if IRA distribution occurs at/after age 59½ (no 10% penalty)' 
+    section: 'PMI Options',
+    hint: 'PMI (0.5% annually) is normally required if less than 20% equity. Select "Do NOT include" only if refinancing a Freddie Mac/Fannie Mae loan that doesn\'t currently require PMI.' 
   },
 ];
