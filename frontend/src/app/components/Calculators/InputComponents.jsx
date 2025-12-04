@@ -11,28 +11,28 @@ const INPUT_STYLES = {
 
 const getInputClassName = (disabled, error = false) => {
   const classes = [INPUT_STYLES.base];
-  
+
   if (disabled) {
     classes.push(INPUT_STYLES.disabled);
   } else {
     classes.push(INPUT_STYLES.enabled);
   }
-  
+
   if (error) {
     classes.push(INPUT_STYLES.error);
   }
-  
+
   return classes.join(' ');
 };
 
 // Text Input
-export const TextInput = React.memo(({ 
-  value, 
-  onChange, 
-  onBlur, 
-  placeholder, 
-  disabled, 
-  maxLength = 100 
+export const TextInput = React.memo(({
+  value,
+  onChange,
+  onBlur,
+  placeholder,
+  disabled,
+  maxLength = 100
 }) => {
   const handleChange = useCallback((e) => {
     const inputValue = e.target.value;
@@ -75,15 +75,20 @@ const formatCurrency = (value) => {
 
 const parseNumericInput = (input, maxLength, allowNegative = true, allowDecimals = true) => {
   if (input === '' || input === '-') return input === '-' && allowNegative ? '-' : '';
-  
+
+  // Allow "-0" as a valid partial input
+  if (input === '-0' && allowNegative) {
+    return input;
+  }
+
   // Build regex based on what's allowed
   let pattern = '[^0-9';
   if (allowNegative) pattern += '-';
   if (allowDecimals) pattern += '.';
   pattern += ']';
-  
+
   let cleaned = input.replace(new RegExp(pattern, 'g'), '');
-  
+
   // Ensure only one decimal point
   if (allowDecimals) {
     const parts = cleaned.split('.');
@@ -91,7 +96,7 @@ const parseNumericInput = (input, maxLength, allowNegative = true, allowDecimals
       cleaned = parts[0] + '.' + parts.slice(1).join('');
     }
   }
-  
+
   // Ensure only one minus sign at the start
   if (allowNegative) {
     const minusCount = (cleaned.match(/-/g) || []).length;
@@ -101,24 +106,26 @@ const parseNumericInput = (input, maxLength, allowNegative = true, allowDecimals
       cleaned = '-' + cleaned.replace(/-/g, '');
     }
   }
-  
+
   // Check length (excluding minus and decimal)
   const digitsOnly = cleaned.replace(/[^0-9]/g, '');
   if (digitsOnly.length > maxLength) return null;
-  
-  // Return the string for partial inputs like "-" or "5."
-  if (cleaned === '-' || cleaned.endsWith('.')) return cleaned;
-  
+
+  // Return the string for partial inputs like "-", "-0", or "5."
+  if (cleaned === '-' || cleaned === '-0' || cleaned.endsWith('.')) {
+    return cleaned;
+  }
+
   const num = parseFloat(cleaned);
   return (isNaN(num) || !isFinite(num)) ? null : num;
 };
 
-export const CurrencyInput = React.memo(({ 
-  value, 
-  onChange, 
-  onBlur, 
-  placeholder = '0', 
-  disabled, 
+export const CurrencyInput = React.memo(({
+  value,
+  onChange,
+  onBlur,
+  placeholder = '0',
+  disabled,
   maxLength = 15,
   allowNegative = true,
   allowDecimals = true
@@ -133,8 +140,12 @@ export const CurrencyInput = React.memo(({
       // Only update if value is different from what we're typing
       if (value === '' || value === null || value === undefined) {
         setInputValue('');
+      } else if (value === '-' || value === '-0') {
+        setInputValue(value);
       } else if (typeof value === 'number') {
         setInputValue(String(value));
+      } else if (typeof value === 'string') {
+        setInputValue(value);
       }
     }
   }, [value, disabled]);
@@ -142,11 +153,11 @@ export const CurrencyInput = React.memo(({
   const handleChange = useCallback((e) => {
     const input = e.target.value;
     setInputValue(input);
-    
+
     const parsed = parseNumericInput(input, maxLength, allowNegative, allowDecimals);
-    
-    if (parsed === '' || parsed === '-') {
-      onChange('');
+
+    if (parsed === '' || parsed === '-' || parsed === '-0') {
+      onChange(parsed);
     } else if (parsed !== null) {
       onChange(parsed);
     }
@@ -156,8 +167,8 @@ export const CurrencyInput = React.memo(({
     e.preventDefault();
     const pastedText = e.clipboardData.getData('text');
     const parsed = parseNumericInput(pastedText, maxLength, allowNegative, allowDecimals);
-    
-    if (parsed !== null || parsed === '' || parsed === '-') {
+
+    if (parsed !== null || parsed === '' || parsed === '-' || parsed === '-0') {
       setInputValue(pastedText);
       onChange(parsed === null ? '' : parsed);
     }
@@ -165,8 +176,8 @@ export const CurrencyInput = React.memo(({
 
   const handleBlur = useCallback((e) => {
     // Clean up trailing decimal or lone minus on blur
-    if (inputValue === '-' || inputValue.endsWith('.')) {
-      const cleaned = inputValue.replace(/[-.]$/, '');
+    if (inputValue === '-' || inputValue === '-0' || inputValue.endsWith('.')) {
+      const cleaned = inputValue.replace(/[-.]$/, '').replace(/^-0$/, '0');
       const num = parseFloat(cleaned);
       if (!isNaN(num)) {
         setInputValue(String(num));
@@ -183,16 +194,15 @@ export const CurrencyInput = React.memo(({
 
   return (
     <div className="relative">
-      <span className={`absolute left-3 top-2.5 font-work-sans ${
-        disabled ? 'text-gray-400' : 'text-gray-600'
-      }`}>
+      <span className={`absolute left-3 top-2.5 font-work-sans ${disabled ? 'text-gray-400' : 'text-gray-600'
+        }`}>
         $
       </span>
-      
+
       {disabled && (
         <LockIcon className="absolute right-3 top-2.5 w-5 h-5 text-gray-400" />
       )}
-      
+
       <input
         type="text"
         inputMode="decimal"
@@ -203,9 +213,8 @@ export const CurrencyInput = React.memo(({
         placeholder={placeholder}
         disabled={disabled}
         readOnly={disabled}
-        className={`${getInputClassName(disabled)} pl-8 ${
-          disabled ? 'pr-10' : 'pr-3'
-        }`}
+        className={`${getInputClassName(disabled)} pl-8 ${disabled ? 'pr-10' : 'pr-3'
+          }`}
       />
     </div>
   );
@@ -215,17 +224,17 @@ CurrencyInput.displayName = 'CurrencyInput';
 
 // Lock icon component
 const LockIcon = ({ className }) => (
-  <svg 
+  <svg
     className={className}
-    fill="none" 
-    stroke="currentColor" 
+    fill="none"
+    stroke="currentColor"
     viewBox="0 0 24 24"
   >
-    <path 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      strokeWidth={2} 
-      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" 
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
     />
   </svg>
 );
@@ -233,22 +242,27 @@ const LockIcon = ({ className }) => (
 // Percentage Input
 const parsePercentageInput = (input, maxLength, maxDecimals, allowNegative = true) => {
   if (input === '' || (input === '-' && allowNegative)) {
-    return input === '-' ? '-' : '';
+    return input;
+  }
+
+  // Allow "-0" as a valid partial input
+  if (input === '-0' && allowNegative) {
+    return input;
   }
 
   // Build pattern
   let pattern = '[^0-9.';
   if (allowNegative) pattern += '-';
   pattern += ']';
-  
+
   let cleaned = input.replace(new RegExp(pattern, 'g'), '');
-  
+
   // Handle multiple decimals
   const parts = cleaned.split('.');
   if (parts.length > 2) {
     cleaned = parts[0] + '.' + parts.slice(1).join('');
   }
-  
+
   // Handle multiple minus signs
   if (allowNegative) {
     const minusCount = (cleaned.match(/-/g) || []).length;
@@ -262,25 +276,27 @@ const parsePercentageInput = (input, maxLength, maxDecimals, allowNegative = tru
   // Validate integer part length
   const integerPart = cleaned.split('.')[0].replace('-', '');
   if (integerPart.length > maxLength) return null;
-  
+
   // Validate decimal part length
   const decimalPart = cleaned.split('.')[1] || '';
   if (decimalPart.length > maxDecimals) return null;
 
-  // Return string for partial inputs
-  if (cleaned === '-' || cleaned.endsWith('.')) return cleaned;
+  // Return string for partial inputs like "-", "-0", or "5."
+  if (cleaned === '-' || cleaned === '-0' || cleaned.endsWith('.')) {
+    return cleaned;
+  }
 
   const num = parseFloat(cleaned);
   return (isNaN(num) || !isFinite(num)) ? null : num;
 };
 
-export const PercentageInput = React.memo(({ 
-  value, 
-  onChange, 
-  onBlur, 
-  placeholder = '0', 
-  disabled, 
-  maxLength = 6, 
+export const PercentageInput = React.memo(({
+  value,
+  onChange,
+  onBlur,
+  placeholder = '0',
+  disabled,
+  maxLength = 6,
   maxDecimals = 2,
   allowNegative = true
 }) => {
@@ -290,6 +306,8 @@ export const PercentageInput = React.memo(({
   useEffect(() => {
     if (value === '' || value === null || value === undefined) {
       setInputValue('');
+    } else if (value === '-' || value === '-0') {
+      setInputValue(value);
     } else if (typeof value === 'number') {
       setInputValue(String(value));
     } else {
@@ -300,11 +318,11 @@ export const PercentageInput = React.memo(({
   const handleChange = useCallback((e) => {
     const input = e.target.value;
     setInputValue(input);
-    
+
     const parsed = parsePercentageInput(input, maxLength, maxDecimals, allowNegative);
-    
-    if (parsed === '' || parsed === '-') {
-      onChange('');
+
+    if (parsed === '' || parsed === '-' || parsed === '-0') {
+      onChange(parsed);
     } else if (parsed !== null) {
       onChange(parsed);
     }
@@ -314,8 +332,8 @@ export const PercentageInput = React.memo(({
     e.preventDefault();
     const pastedText = e.clipboardData.getData('text');
     const parsed = parsePercentageInput(pastedText, maxLength, maxDecimals, allowNegative);
-    
-    if (parsed !== null || parsed === '' || parsed === '-') {
+
+    if (parsed !== null || parsed === '' || parsed === '-' || parsed === '-0') {
       setInputValue(pastedText);
       onChange(parsed === null ? '' : parsed);
     }
@@ -323,8 +341,8 @@ export const PercentageInput = React.memo(({
 
   const handleBlur = useCallback((e) => {
     // Clean up trailing decimal or lone minus on blur
-    if (inputValue === '-' || inputValue.endsWith('.')) {
-      const cleaned = inputValue.replace(/[-.]$/, '');
+    if (inputValue === '-' || inputValue === '-0' || inputValue.endsWith('.')) {
+      const cleaned = inputValue.replace(/[-.]$/, '').replace(/^-0$/, '0');
       const num = parseFloat(cleaned);
       if (!isNaN(num)) {
         setInputValue(String(num));
@@ -350,9 +368,8 @@ export const PercentageInput = React.memo(({
         disabled={disabled}
         className={`${getInputClassName(disabled)} pr-8`}
       />
-      <span className={`absolute right-3 top-2.5 font-work-sans ${
-        disabled ? 'text-gray-400' : 'text-gray-600'
-      }`}>
+      <span className={`absolute right-3 top-2.5 font-work-sans ${disabled ? 'text-gray-400' : 'text-gray-600'
+        }`}>
         %
       </span>
     </div>
@@ -385,19 +402,19 @@ const parseDateFromDigits = (digits) => {
       year: digits.slice(4, 8)
     };
   }
-  
+
   if (digits.length === 6) {
     // MM-DD-YY format
     const shortYear = digits.slice(4, 6);
     const yearPrefix = parseInt(shortYear) > 50 ? '19' : '20';
-    
+
     return {
       month: digits.slice(0, 2),
       day: digits.slice(2, 4),
       year: yearPrefix + shortYear
     };
   }
-  
+
   return null;
 };
 
@@ -405,22 +422,22 @@ const validateDate = (month, day, year) => {
   if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
     return false;
   }
-  
+
   const isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
   const date = new Date(isoDate + 'T00:00:00');
-  
+
   return (
-    date.getMonth() + 1 === parseInt(month) && 
+    date.getMonth() + 1 === parseInt(month) &&
     date.getDate() === parseInt(day)
   );
 };
 
-export const DateInput = React.memo(({ 
-  value, 
-  onChange, 
-  onBlur, 
-  disabled, 
-  error 
+export const DateInput = React.memo(({
+  value,
+  onChange,
+  onBlur,
+  disabled,
+  error
 }) => {
   const monthRef = useRef(null);
   const dayRef = useRef(null);
@@ -430,7 +447,7 @@ export const DateInput = React.memo(({
   // Sync refs when value changes externally
   useEffect(() => {
     if (!value) return;
-    
+
     try {
       const date = new Date(value + 'T00:00:00');
       if (monthRef.current) monthRef.current.value = String(date.getMonth() + 1).padStart(2, '0');
