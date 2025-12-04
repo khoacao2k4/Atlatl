@@ -16,13 +16,13 @@ export const schema = z.object({
   loan1Amount: z.number().min(0).max(100000000, 'Must be between $0 and $100,000,000'),
   interestRate1: z.number().min(0).max(100, 'Must be between 0% and 100%'),
   termInMonths1: z.number().int().min(0).max(360, 'Must be between 0 and 360'),
-  interestOnly1: z.string().transform(val => val === 'true').optional(),
+  interestOnly1: z.coerce.boolean(),
   
   // Financing - Loan 2
   loan2Amount: z.number().min(0).max(100000000, 'Must be between $0 and $100,000,000'),
   interestRate2: z.number().min(0).max(100, 'Must be between 0% and 100%'),
   termInMonths2: z.number().int().min(0).max(360, 'Must be between 0 and 360'),
-  interestOnly2: z.string().transform(val => val === 'true').optional(),
+  interestOnly2: z.coerce.boolean(),
   
   // Annual Expenses
   realEstateTaxes: z.number().min(0).max(1000000, 'Must be between $0 and $1,000,000'),

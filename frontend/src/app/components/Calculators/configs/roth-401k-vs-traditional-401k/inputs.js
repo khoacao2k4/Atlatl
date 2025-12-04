@@ -62,8 +62,8 @@ export const inputs = [
     type: 'select',
     required: true,
     options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false }
+      { label: 'Yes', value: 'true' },
+      { label: 'No', value: 'false' }
     ],
     hint: 'Invest tax savings from Traditional contributions in a taxable account'
   },
@@ -73,8 +73,8 @@ export const inputs = [
     type: 'select',
     required: true,
     options: [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false }
+      { label: 'Yes', value: 'true' },
+      { label: 'No', value: 'false' }
     ],
     hint: 'Increase contributions to maximum allowed ($23,500 base, $31,000 with catch-up at age 50+)'
   },

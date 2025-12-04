@@ -6,6 +6,6 @@ export const defaults = {
   annualRateOfReturn: 7,
   currentTaxRate: 24,
   retirementTaxRate: 22,
-  investTaxSavings: true,
-  maximizeContributions: false,
+  investTaxSavings: 'true',
+  maximizeContributions: 'false',
 };
