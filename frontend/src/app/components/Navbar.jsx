@@ -59,7 +59,7 @@ export default function Navbar() {
     { 
       name: "FAQ", 
       desc: "Quick answers to your common questions", 
-      href: "/faq", 
+      href: "/resources/faq", 
       icon: <FiInfo className="w-6 h-6 md:w-8 md:h-8" /> 
     },
   ];

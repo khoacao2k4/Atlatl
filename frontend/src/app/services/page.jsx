@@ -5,8 +5,10 @@ import FaqSection from '../components/service/FaqSection';
 import { getFAQContent } from '@/lib/strapi';
 
 export default async function ServicesPage() {
-  const services = await getServicepageContent();
-  const faqs = await getFAQContent();
+  const [services, faqs] = await Promise.all([
+    getServicepageContent(),
+    getFAQContent(),
+  ]);
 
   if (!services || !services.serviceblock || services.serviceblock.length === 0
     || !faqs || !faqs.topics || faqs.topics.length === 0) {
