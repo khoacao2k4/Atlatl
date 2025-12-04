@@ -1,4 +1,5 @@
 import ContactForm from "@/app/components/contact/ContactForm";
+import CtaSection from "@/app/components/homepage/CtaSection";
 
 // Google Maps
 const mapContainerStyle = { width: "100%", height: "100%", borderRadius: "20px" };
@@ -6,7 +7,7 @@ const mapContainerStyle = { width: "100%", height: "100%", borderRadius: "20px" 
 export default function ContactUsPage() {
   return (
     <main className="bg-white">
-      <div className="container mx-auto px-6 xl:px-20 py-16 md:py-24">
+      <section className="container mx-auto px-6 xl:px-20 py-16 md:py-24">
         {/* --- PAGE TITLE --- */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-songer text-darker-bold-blue font-bold text-center uppercase tracking-wide mb-16">
           LET'S CONNECT
@@ -39,20 +40,21 @@ export default function ContactUsPage() {
           </div>
 
           {/* --- RIGHT COLUMN: FORM --- */}
-          <div className="w-full lg:w-7/12">
+          <div className="w-full lg:w-3/4">
             <ContactForm />
           </div>
         </div>
-
+      </section>
+      <section className="container mx-auto px-6 xl:px-20 pb-16 md:pb-24">
         {/* --- MAP SECTION --- */}
-        <div className="w-full h-[400px] mt-24 rounded-3xl overflow-hidden shadow-lg border border-gray-200">
-          <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=2921%20Landmark%20Pl%20Suite%20501+(My%20Business%20Name)&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
-            <a href="https://www.mapsdirections.info/de/evolkerung-auf-einer-karte-berechnen/">Bevölkerung visualisieren Karte
-            </a>
+        <div className="w-full h-[500px] rounded-3xl overflow-hidden shadow-lg border border-gray-200">
+          <iframe className={`${mapContainerStyle}`} style={mapContainerStyle} src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Atlatl%20Advisers+(Atlatl%20Advisers)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
           </iframe>
         </div>
-
-      </div>
+      </section>
+      <section className="bg-darker-light-blue">
+        <CtaSection />
+      </section>
     </main>
   );
 }
