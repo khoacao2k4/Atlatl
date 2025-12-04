@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-light-blue py-16 md:py-24">
+      <section className="bg-white py-16 md:py-24">
         <Hero media={homepageContent?.heroMedia} />
       </section>
 
