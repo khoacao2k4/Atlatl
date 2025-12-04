@@ -15,7 +15,7 @@ export const schema = z.object({
   beneficiaryBirthdate: z.string()
     .min(1, 'Beneficiary birthdate is required')
     .refine(val => !isNaN(new Date(val + 'T00:00:00').getTime()), 'Invalid date - use MM/DD/YYYY format'),
-  rateOfReturn: z.number().min(-50, 'Rate too low').max(50, 'Rate too high'),
+  rateOfReturn: z.number().min(-50, 'Rate too low').max(100, 'Rate too high'),
   accountBalance: z.number().min(0, 'Balance must be positive'),
   ownerDeathDate: z.string()
     .min(1, 'Death date is required')

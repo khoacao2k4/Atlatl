@@ -1,14 +1,13 @@
 import { z } from 'zod';
 
 export const schema = z.object({
-  // Common fields
   purchasePrice: z.number()
-    .min(1000, 'Purchase price must be at least $1,000')
-    .max(1000000, 'Purchase price seems unreasonably high'),
+    .min(0, 'Purchase price must be 0 or greater')
+    .max(10000000, 'Purchase price seems unreasonably high'),
   
   downPayment: z.number()
     .min(0, 'Down payment cannot be negative')
-    .max(1000000, 'Down payment seems unreasonably high'),
+    .max(10000000, 'Down payment seems unreasonably high'),
   
   salesTaxRate: z.number()
     .min(0, 'Sales tax rate cannot be negative')
@@ -16,7 +15,7 @@ export const schema = z.object({
   
   investmentReturnRate: z.number()
     .min(0, 'Investment return rate cannot be negative')
-    .max(50, 'Investment return rate seems unreasonably high'),
+    .max(100, 'Investment return rate seems unreasonably high'),
   
   // Buy option fields
   loanTermMonths: z.number()
@@ -26,15 +25,15 @@ export const schema = z.object({
   
   loanInterestRate: z.number()
     .min(0, 'Interest rate cannot be negative')
-    .max(30, 'Interest rate seems unreasonably high'),
+    .max(100, 'Interest rate seems unreasonably high'),
   
   buyOtherFees: z.number()
     .min(0, 'Fees cannot be negative')
-    .max(100000, 'Fees seem unreasonably high'),
+    .max(1000000, 'Fees seem unreasonably high'),
   
   annualDepreciationRate: z.number()
     .min(0, 'Depreciation rate cannot be negative')
-    .max(50, 'Depreciation rate seems unreasonably high'),
+    .max(100, 'Depreciation rate seems unreasonably high'),
   
   // Lease option fields
   leaseTermMonths: z.number()
@@ -44,11 +43,11 @@ export const schema = z.object({
   
   leaseInterestRate: z.number()
     .min(0, 'Interest rate cannot be negative')
-    .max(30, 'Interest rate seems unreasonably high'),
+    .max(100, 'Interest rate seems unreasonably high'),
   
   leaseOtherFees: z.number()
     .min(0, 'Fees cannot be negative')
-    .max(100000, 'Fees seem unreasonably high'),
+    .max(1000000, 'Fees seem unreasonably high'),
   
   residualPercent: z.number()
     .min(0, 'Residual percent cannot be negative')
@@ -56,7 +55,7 @@ export const schema = z.object({
   
   securityDeposit: z.number()
     .min(0, 'Security deposit cannot be negative')
-    .max(100000, 'Security deposit seems unreasonably high'),
+    .max(1000000, 'Security deposit seems unreasonably high'),
 })
 .refine(
   (data) => data.downPayment <= data.purchasePrice,

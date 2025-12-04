@@ -8,6 +8,6 @@ export const schema = z.object({
   annualRateOfReturn: z.number().min(-100, 'Must be -100% or greater').max(100, 'Must be 100% or less'),
   currentTaxRate: z.number().min(0, 'Must be 0 or greater').max(100, 'Must be 100% or less'),
   retirementTaxRate: z.number().min(0, 'Must be 0 or greater').max(100, 'Must be 100% or less'),
-  investTaxSavings: z.coerce.boolean(),
-  maximizeContributions: z.coerce.boolean(),
+  investTaxSavings: z.string().transform(val => val === 'true'),
+  maximizeContributions: z.string().transform(val => val === 'true'),
 });
