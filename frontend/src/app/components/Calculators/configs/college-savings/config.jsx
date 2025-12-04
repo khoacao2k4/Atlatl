@@ -4,242 +4,241 @@ import { inputs } from './inputs';
 import { results } from './results';
 
 export const config = {
-  title: 'Company Stock Distribution Analysis Calculator',
-  description: 'Compare NUA (Net Unrealized Appreciation) strategy versus IRA rollover for company stock distributions from your retirement plan',
+  title: 'College Savings Calculator',
+  description:
+    'Plan for your child\'s college education by calculating future costs and determining how much you need to save monthly',
   schema,
   defaultValues: defaults,
   inputs,
   results,
 
   calculate: (data) => {
-    /*
-    Dinkytown-style implementation:
-     - NUA = FMV at distribution - cost basis
-     - At distribution (NUA strategy): pay ordinary income tax on cost basis now (and 10% penalty on cost basis if not qualified)
-     - NUA portion is taxed as long-term capital gain when sold (even if sold immediately)
-     - Appreciation AFTER distribution: taxed as short-term (ordinary) if sold within 1 year, otherwise long-term capital gain
-     - IRA rollover: entire amount taxed as ordinary income when withdrawn (plus 10% penalty if applicable)
-     - Present value calculations: discount FUTURE taxes to present using inflationRate
-    */
+    // --- Inputs (coerce to numbers)
+    const currentAge = Number(data.currentAge) || 0;
+    const ageStartCollege = Number(data.ageStartCollege) || 18;
+    const yearsInCollege = Number(data.yearsInCollege) || 4;
 
-    const nua = data.balanceAtDistribution - data.costBasis;
+    const annualTuition = Number(data.annualTuition) || 0;
+    const roomAndBoard = Number(data.roomAndBoard) || 0;
+    const educationInflation = Number(data.educationInflation) || 0;
 
-    // Convert holding period to decimal years
-    const holdingYears = data.holdingPeriodYears + (data.holdingPeriodMonths || 0) / 12;
+    const currentSavings = Number(data.currentSavings) || 0;
+    const monthlyContribution = Number(data.monthlyContribution) || 0;
+    const rateOfReturn = Number(data.rateOfReturn) || 0;
 
-    // Future FMV after holding period (applies equally for both strategies)
-    const fmvAtSale = data.balanceAtDistribution * Math.pow(1 + data.rateOfReturn / 100, holdingYears);
+    const annualRate = rateOfReturn / 100;
+    const K = 0.5444409899; // Dinkytown's timing factor
+    const contributionFactor = 1 + (Math.pow(1 + annualRate, K) - 1);
 
-    // Appreciation that occurs AFTER the distribution event
-    const appreciationAfterDistribution = fmvAtSale - data.balanceAtDistribution;
+    // --- Years until college
+    const yearsUntilCollege = Math.max(0, ageStartCollege - currentAge);
 
-    // Penalty conditions:
-    // For cost-basis taxation at distribution (NUA initial tax), penalty applies unless separatedAtAge55 OR distribution is at/after 59.5
-    const penaltyOnRetirementDist = !(data.separatedAtAge55 || data.retirementDistributionAfter59Half);
-    // For IRA distributions (rolled-over funds), penalty applies if IRA distribution occurs before 59.5
-    const penaltyOnIraDist = !data.iraDistributionAfter59Half;
+    // --- Current annual cost
+    const currentAnnualCost = annualTuition + roomAndBoard;
 
-    // ===== NUA STRATEGY =====
-    // Initial tax at distribution: cost basis taxed at ordinary marginal tax rate now
-    const nuaInitialTax = data.costBasis * (data.marginalTaxRate / 100);
-    const nuaInitialPenalty = penaltyOnRetirementDist ? data.costBasis * 0.10 : 0;
-    const nuaTotalInitialTax = nuaInitialTax + nuaInitialPenalty;
+    // --- Project future college costs
+    let totalCollegeCost = 0;
+    const collegeCostsByYear = [];
 
-    // Future taxes when stock is sold:
-    // - NUA portion taxed at long-term capital gains rate (per Dinkytown: treated as long-term cap gain even if sold immediately)
-    const nuaPortionTaxAtSale = Math.max(0, nua) * (data.capitalGainsRate / 100);
+    for (let year = 0; year < yearsInCollege; year++) {
+      const yearsFromNow = yearsUntilCollege + year;
+      const futureCost =
+        currentAnnualCost *
+        Math.pow(1 + educationInflation / 100, yearsFromNow);
+      totalCollegeCost += futureCost;
+      collegeCostsByYear.push({
+        year: year + 1,
+        age: ageStartCollege + year,
+        cost: futureCost,
+      });
+    }
 
-    // - Appreciation after distribution taxed as:
-    //     * ordinary income (marginal tax rate) if holding < 1 year
-    //     * long-term capital gains if holding >= 1 year
-    const appreciationTaxRate = holdingYears >= 1 ? (data.capitalGainsRate / 100) : (data.marginalTaxRate / 100);
-    const appreciationTaxAtSale = Math.max(0, appreciationAfterDistribution) * appreciationTaxRate;
+    // --- Savings growth BEFORE college (current plan)
+    let balance = currentSavings;
+    const annualContribution = monthlyContribution * 12;
 
-    const nuaTotalFutureTax = nuaPortionTaxAtSale + appreciationTaxAtSale;
+    for (let y = 0; y < yearsUntilCollege; y++) {
+      balance = balance * (1 + annualRate) + annualContribution * contributionFactor;
+    }
 
-    // Total taxes (initial + future)
-    const nuaTotalTax = nuaTotalInitialTax + nuaTotalFutureTax;
+    const totalSavingsAtCollegeStart = balance;
 
-    // Net proceeds at sale (future value basis): FMV at sale minus ALL taxes paid (initial taxes were paid now, but for "future value" comparison we subtract all taxes)
-    const nuaNetProceeds = fmvAtSale - nuaTotalFutureTax - nuaTotalInitialTax; // taxes already removed
+    // --- Shortfall / Surplus & percentage covered
+    const shortfallOrSurplus = totalSavingsAtCollegeStart - totalCollegeCost;
+    const percentageCovered =
+      totalCollegeCost > 0
+        ? (totalSavingsAtCollegeStart / totalCollegeCost) * 100
+        : 100;
 
-    // Present value calculations:
-    // Discount only FUTURE taxes to present using inflationRate (per Dinkytown: discount future tax distributions).
-    const discountRate = data.inflationRate / 100;
-    const pvNuaFutureTax = nuaTotalFutureTax / Math.pow(1 + discountRate, holdingYears);
-    const pvNuaTotalTax = nuaTotalInitialTax + pvNuaFutureTax; // initial tax is "now" (no discount)
-    const pvNuaNetProceeds = data.balanceAtDistribution - pvNuaTotalTax;
+    // --- Monthly needed to fully fund (with contributions DURING college)
+    let monthlyNeededToFullyFund = 0;
 
-    // ===== IRA ROLLOVER STRATEGY =====
-    // If rolled over to IRA, the whole balance grows and when withdrawn later it's taxed as ordinary income (marginal)
-    const iraFmvAtSale = fmvAtSale;
-    const iraTotalTaxAtSale = iraFmvAtSale * (data.marginalTaxRate / 100);
-    const iraPenaltyAtSale = penaltyOnIraDist ? iraFmvAtSale * 0.10 : 0;
-    const iraTotalTaxWithPenalty = iraTotalTaxAtSale + iraPenaltyAtSale;
+    if (yearsUntilCollege > 0 || yearsInCollege > 0) {
+      // Binary search for the required annual contribution
+      // that results in balance ≥ 0 after all college years
+      let low = 0;
+      let high = totalCollegeCost * 2; // Upper bound
+      let bestAnnual = 0;
 
-    const iraNetProceeds = iraFmvAtSale - iraTotalTaxWithPenalty;
+      for (let iteration = 0; iteration < 50; iteration++) {
+        const testAnnual = (low + high) / 2;
+        
+        // Simulate accumulation phase
+        let testBalance = currentSavings;
+        for (let y = 0; y < yearsUntilCollege; y++) {
+          testBalance = testBalance * (1 + annualRate) + testAnnual * contributionFactor;
+        }
+        
+        // Simulate college phase (continuing contributions)
+        for (let y = 0; y < yearsInCollege; y++) {
+          testBalance = testBalance * (1 + annualRate) + 
+                       testAnnual * contributionFactor - 
+                       collegeCostsByYear[y].cost;
+        }
+        
+        // Check if we meet the goal
+        if (Math.abs(testBalance) < 1) {
+          bestAnnual = testAnnual;
+          break;
+        } else if (testBalance < 0) {
+          low = testAnnual; // Need more
+        } else {
+          high = testAnnual; // Can reduce
+          bestAnnual = testAnnual;
+        }
+      }
+      
+      monthlyNeededToFullyFund = bestAnnual / 12;
+    } else {
+      monthlyNeededToFullyFund = Math.max(0, totalCollegeCost - currentSavings);
+    }
 
-    // Present value for IRA: discount future tax (all taxed at withdrawal) to present
-    const pvIraTax = iraTotalTaxWithPenalty / Math.pow(1 + discountRate, holdingYears);
-    const pvIraNetProceeds = data.balanceAtDistribution - pvIraTax;
+    // --- Year-by-year breakdown during college (with current contributions)
+    const yearlyBreakdown = [];
+    let remaining = totalSavingsAtCollegeStart;
 
-    // ===== Comparison & summary metrics =====
-    const advantage = nuaNetProceeds - iraNetProceeds;
-    const advantagePercent = iraNetProceeds !== 0 ? (advantage / Math.abs(iraNetProceeds)) * 100 : 0;
+    for (let year = 0; year < yearsInCollege; year++) {
+      const cost = collegeCostsByYear[year].cost;
+      const savingsAtStart = remaining;
+      // Continue contributing during college
+      const grownWithContributions = savingsAtStart * (1 + annualRate) + 
+                                     annualContribution * contributionFactor;
+      const savingsAfterCost = grownWithContributions - cost;
 
-    const pvAdvantage = pvNuaNetProceeds - pvIraNetProceeds;
-    const pvAdvantagePercent = pvIraNetProceeds !== 0 ? (pvAdvantage / Math.abs(pvIraNetProceeds)) * 100 : 0;
+      yearlyBreakdown.push({
+        year: year + 1,
+        age: ageStartCollege + year,
+        savingsAtStart,
+        cost,
+        savingsAfterCost,
+      });
 
-    // Recommendation: compare present-value advantage (gives 'today' basis)
-    const betterStrategy = pvAdvantage > 0 ? 'NUA Strategy' : 'IRA Rollover';
+      remaining = savingsAfterCost;
+    }
 
+    // helper
+    const round2 = (v) => (isFinite(v) ? Math.round(v * 100) / 100 : 0);
+
+    // --- Return results
     return {
-      // Basic metrics
-      nua,
-      fmvAtSale,
-      appreciationAfterDistribution,
+      yearsUntilCollege,
+      totalCollegeCost,
+      totalSavingsAtCollegeStart,
+      shortfallOrSurplus,
+      percentageCovered,
+      monthlyNeededToFullyFund,
 
-      // NUA Strategy breakdown
-      nuaInitialTax,
-      nuaInitialPenalty,
-      nuaTotalInitialTax,
-      nuaPortionTaxAtSale,
-      appreciationTaxAtSale,
-      nuaTotalFutureTax,
-      nuaTotalTax,
-      nuaNetProceeds,
-      pvNuaFutureTax,
-      pvNuaTotalTax,
-      pvNuaNetProceeds,
+      collegeCostsByYear,
+      yearlyBreakdown,
 
-      // IRA Rollover breakdown
-      iraTotalTaxAtSale,
-      iraPenaltyAtSale,
-      iraTotalTaxWithPenalty,
-      iraNetProceeds,
-      pvIraTax,
-      pvIraNetProceeds,
-
-      // Comparison
-      advantage,
-      advantagePercent,
-      pvAdvantage,
-      pvAdvantagePercent,
-      betterStrategy,
-
-      // Detailed breakdown for display
       breakdown: [
-        { label: 'NUA Amount', value: nua, format: 'currency' },
-        { label: 'Cost Basis', value: data.costBasis, format: 'currency' },
-        { label: 'Initial Distribution FMV', value: data.balanceAtDistribution, format: 'currency' },
-        { label: 'Projected FMV at Sale', value: fmvAtSale, format: 'currency' },
-        { label: 'Post-Distribution Appreciation', value: appreciationAfterDistribution, format: 'currency' },
+        { label: 'Years Until College', value: yearsUntilCollege, format: 'number' },
+        { label: 'Current Annual Cost', value: currentAnnualCost, format: 'currency' },
+        { label: 'Total Future Cost', value: round2(totalCollegeCost), format: 'currency' },
+        { label: 'Current Savings', value: currentSavings, format: 'currency' },
+        { label: 'Monthly Contribution', value: monthlyContribution, format: 'currency' },
+        { label: 'Projected Savings at College Start', value: round2(totalSavingsAtCollegeStart), format: 'currency' },
+        { label: 'Shortfall/Surplus', value: round2(shortfallOrSurplus), format: 'currency' },
+        { label: 'Percentage Covered', value: round2(percentageCovered), format: 'percentage' },
       ],
 
-      nuaBreakdown: [
-        { label: 'Tax on Cost Basis (Ordinary Income)', value: nuaInitialTax, format: 'currency' },
-        { label: 'Penalty on Cost Basis (if applicable)', value: nuaInitialPenalty, format: 'currency' },
-        { label: 'Total Initial Tax', value: nuaTotalInitialTax, format: 'currency' },
-        { label: 'Tax on NUA (Capital Gains)', value: nuaPortionTaxAtSale, format: 'currency' },
-        { label: 'Tax on Appreciation (At Sale)', value: appreciationTaxAtSale, format: 'currency' },
-        { label: 'Total Future Tax', value: nuaTotalFutureTax, format: 'currency' },
-        { label: 'Total Tax (All)', value: nuaTotalTax, format: 'currency' },
-        { label: 'Net Proceeds (Future Value)', value: nuaNetProceeds, format: 'currency' },
-      ],
-
-      iraBreakdown: [
-        { label: 'Tax on Full Amount (Ordinary Income)', value: iraTotalTaxAtSale, format: 'currency' },
-        { label: 'Early Withdrawal Penalty (if applicable)', value: iraPenaltyAtSale, format: 'currency' },
-        { label: 'Total Tax', value: iraTotalTaxWithPenalty, format: 'currency' },
-        { label: 'Net Proceeds (Future Value)', value: iraNetProceeds, format: 'currency' },
-      ],
-
-      // Notes (human friendly)
       notes: [
-        `Holding period: ${data.holdingPeriodYears} years and ${data.holdingPeriodMonths} months`,
-        penaltyOnRetirementDist ? 'Early withdrawal penalty (10%) applied to NUA initial distribution (cost basis)' : 'No early withdrawal penalty on NUA initial distribution',
-        penaltyOnIraDist ? 'Early withdrawal penalty (10%) will apply to IRA distribution' : 'No early withdrawal penalty on IRA distribution',
-        `NUA portion is treated as long-term capital gain (taxed at ${data.capitalGainsRate}%).`,
-        holdingYears < 1
-          ? 'Appreciation after distribution will be taxed as ordinary income (short-term) because holding period is under 1 year.'
-          : 'Appreciation after distribution will be taxed as long-term capital gain because holding period is at least 1 year.',
-        `The ${betterStrategy} provides ${Math.abs(pvAdvantagePercent).toFixed(2)}% ${pvAdvantage > 0 ? 'more' : 'less'} net proceeds on a present-value basis.`,
+        `Your child will start college in ${yearsUntilCollege} year${yearsUntilCollege !== 1 ? 's' : ''} at age ${ageStartCollege}.`,
+        `Total projected cost for ${yearsInCollege} years of college: $${round2(totalCollegeCost).toLocaleString()}.`,
+        `With current savings plan, you will have $${round2(totalSavingsAtCollegeStart).toLocaleString()} when college starts.`,
+        shortfallOrSurplus >= 0
+          ? `Great news! You have a surplus of $${round2(shortfallOrSurplus).toLocaleString()}, covering ${round2(percentageCovered)}% of costs.`
+          : `That covers ${round2(percentageCovered)}% of costs — you'd need an additional $${round2(Math.abs(shortfallOrSurplus)).toLocaleString()} to break even.`,
+        monthlyNeededToFullyFund > monthlyContribution
+          ? `To fully fund college costs, increase monthly savings to $${round2(monthlyNeededToFullyFund).toLocaleString()} (assumes you continue saving during college years).`
+          : monthlyNeededToFullyFund > 0
+            ? `Your current monthly contribution is sufficient to fully fund costs.`
+            : `Your current savings cover all projected costs.`,
+        `College costs grow at ${educationInflation}% annually; investments grow at ${rateOfReturn}% annually.`,
       ],
     };
   },
 
   charts: [
     {
-      title: 'Strategy Comparison: Net Proceeds',
+      title: 'Savings vs. College Costs',
       type: 'bar',
       height: 350,
-      xKey: 'strategy',
+      xKey: 'category',
       format: 'currency',
       showLegend: false,
       data: (results) => [
-        { 
-          strategy: 'NUA Strategy', 
-          value: results.nuaNetProceeds,
-          color: '#378CE7'
+        {
+          category: 'Projected Savings',
+          value: results.totalSavingsAtCollegeStart,
+          color: '#10B981',
         },
-        { 
-          strategy: 'IRA Rollover', 
-          value: results.iraNetProceeds,
-          color: '#245383'
+        {
+          category: 'Total College Cost',
+          value: results.totalCollegeCost,
+          color: '#F59E0B',
         },
       ],
-      bars: [
-        { key: 'value', name: 'Net Proceeds', color: '#378CE7' }
-      ],
-      description: 'Future value comparison of net proceeds after all taxes'
+      bars: [{ key: 'value', name: 'Amount', color: '#10B981' }],
+      description: 'Comparison of projected savings vs. total college costs',
     },
     {
-      title: 'Total Tax Comparison',
+      title: 'College Costs by Year',
       type: 'bar',
       height: 350,
-      xKey: 'strategy',
+      xKey: 'label',
       format: 'currency',
       showLegend: false,
-      data: (results) => [
-        { 
-          strategy: 'NUA Strategy', 
-          value: results.nuaTotalTax,
-          color: '#F87171'
-        },
-        { 
-          strategy: 'IRA Rollover', 
-          value: results.iraTotalTaxWithPenalty,
-          color: '#DC2626'
-        },
-      ],
-      bars: [
-        { key: 'value', name: 'Total Tax', color: '#F87171' }
-      ],
-      description: 'Total tax liability for each strategy'
+      data: (results) =>
+        results.collegeCostsByYear.map((year) => ({
+          label: `Year ${year.year} (Age ${year.age})`,
+          value: year.cost,
+          color: '#3B82F6',
+        })),
+      bars: [{ key: 'value', name: 'Annual Cost', color: '#3B82F6' }],
+      description: 'Projected annual college costs including inflation',
     },
     {
-      title: 'Present Value Comparison',
+      title: 'Savings Balance During College',
       type: 'bar',
       height: 350,
-      xKey: 'strategy',
+      xKey: 'label',
       format: 'currency',
-      showLegend: false,
-      data: (results) => [
-        { 
-          strategy: 'NUA Strategy', 
-          value: results.pvNuaNetProceeds,
-          color: '#378CE7'
-        },
-        { 
-          strategy: 'IRA Rollover', 
-          value: results.pvIraNetProceeds,
-          color: '#245383'
-        },
-      ],
+      showLegend: true,
+      data: (results) =>
+        results.yearlyBreakdown.map((year) => ({
+          label: `Year ${year.year}`,
+          savingsStart: year.savingsStart,
+          cost: year.cost,
+          savingsEnd: Math.max(0, year.savingsAfterCost),
+          color: year.savingsAfterCost >= 0 ? '#10B981' : '#EF4444',
+        })),
       bars: [
-        { key: 'value', name: 'Present Value Net Proceeds', color: '#378CE7' }
+        { key: 'savingsStart', name: 'Savings at Start', color: '#10B981' },
+        { key: 'cost', name: 'Annual Cost', color: '#F59E0B' },
+        { key: 'savingsEnd', name: 'Savings After Cost', color: '#3B82F6' },
       ],
-      description: `Net proceeds adjusted for ${defaults.inflationRate}% inflation rate`
+      description: 'How your savings balance changes during college years (includes continued contributions)',
     },
-  ]
+  ],
 };

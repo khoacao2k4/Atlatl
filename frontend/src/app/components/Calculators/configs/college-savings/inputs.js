@@ -1,100 +1,87 @@
 export const inputs = [
+  // === Child's Information ===
   { 
-    name: 'balanceAtDistribution', 
-    label: 'Balance at Time of Distribution (FMV)', 
-    type: 'number',
-    format: 'currency',
-    required: true, 
-    hint: 'Fair market value of company stock to be distributed' 
-  },
-  { 
-    name: 'costBasis', 
-    label: 'Total Stock Purchases (Cost Basis)', 
-    type: 'number',
-    format: 'currency',
-    required: true, 
-    hint: 'Total amount paid for the stock (you and/or employer contributions)' 
-  },
-  { 
-    name: 'rateOfReturn', 
-    label: 'Rate of Return', 
-    type: 'number',
-    format: 'percentage',
-    step: 0.1, 
-    hint: 'Expected annual return on company stock' 
-  },
-  { 
-    name: 'holdingPeriodYears', 
-    label: 'Holding Period (Years)', 
+    name: 'currentAge', 
+    label: "Child's Current Age", 
     type: 'number',
     required: true,
-    hint: 'Years you expect to hold the stock after distribution' 
+    section: "Child's Information",
+    hint: 'Current age of your child. The difference between their current age and college start age is the number of years you have to save.' 
   },
   { 
-    name: 'holdingPeriodMonths', 
-    label: 'Holding Period (Additional Months)', 
+    name: 'ageStartCollege', 
+    label: 'Age to Start College', 
     type: 'number',
-    hint: 'Additional months beyond full years (0-11)' 
+    required: true,
+    section: "Child's Information",
+    hint: 'The age your child will begin college. Default is 18, but can be any age up to 25.' 
   },
   { 
-    name: 'capitalGainsRate', 
-    label: 'Capital Gains Tax Rate', 
+    name: 'yearsInCollege', 
+    label: 'Number of Years in College', 
     type: 'number',
-    format: 'percentage',
-    step: 0.1, 
-    hint: 'Long-term capital gains tax rate (typically 0%, 15%, or 20%)' 
+    required: true,
+    section: "Child's Information",
+    hint: 'Expected number of years your child will attend college (typically 4 years for undergraduate)' 
   },
+
+  // === College Costs ===
   { 
-    name: 'marginalTaxRate', 
-    label: 'Marginal Income Tax Rate', 
+    name: 'annualTuition', 
+    label: 'Annual Tuition (Current Cost)', 
     type: 'number',
-    format: 'percentage',
-    step: 0.1, 
-    hint: 'Your ordinary income tax rate' 
+    format: 'currency',
+    required: true,
+    section: 'College Costs',
+    hint: 'Current estimated cost of one year of tuition and books. Average 2024-25: Public in-state $11,610, Public out-of-state $30,780, Private $43,350' 
   },
   { 
-    name: 'inflationRate', 
-    label: 'Expected Inflation Rate', 
+    name: 'roomAndBoard', 
+    label: 'Annual Room & Board (Current Cost)', 
+    type: 'number',
+    format: 'currency',
+    required: true,
+    section: 'College Costs',
+    hint: 'Current estimated cost of one-year room, board, and other expenses. Average 2024-25: Public $18,300, Private $19,640' 
+  },
+  { 
+    name: 'educationInflation', 
+    label: 'Education Cost Inflation Rate', 
     type: 'number',
     format: 'percentage',
     step: 0.1,
-    hint: 'Long-term average inflation rate for present value calculations' 
-  },
-  { 
-    name: 'currentAge', 
-    label: 'Current Age', 
-    type: 'number',
     required: true,
-    hint: 'Your current age' 
+    section: 'College Costs',
+    hint: 'Expected annual increase in college costs. Historical average: 4.8% over past 30 years, recent: ~3%' 
+  },
+
+  // === Savings Plan ===
+  { 
+    name: 'currentSavings', 
+    label: 'Current Amount Saved', 
+    type: 'number',
+    format: 'currency',
+    required: true,
+    section: 'Savings Plan',
+    hint: 'Total amount you currently have saved for college education' 
   },
   { 
-    name: 'separatedAtAge55', 
-    label: 'Separated from Service at Age 55 or Older', 
-    type: 'select',
-    options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
-    ],
-    hint: 'Check if you separated in/after the year you turned 55 (no 10% penalty)' 
+    name: 'monthlyContribution', 
+    label: 'Monthly Contribution', 
+    type: 'number',
+    format: 'currency',
+    required: true,
+    section: 'Savings Plan',
+    hint: 'Dollar amount you plan to save per month. All amounts assumed to be added at the beginning of each month.' 
   },
   { 
-    name: 'retirementDistributionAfter59Half', 
-    label: 'Retirement Plan Distribution at Age 59½ or Older', 
-    type: 'select',
-    options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
-    ],
-    hint: 'Check if distribution occurs at/after age 59½ (no 10% penalty)' 
-  },
-  { 
-    name: 'iraDistributionAfter59Half', 
-    label: 'IRA Distribution at Age 59½ or Older', 
-    type: 'select',
-    options: [
-      { value: false, label: 'No' },
-      { value: true, label: 'Yes' }
-    ],
-    hint: 'Check if IRA distribution occurs at/after age 59½ (no 10% penalty)' 
+    name: 'rateOfReturn', 
+    label: 'Expected Annual Rate of Return', 
+    type: 'number',
+    format: 'percentage',
+    step: 0.1,
+    required: true,
+    section: 'Savings Plan',
+    hint: 'Expected annual return on investments. S&P 500: 11.2% avg 1970-2024, 14.9% avg last 10 years. Savings accounts: much lower but safer.' 
   },
 ];
