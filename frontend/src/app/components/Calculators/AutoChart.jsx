@@ -34,6 +34,34 @@ export const AutoChart = ({ config, results }) => {
         return new Intl.NumberFormat('en-US').format(value);
     };
 
+    const formatAxisValue = (value, format = 'number') => {
+        if (value === null || value === undefined) return '';
+        
+        if (format === 'currency') {
+            // Format large numbers more compactly for axis
+            const absValue = Math.abs(value);
+            if (absValue >= 1000000) {
+                return `$${(value / 1000000).toFixed(1)}M`;
+            } else if (absValue >= 1000) {
+                return `$${(value / 1000).toFixed(0)}K`;
+            }
+            return `$${value.toFixed(0)}`;
+        }
+        
+        if (format === 'percentage') {
+            return `${value.toFixed(0)}%`;
+        }
+        
+        // Regular number formatting
+        const absValue = Math.abs(value);
+        if (absValue >= 1000000) {
+            return `${(value / 1000000).toFixed(1)}M`;
+        } else if (absValue >= 1000) {
+            return `${(value / 1000).toFixed(0)}K`;
+        }
+        return value.toFixed(0);
+    };
+
     const CustomTooltip = ({ active, payload }) => {
         if (active && payload && payload.length) {
             return (
@@ -91,9 +119,10 @@ export const AutoChart = ({ config, results }) => {
                                 stroke="#245383"
                             />
                             <YAxis
-                                tickFormatter={(val) => formatValue(val, config.format)}
+                                tickFormatter={(val) => formatAxisValue(val, config.format)}
                                 label={config.yLabel ? { value: config.yLabel, angle: -90, position: 'insideLeft' } : undefined}
                                 stroke="#245383"
+                                width={80}
                             />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend />
@@ -129,8 +158,9 @@ export const AutoChart = ({ config, results }) => {
                             <CartesianGrid strokeDasharray="3 3" stroke="#378CE7" />
                             <XAxis dataKey={config.xKey} stroke="#245383" />
                             <YAxis
-                                tickFormatter={(val) => formatValue(val, config.format)}
+                                tickFormatter={(val) => formatAxisValue(val, config.format)}
                                 stroke="#245383"
+                                width={80}
                             />
                             <Tooltip content={<CustomTooltip />} />
                             <Legend />
@@ -160,13 +190,14 @@ export const AutoChart = ({ config, results }) => {
         case 'bar':
             return (
                 <div>
-                    <ResponsiveContainer width="100%" height={config.height || 300}>
+                    <ResponsiveContainer width="100%" height={config.height || 350}>
                         <BarChart data={data}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#378CE7" />
                             <XAxis dataKey={config.xKey} stroke="#245383" />
                             <YAxis
-                                tickFormatter={(val) => formatValue(val, config.format)}
+                                tickFormatter={(val) => formatAxisValue(val, config.format)}
                                 stroke="#245383"
+                                width={80}
                             />
                             <Tooltip content={<CustomTooltip />} />
                             {config.showLegend !== false && <Legend />}
