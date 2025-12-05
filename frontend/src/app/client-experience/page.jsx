@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Markdown from "../components/Markdown";
+import { LOGIN_URL, APPLE_STORE_URL, GOOGLE_PLAY_URL } from "@/lib/constant";
 
 const feature_list = [
     "Comprehensive Experience",
@@ -17,11 +18,6 @@ const feature_list = [
 ]
 
 export default function ClientPortalPage() {
-    // Replace this with the actual URL where your client logs in (e.g., Black Diamond portal)
-    const LOGIN_URL = "https://bd3.bdreporting.com/";
-    const APPLE_STORE_URL = "https://apps.apple.com/us/app/black-diamond-wealth-platform/id1326892984";
-    const GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=com.bdmobile&hl=en_US&gl=US";
-
     return (
         <>
             <section className="container mx-auto px-6 md:px-12 lg:px-20 pt-16 md:pt-24 font-work-sans">

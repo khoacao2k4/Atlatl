@@ -1,8 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { FaRegEnvelope, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { APPLE_STORE_URL, GOOGLE_PLAY_URL } from "@/lib/constant";
 
 export default function Footer() {
   const quickLinkItems = [
@@ -132,9 +131,13 @@ export default function Footer() {
         flex flex-col gap-2
         "
       >
-        <div className="flex justify-center gap-5">
-          <img src="/images/app-store.svg" alt="App Store" className="w-[150px]" />
-          <img src="/images/google-play.svg" alt="Google Play" className="w-[200px]" />
+        <div className="flex justify-center items-center gap-5">
+          <Link href={APPLE_STORE_URL} target="_blank" rel="noopener noreferrer">
+            <img src="/images/app-store.svg" alt="App Store" className="w-[150px]" />
+          </Link>
+          <Link href={GOOGLE_PLAY_URL} target="_blank" rel="noopener noreferrer">
+            <img src="/images/google-play.svg" alt="Google Play" className="w-[200px]" />
+          </Link>
         </div>
         <p>© 2025 Atlatl Advisers. All Rights Reserved.</p>
       </div>
