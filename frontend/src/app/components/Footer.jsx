@@ -7,12 +7,12 @@ export default function Footer() {
   const quickLinkItems = [
     { name: "Home", href: "/" },
     { name: "Why Atlatl", href: "/why-atlatl" },
-    { name: "Our Services", href: "/" },
-    { name: "Meet The Team", href: "/" },
-    { name: "Client Experience", href: "/" },
-    { name: "Contact Us", href: "/" },
-    { name: "FAQ", href: "/" },
-    { name: "Blog", href: "/" },
+    { name: "Our Services", href: "/services" },
+    { name: "Meet The Team", href: "/team" },
+    { name: "Client Experience", href: "/client-experience" },
+    { name: "Contact Us", href: "/contact-us" },
+    { name: "FAQ", href: "/resources/faq" },
+    { name: "Blog", href: "/resources" },
   ];
 
   const moreInfoItems = [

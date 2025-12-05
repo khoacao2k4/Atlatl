@@ -33,13 +33,13 @@ const resourceItems = [
     {
       name: "WHY ATLATL",
       desc: "Why Clients Choose Atlatl",
-      href: "/team",
+      href: "/why-atlatl",
       icon: <FiKey className="w-6 h-6 md:w-8 md:h-8" />
     },
     {
       name: "PROCESS",
       desc: "The Atlatl Way of Working",
-      href: "/team",
+      href: "/process",
       icon: <RiLoopLeftFill className="w-6 h-6 md:w-8 md:h-8" />
     },
   ];
@@ -146,7 +146,7 @@ export default function Navbar() {
             );
           }
         })}
-        <Link href="/log-in" className={loginButtonStyles}>
+        <Link href="/client-experience" className={loginButtonStyles}>
           LOGIN
         </Link>
       </div>
