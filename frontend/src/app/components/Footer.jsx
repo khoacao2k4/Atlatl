@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { FaRegEnvelope, FaInstagram, FaLinkedin } from "react-icons/fa";
-import { APPLE_STORE_URL, GOOGLE_PLAY_URL } from "@/lib/constant";
+import { APPLE_STORE_URL, GOOGLE_PLAY_URL, PHONE_NUMBER, EMAIL_ADDRESS, OFFICE_ADDRESS, GOOGLE_MAP_LINK } from "@/lib/constant";
 
 export default function Footer() {
   const quickLinkItems = [
@@ -40,23 +40,23 @@ export default function Footer() {
       <div className="flex flex-col gap-2">
         <h1 className={headingStyles}>ATLATL ADVISERS</h1>
         <ul className="flex flex-col gap-2 text-base">
-          <li className={listItemStyles}>
+          <li className={listItemStyles + " hover:underline underline-offset-4"}>
             <FaLocationDot size={20}/>
-            <div>
-              2921 Landmark Pl, Suite 501, Madison, WI 53713
-            </div>
+            <Link href={GOOGLE_MAP_LINK} target="_blank" rel="noopener noreferrer" className="group">
+              {OFFICE_ADDRESS}
+            </Link>
           </li>
           <li className={listItemStyles}>
             <FaRegEnvelope size={20}/>
-            <Link href="mailto:info@atlantladvisers.com" className="group">
-              info@atlantladvisers.com
+            <Link href={`mailto:${EMAIL_ADDRESS}`} className="group">
+              {EMAIL_ADDRESS}
               <span className={underlineStyles} />
             </Link>
           </li>
           <li className={listItemStyles}>
             <FaPhone size={20}/>
-            <Link href="tel:6083514500" className="group">
-              608-351-4500
+            <Link href={`tel:${PHONE_NUMBER}`} className="group">
+              {PHONE_NUMBER}
               <span className={underlineStyles} />
             </Link>
           </li>
