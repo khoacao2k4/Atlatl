@@ -1,10 +1,5 @@
 import { PostBlock, RecentBlogCard, FeaturedBlog } from '../components/resource/Post';
 import PostsSection from '../components/resource/PostsSection';
-const PlaceholderImage = ({ className }) => (
-  <div className={`animate-pulse relative overflow-hidden flex items-center justify-center ${className}`}>
-    <img src="https://placehold.co/600x400" alt="Placeholder" className="w-full h-full object-cover" />
-  </div>
-);
 
 export default function ResourcesPage() {
   return (

@@ -1,6 +1,6 @@
 const PlaceholderImage = ({ className }) => (
-    <div className={`animate-pulse relative overflow-hidden flex items-center justify-center ${className}`}>
-        <img src="https://placehold.co/600x400" alt="Placeholder" className="w-full h-full object-cover" />
+    <div className={`relative overflow-hidden flex items-center justify-center ${className}`}>
+        <img src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/400/600`} alt="Placeholder" className="w-full h-full object-cover" />
     </div>
 );
 

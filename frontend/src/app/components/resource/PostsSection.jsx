@@ -3,7 +3,7 @@ import { RecentBlogCard } from "./Post";
 export default function PostsSection({ name, }) {
     return (
         <div className="bg-light-blue rounded-[30px] p-8 md:p-10">
-            <h2 className="text-2xl md:text-3xl font-songer text-black mb-6 uppercase">
+            <h2 className="text-2xl md:text-3xl font-songer text-black mb-6 uppercase pl-6">
                 {name}
             </h2>
 
