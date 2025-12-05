@@ -15,9 +15,8 @@ export const config = {
     /*
     Biweekly Payment Strategy:
     - Pay 1/2 of monthly payment every 2 weeks (26 payments per year = 13 monthly payments)
-    - Every 6th payment includes an extra 1/2 payment (making it 1.5x monthly payment)
     - This results in one extra monthly payment per year going directly to principal
-    - Also handle optional escrow and prepayment amounts
+    - Interest still accrues monthly based on the outstanding balance
     */
 
     const principal = data.mortgageAmount;
@@ -60,37 +59,36 @@ export const config = {
       if (balance <= 0) break;
     }
 
-    // Biweekly calculation
+    // Biweekly calculation - simulate 26 payments per year
     const biweeklyPayment = monthlyPayment / 2;
     const biweeklyEscrow = data.monthlyEscrow / 2;
     const biweeklyPrepayment = data.monthlyPrepayment / 2;
     
-    // Biweekly rate (approximate: monthly rate / 2)
-    const biweeklyRate = monthlyRate / 2;
-
-    // Simulate biweekly payments with extra payment every 6th payment
+    // Simulate month-by-month with biweekly payments
+    // Each month gets 2 biweekly payments, plus every 6th month gets an extra payment (26 total/year)
     let biweeklyBalance = currentBalance;
     let biweeklyInterestPaid = 0;
     let biweeklyPaymentCount = 0;
-    let paymentNumber = 0;
+    let monthCount = 0;
 
-    while (biweeklyBalance > 0 && biweeklyPaymentCount < 2000) { // Safety limit
-      biweeklyPaymentCount++;
-      paymentNumber++;
+    while (biweeklyBalance > 0.01 && monthCount < 500) {
+      monthCount++;
       
-      const interest = biweeklyBalance * biweeklyRate;
-      biweeklyInterestPaid += interest;
+      // Calculate monthly interest
+      const monthlyInterest = biweeklyBalance * monthlyRate;
+      biweeklyInterestPaid += monthlyInterest;
       
-      // Every 6th payment is 1.5x the normal payment (creating the extra annual payment)
-      const principalPayment = (paymentNumber % 6 === 0) 
-        ? (biweeklyPayment * 1.5) - interest + biweeklyPrepayment
-        : biweeklyPayment - interest + biweeklyPrepayment;
+      // Determine number of payments this month (2 or 3)
+      // Every 6th month gets 3 payments to reach 26 payments per year
+      const paymentsThisMonth = (monthCount % 6 === 0) ? 3 : 2;
+      biweeklyPaymentCount += paymentsThisMonth;
       
-      biweeklyBalance -= principalPayment;
+      // Total principal paid this month
+      const totalPrincipalThisMonth = (paymentsThisMonth * (biweeklyPayment + biweeklyPrepayment)) - monthlyInterest;
+      
+      biweeklyBalance -= totalPrincipalThisMonth;
       
       if (biweeklyBalance < 0) {
-        // Adjust final payment
-        biweeklyInterestPaid += biweeklyBalance * biweeklyRate;
         biweeklyBalance = 0;
       }
     }
@@ -141,7 +139,7 @@ export const config = {
       biweeklySchedule: [
         { label: 'Remaining Payments', value: biweeklyPaymentCount, format: 'number' },
         { label: 'Total Interest to be Paid', value: biweeklyInterestPaid, format: 'currency' },
-        { label: 'Payoff Time', value: `${Math.floor(biweeklyPaymentCount / 26)} years ${Math.round((biweeklyPaymentCount % 26) / 2.17)} months`, format: 'text' },
+        { label: 'Payoff Time', value: `${(biweeklyPaymentCount / 26).toFixed(1)} years`, format: 'text' },
       ],
 
       savingsBreakdown: [
@@ -151,8 +149,8 @@ export const config = {
 
       notes: [
         'Biweekly payments are achieved by paying half your monthly payment every two weeks.',
-        'Every 6th payment includes an extra half payment (1.5x normal biweekly amount).',
-        'This results in the equivalent of one extra monthly payment per year.',
+        'This results in 26 payments per year (equivalent to 13 full monthly payments).',
+        'The extra annual payment goes directly toward principal, reducing interest and loan term.',
         `Current monthly payment: ${formatCurrency(monthlyPayment)} (principal & interest only)`,
         data.monthlyEscrow > 0 ? `Monthly escrow: ${formatCurrency(data.monthlyEscrow)} (${formatCurrency(biweeklyEscrow)} biweekly)` : null,
         data.monthlyPrepayment > 0 ? `Monthly prepayment: ${formatCurrency(data.monthlyPrepayment)} (${formatCurrency(biweeklyPrepayment)} biweekly)` : null,
