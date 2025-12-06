@@ -1,27 +1,25 @@
-'use client'
-
-import ContactForm from "@/app/components/contact/ContactForm";
-import CtaSection from "@/app/components/homepage/CtaSection";
 import { getFAQContent } from '@/lib/strapi';
 import FaqSection from '@/app/components/service/FaqSection';
 import { getMediaComponent } from "@/lib/helper";
-import Link from "next/link";
-import { useState } from "react";
 
-export function RoadmapTextSection({stepNum, title, children }) {
-    return (
-        <div className="w-full lg:w-1/2 px-4 justify-center flex flex-col gap-6 items-center">
-            <div>
-                <div className="flex flex-row text-dark-blue text-bold font-songer items-end gap-3">
-                    <h1 className="text-7xl">{stepNum}</h1>
-                    <span><h6 className="text-3xl">{title}</h6></span>
-                </div>
-                <div className="font-work-sans lg:max-w-5/6 text-center md:text-left">
-                    {children}
-                </div>
-            </div>
+export function RoadmapTextSection({ stepNum, title, children }) {
+  return (
+    <div className="w-full lg:w-1/2 px-0 md:px-4 justify-center flex flex-col gap-4 md:gap-6 items-center md:items-start">
+      <div className="flex flex-col space-y-4">
+        {/* Header: Number and Title */}
+        <div className="flex flex-row text-dark-blue font-bold font-songer items-baseline justify-center md:justify-start gap-3">
+          {/* Responsive text sizes: smaller on mobile, larger on md+ */}
+          <h1 className="text-5xl md:text-7xl leading-none">{stepNum}</h1>
+          <h6 className="text-2xl md:text-3xl leading-none">{title}</h6>
         </div>
-    )
+        
+        {/* Description Text */}
+        <div className="font-work-sans w-full text-center md:text-left text-base md:text-lg text-gray-700">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export function RoadmapImageSection({ imageUrl }) {
@@ -96,23 +94,19 @@ export function RoadmapShort() {
 }
 
 export default async function ProcessPage() {
-
-    const [hasFAQ, setHasFAQ] = useState(true); 
     const faqs = await getFAQContent();
-    if (!faqs || !faqs.topics || faqs.topics.length === 0) {
-        setHasFAQ(() => false);
-    }    
+    const hasFAQ = faqs && faqs.topics && faqs.topics.length > 0;
 
   return (
     <main className="bg-white">
       <section className="container mx-auto px-6 xl:px-20 py-16 md:py-24">
         {/* --- PAGE TITLE --- */}
-        <h1 className="text-6xl md:text-7xl lg:text-8xl font-songer text-darker-bold-blue font-bold text-center uppercase tracking-wide mb-16">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-songer text-darker-bold-blue font-bold text-center uppercase tracking-wide mb-16">
           PROCESS
         </h1>
         {/* --- SUBTITLE --- */}
         <div className="text-center font-work-sans space-y-8 text-dark-blue ">
-            <p className="text-3xl md:text-4xl lg:text-5xl font-bold">
+            <p className="text-xl md:text-2xl lg:text-3xl font-bold">
                 A thoughtful, personalized approach to building max financial success
             </p>
             <p className="text-xl text-gray-700 max-w-8xl mx-auto">
@@ -130,16 +124,15 @@ export default async function ProcessPage() {
         <div className="flex items-center">
             <Roadmap />
         </div>
-
-        {
-            /** FAQ */
-            hasFAQ && (
-                <section className="bg-white py-16 md:py-24">
-                    <FaqSection faqBlocks={faqs.topics} />
-                </section>
-            )
-        }
       </section>
+      {
+          /** FAQ */
+          hasFAQ && (
+              <section className="bg-white py-16 md:py-24">
+                  <FaqSection faqBlocks={faqs.topics} />
+              </section>
+          )
+      }
     </main>
   );
 }
