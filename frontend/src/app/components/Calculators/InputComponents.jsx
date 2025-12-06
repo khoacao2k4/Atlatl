@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 
-// Shared utilities & constants
+// ============================================================================
+// CONSTANTS
+// ============================================================================
 
 const INPUT_STYLES = {
   base: 'w-full px-3 py-2 border-2 rounded-lg font-work-sans transition-all',
@@ -9,6 +11,30 @@ const INPUT_STYLES = {
   error: 'border-red-500'
 };
 
+const DATE_CONFIG = {
+  MONTH: { maxLength: 2, placeholder: 'MM' },
+  DAY: { maxLength: 2, placeholder: 'DD' },
+  YEAR: { maxLength: 4, placeholder: 'YYYY' }
+};
+
+const DEFAULT_TEXT_MAX_LENGTH = 100;
+const DEFAULT_CURRENCY_MAX_LENGTH = 15;
+const DEFAULT_PERCENTAGE_MAX_LENGTH = 6;
+const DEFAULT_PERCENTAGE_MAX_DECIMALS = 2;
+const YEAR_CUTOFF_FOR_CENTURY = 50;
+const CENTURY_PREFIX_OLD = '19';
+const CENTURY_PREFIX_NEW = '20';
+const MIN_VALID_YEAR = 1900;
+const DIGITS_FOR_FULL_DATE = 8;
+const DIGITS_FOR_SHORT_DATE = 6;
+
+// ============================================================================
+// SHARED UTILITIES
+// ============================================================================
+
+/**
+ * Generates input className based on state
+ */
 const getInputClassName = (disabled, error = false) => {
   const classes = [INPUT_STYLES.base];
 
@@ -25,14 +51,17 @@ const getInputClassName = (disabled, error = false) => {
   return classes.join(' ');
 };
 
-// Text Input
+// ============================================================================
+// TEXT INPUT COMPONENT
+// ============================================================================
+
 export const TextInput = React.memo(({
   value,
   onChange,
   onBlur,
   placeholder,
   disabled,
-  maxLength = 100
+  maxLength = DEFAULT_TEXT_MAX_LENGTH
 }) => {
   const handleChange = useCallback((e) => {
     const inputValue = e.target.value;
@@ -65,7 +94,13 @@ export const TextInput = React.memo(({
 
 TextInput.displayName = 'TextInput';
 
-// Currency Input
+// ============================================================================
+// CURRENCY INPUT COMPONENT
+// ============================================================================
+
+/**
+ * Formats a numeric value as currency (without $ symbol)
+ */
 const formatCurrency = (value) => {
   if (!value && value !== 0) return '';
   const absValue = Math.abs(value);
@@ -73,6 +108,14 @@ const formatCurrency = (value) => {
   return value < 0 ? `-${formatted}` : formatted;
 };
 
+/**
+ * Parses numeric input with validation
+ * @param {string} input - Raw input string
+ * @param {number} maxLength - Maximum number of digits allowed
+ * @param {boolean} allowNegative - Whether to allow negative numbers
+ * @param {boolean} allowDecimals - Whether to allow decimal points
+ * @returns {string|number|null} Parsed number or string for partial inputs
+ */
 const parseNumericInput = (input, maxLength, allowNegative = true, allowDecimals = true) => {
   if (input === '' || input === '-') return input === '-' && allowNegative ? '-' : '';
 
@@ -81,7 +124,7 @@ const parseNumericInput = (input, maxLength, allowNegative = true, allowDecimals
     return input;
   }
 
-  // Build regex based on what's allowed
+  // Build regex pattern based on what's allowed
   let pattern = '[^0-9';
   if (allowNegative) pattern += '-';
   if (allowDecimals) pattern += '.';
@@ -126,7 +169,7 @@ export const CurrencyInput = React.memo(({
   onBlur,
   placeholder = '0',
   disabled,
-  maxLength = 15,
+  maxLength = DEFAULT_CURRENCY_MAX_LENGTH,
   allowNegative = true,
   allowDecimals = true
 }) => {
@@ -222,7 +265,10 @@ export const CurrencyInput = React.memo(({
 
 CurrencyInput.displayName = 'CurrencyInput';
 
-// Lock icon component
+// ============================================================================
+// LOCK ICON COMPONENT
+// ============================================================================
+
 const LockIcon = ({ className }) => (
   <svg
     className={className}
@@ -239,7 +285,13 @@ const LockIcon = ({ className }) => (
   </svg>
 );
 
-// Percentage Input
+// ============================================================================
+// PERCENTAGE INPUT COMPONENT
+// ============================================================================
+
+/**
+ * Parses percentage input with validation
+ */
 const parsePercentageInput = (input, maxLength, maxDecimals, allowNegative = true) => {
   if (input === '' || (input === '-' && allowNegative)) {
     return input;
@@ -296,8 +348,8 @@ export const PercentageInput = React.memo(({
   onBlur,
   placeholder = '0',
   disabled,
-  maxLength = 6,
-  maxDecimals = 2,
+  maxLength = DEFAULT_PERCENTAGE_MAX_LENGTH,
+  maxDecimals = DEFAULT_PERCENTAGE_MAX_DECIMALS,
   allowNegative = true
 }) => {
   const [inputValue, setInputValue] = useState('');
@@ -378,17 +430,18 @@ export const PercentageInput = React.memo(({
 
 PercentageInput.displayName = 'PercentageInput';
 
-// Date input
-const DATE_CONFIG = {
-  MONTH: { maxLength: 2, placeholder: 'MM' },
-  DAY: { maxLength: 2, placeholder: 'DD' },
-  YEAR: { maxLength: 4, placeholder: 'YYYY' }
-};
+// ============================================================================
+// DATE INPUT COMPONENT
+// ============================================================================
 
+/**
+ * Parses a string of digits into date components
+ * Supports YYYY-MM-DD, MM-DD-YYYY, and MM-DD-YY formats
+ */
 const parseDateFromDigits = (digits) => {
-  if (digits.length === 8) {
+  if (digits.length === DIGITS_FOR_FULL_DATE) {
     // Check if YYYY-MM-DD format (year first)
-    if (parseInt(digits.slice(0, 4)) > 1900) {
+    if (parseInt(digits.slice(0, 4)) > MIN_VALID_YEAR) {
       return {
         year: digits.slice(0, 4),
         month: digits.slice(4, 6),
@@ -403,10 +456,12 @@ const parseDateFromDigits = (digits) => {
     };
   }
 
-  if (digits.length === 6) {
+  if (digits.length === DIGITS_FOR_SHORT_DATE) {
     // MM-DD-YY format
     const shortYear = digits.slice(4, 6);
-    const yearPrefix = parseInt(shortYear) > 50 ? '19' : '20';
+    const yearPrefix = parseInt(shortYear) > YEAR_CUTOFF_FOR_CENTURY
+      ? CENTURY_PREFIX_OLD
+      : CENTURY_PREFIX_NEW;
 
     return {
       month: digits.slice(0, 2),
@@ -418,6 +473,9 @@ const parseDateFromDigits = (digits) => {
   return null;
 };
 
+/**
+ * Validates that month, day, and year form a valid date
+ */
 const validateDate = (month, day, year) => {
   if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
     return false;

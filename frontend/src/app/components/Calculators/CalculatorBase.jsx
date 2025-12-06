@@ -11,7 +11,10 @@ import {
 } from './InputComponents';
 import { EmailGateOverlay } from './EmailGateOverlay';
 
-// Constants & Utilities
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
 const INPUT_TYPES = {
     TEXT: 'text',
     NUMBER: 'number',
@@ -34,44 +37,62 @@ const BUTTON_STYLES = {
     secondary: 'px-8 py-3 bg-white text-bold-blue border-2 border-bold-blue font-bold rounded-lg shadow-sm hover:bg-bold-blue hover:text-white transition-colors'
 };
 
-const INPUT_BASE_STYLES = 'w-full px-3 py-2 border-2 rounded-lg font-work-sans transition-all';
-const INPUT_DISABLED_STYLES = 'bg-gray-50 border-gray-300 text-gray-600 cursor-not-allowed';
-const INPUT_ENABLED_STYLES = 'border-bold-blue focus:ring-2 focus:ring-bold-blue';
+const INPUT_STYLES = {
+    base: 'w-full px-3 py-2 border-2 rounded-lg font-work-sans transition-all',
+    disabled: 'bg-gray-50 border-gray-300 text-gray-600 cursor-not-allowed',
+    enabled: 'border-bold-blue focus:ring-2 focus:ring-bold-blue',
+};
 
-// Formatting Utilities
+const DEFAULT_SECTION_NAME = 'Default';
+const STORAGE_KEY_EMAIL_SUBMITTED = 'calculatorEmailSubmitted';
+const DECIMAL_PLACES = 2;
+
+// ============================================================================
+// FORMATTING UTILITIES
+// ============================================================================
+
 const formatters = {
     [FORMAT_TYPES.CURRENCY]: (value) => {
         if (value == null) return 'N/A';
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
+            minimumFractionDigits: DECIMAL_PLACES,
+            maximumFractionDigits: DECIMAL_PLACES,
         }).format(value);
     },
 
     [FORMAT_TYPES.PERCENTAGE]: (value) => {
         if (value == null) return 'N/A';
-        return `${value.toFixed(2)}%`;
+        return `${value.toFixed(DECIMAL_PLACES)}%`;
     },
 
     [FORMAT_TYPES.NUMBER]: (value) => {
         if (value == null) return 'N/A';
         return new Intl.NumberFormat('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
+            minimumFractionDigits: DECIMAL_PLACES,
+            maximumFractionDigits: DECIMAL_PLACES,
         }).format(value);
     },
 
     [FORMAT_TYPES.TEXT]: (value) => value || 'N/A',
 };
 
+/**
+ * Formats a value according to the specified format type
+ * @param {*} value - The value to format
+ * @param {string} format - The format type from FORMAT_TYPES
+ * @returns {string} Formatted value or original value if no formatter exists
+ */
 const formatValue = (value, format) => {
     const formatter = formatters[format];
     return formatter ? formatter(value) : value;
 };
 
-// Sub-components
+// ============================================================================
+// UI SUB-COMPONENTS
+// ============================================================================
+
 const FieldLabel = ({ label, required, disabled }) => (
     <label className="block text-sm font-medium text-black mb-1 font-work-sans">
         {label}
@@ -144,14 +165,20 @@ const ResultBreakdown = ({ breakdown }) => (
     </div>
 );
 
-// Input renderers
+// ============================================================================
+// INPUT COMPONENTS
+// ============================================================================
+
+const getInputClassName = (disabled) =>
+    `${INPUT_STYLES.base} ${disabled ? INPUT_STYLES.disabled : INPUT_STYLES.enabled}`;
+
 const SelectInput = ({ input, register, disabled, handleFieldChange }) => (
     <select
         {...register(input.name, {
             onChange: (e) => handleFieldChange(input, e.target.value)
         })}
         disabled={disabled}
-        className={`${INPUT_BASE_STYLES} ${disabled ? INPUT_DISABLED_STYLES : INPUT_ENABLED_STYLES}`}
+        className={getInputClassName(disabled)}
     >
         {input.options.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -166,7 +193,8 @@ const CheckboxInput = ({ input, register, disabled, handleFieldChange }) => (
             onChange: (e) => handleFieldChange(input, e.target.checked)
         })}
         disabled={disabled}
-        className={`w-5 h-5 border-2 rounded transition-all ${disabled ? 'border-gray-300 cursor-not-allowed' : 'border-bold-blue focus:ring-2 focus:ring-bold-blue'}`}
+        className={`w-5 h-5 border-2 rounded transition-all ${disabled ? 'border-gray-300 cursor-not-allowed' : 'border-bold-blue focus:ring-2 focus:ring-bold-blue'
+            }`}
     />
 );
 
@@ -220,7 +248,7 @@ const NumberInput = ({ input, control, disabled, handleFieldChange }) => (
                 step={input.step}
                 disabled={disabled}
                 placeholder={input.placeholder}
-                className={`${INPUT_BASE_STYLES} ${disabled ? INPUT_DISABLED_STYLES : INPUT_ENABLED_STYLES}`}
+                className={getInputClassName(disabled)}
             />
         )}
     />
@@ -235,11 +263,13 @@ const FallbackInput = ({ input, register, disabled, handleFieldChange }) => (
         placeholder={input.placeholder}
         step={input.step}
         disabled={disabled}
-        className={`${INPUT_BASE_STYLES} ${disabled ? INPUT_DISABLED_STYLES : INPUT_ENABLED_STYLES}`}
+        className={getInputClassName(disabled)}
     />
 );
 
-// Input Renderer (Factory)
+/**
+ * Factory component that renders the appropriate input based on type and format
+ */
 const InputRenderer = ({ input, register, control, disabled, handleFieldChange }) => {
     const props = { input, register, control, disabled, handleFieldChange };
 
@@ -266,7 +296,10 @@ const InputRenderer = ({ input, register, control, disabled, handleFieldChange }
     return <FallbackInput {...props} />;
 };
 
-// Form Field Component
+// ============================================================================
+// FORM COMPONENTS
+// ============================================================================
+
 const FormField = ({
     input,
     register,
@@ -298,7 +331,15 @@ const FormField = ({
     </div>
 );
 
-// Section Component
+/**
+ * Checks if an input should be visible based on conditional rules
+ */
+const isInputVisible = (input, formData) => {
+    if (!input.conditional) return true;
+    const fieldValue = formData[input.conditional.field];
+    return fieldValue === input.conditional.value;
+};
+
 const FormSection = ({
     section,
     inputs,
@@ -309,17 +350,15 @@ const FormSection = ({
     handleFieldChange
 }) => {
     const visibleInputs = inputs.filter(input => {
-        if (!input.conditional) return true;
         const formData = getValues();
-        const fieldValue = formData[input.conditional.field];
-        return fieldValue === input.conditional.value;
+        return isInputVisible(input, formData);
     });
 
     if (visibleInputs.length === 0) return null;
 
     return (
         <div className="space-y-4">
-            {section !== 'Default' && (
+            {section !== DEFAULT_SECTION_NAME && (
                 <h3 className="text-lg font-bold text-dark-blue font-songer border-b-2 border-bold-blue pb-2">
                     {section}
                 </h3>
@@ -345,20 +384,44 @@ const FormSection = ({
     );
 };
 
-// Main calculator component
+// ============================================================================
+// MAIN CALCULATOR COMPONENT
+// ============================================================================
+
+/**
+ * Retrieves email submission status from sessionStorage
+ */
+const getEmailSubmittedStatus = () => {
+    if (typeof window === 'undefined') return false;
+    return sessionStorage.getItem(STORAGE_KEY_EMAIL_SUBMITTED) === 'true';
+};
+
+/**
+ * Stores email submission status in sessionStorage
+ */
+const setEmailSubmittedStatus = (value) => {
+    if (typeof window === 'undefined') return;
+    sessionStorage.setItem(STORAGE_KEY_EMAIL_SUBMITTED, String(value));
+};
+
+/**
+ * Groups inputs by their section property
+ */
+const groupInputsBySection = (inputs) => {
+    return inputs.reduce((acc, input) => {
+        const section = input.section || DEFAULT_SECTION_NAME;
+        if (!acc[section]) acc[section] = [];
+        acc[section].push(input);
+        return acc;
+    }, {});
+};
+
 export const CalculatorBase = ({ config }) => {
     const [results, setResults] = useState(null);
     const [formTrigger, setFormTrigger] = useState(0);
     const [showEmailGate, setShowEmailGate] = useState(false);
     const [pendingData, setPendingData] = useState(null);
-
-    // Check sessionStorage on mount
-    const [emailSubmitted, setEmailSubmitted] = useState(() => {
-        if (typeof window !== 'undefined') {
-            return sessionStorage.getItem('calculatorEmailSubmitted') === 'true';
-        }
-        return false;
-    });
+    const [emailSubmitted, setEmailSubmitted] = useState(getEmailSubmittedStatus);
 
     const {
         register,
@@ -376,30 +439,21 @@ export const CalculatorBase = ({ config }) => {
     });
 
     const onSubmit = useCallback((data) => {
-        // Check if this calculator requires email gate
         const requiresEmailGate = config.requireEmailGate === true;
 
         if (requiresEmailGate && !emailSubmitted) {
-            // Show email gate and store the data
             setPendingData(data);
             setShowEmailGate(true);
         } else {
-            // Calculate and show results immediately
             setResults(config.calculate(data));
         }
     }, [config, emailSubmitted]);
 
     const handleEmailSubmit = useCallback((email) => {
-        // Mark email as submitted and store in sessionStorage
         setEmailSubmitted(true);
-        if (typeof window !== 'undefined') {
-            sessionStorage.setItem('calculatorEmailSubmitted', 'true');
-        }
-
-        // Close modal
+        setEmailSubmittedStatus(true);
         setShowEmailGate(false);
 
-        // Calculate and show results with the pending data
         if (pendingData) {
             setResults(config.calculate(pendingData));
             setPendingData(null);
@@ -427,12 +481,7 @@ export const CalculatorBase = ({ config }) => {
     }, [getValues, setValue]);
 
     const groupedInputs = useMemo(() =>
-        config.inputs.reduce((acc, input) => {
-            const section = input.section || 'Default';
-            if (!acc[section]) acc[section] = [];
-            acc[section].push(input);
-            return acc;
-        }, {}),
+        groupInputsBySection(config.inputs),
         [config.inputs]
     );
 
@@ -463,7 +512,7 @@ export const CalculatorBase = ({ config }) => {
                             Input Values
                         </h2>
 
-                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="space-y-6">
                             {Object.entries(groupedInputs).map(([section, inputs]) => (
                                 <FormSection
                                     key={section}
@@ -478,14 +527,14 @@ export const CalculatorBase = ({ config }) => {
                             ))}
 
                             <div className="flex gap-3 pt-4">
-                                <button type="submit" className={BUTTON_STYLES.primary}>
+                                <button onClick={handleSubmit(onSubmit)} className={BUTTON_STYLES.primary}>
                                     Calculate
                                 </button>
-                                <button type="button" onClick={handleReset} className={BUTTON_STYLES.secondary}>
+                                <button onClick={handleReset} className={BUTTON_STYLES.secondary}>
                                     Reset
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </section>
 
                     {/* Results Panel */}
