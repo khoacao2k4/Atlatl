@@ -389,19 +389,19 @@ const FormSection = ({
 // ============================================================================
 
 /**
- * Retrieves email submission status from sessionStorage
+ * Retrieves email submission status from localStorage
  */
 const getEmailSubmittedStatus = () => {
     if (typeof window === 'undefined') return false;
-    return sessionStorage.getItem(STORAGE_KEY_EMAIL_SUBMITTED) === 'true';
+    return localStorage.getItem(STORAGE_KEY_EMAIL_SUBMITTED) === 'true';
 };
 
 /**
- * Stores email submission status in sessionStorage
+ * Stores email submission status in localStorage
  */
 const setEmailSubmittedStatus = (value) => {
     if (typeof window === 'undefined') return;
-    sessionStorage.setItem(STORAGE_KEY_EMAIL_SUBMITTED, String(value));
+    localStorage.setItem(STORAGE_KEY_EMAIL_SUBMITTED, String(value));
 };
 
 /**
