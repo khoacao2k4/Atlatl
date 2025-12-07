@@ -37,9 +37,19 @@ const BUTTON_STYLES = {
     secondary: 'px-8 py-3 bg-white text-bold-blue border-2 border-bold-blue font-bold rounded-lg shadow-sm hover:bg-bold-blue hover:text-white transition-colors'
 };
 
-const INPUT_BASE_STYLES = 'w-full px-3 py-2 border-2 rounded-lg font-tenorite transition-all';
-const INPUT_DISABLED_STYLES = 'bg-gray-50 border-gray-300 text-gray-600 cursor-not-allowed';
-const INPUT_ENABLED_STYLES = 'border-bold-blue focus:ring-2 focus:ring-bold-blue';
+const INPUT_STYLES = {
+    base: 'w-full px-3 py-2 border-2 rounded-lg font-work-sans transition-all',
+    disabled: 'bg-gray-50 border-gray-300 text-gray-600 cursor-not-allowed',
+    enabled: 'border-bold-blue focus:ring-2 focus:ring-bold-blue',
+};
+
+const DEFAULT_SECTION_NAME = 'Default';
+const STORAGE_KEY_EMAIL_SUBMITTED = 'calculatorEmailSubmitted';
+const DECIMAL_PLACES = 2;
+
+// ============================================================================
+// FORMATTING UTILITIES
+// ============================================================================
 
 const formatters = {
     [FORMAT_TYPES.CURRENCY]: (value) => {
@@ -476,25 +486,12 @@ export const CalculatorBase = ({ config }) => {
     );
 
     return (
-<<<<<<< HEAD
         <>
             <EmailGateOverlay
                 isOpen={showEmailGate}
                 onSubmit={handleEmailSubmit}
                 onCancel={handleEmailCancel}
             />
-=======
-        <div className="max-w-6xl mx-auto px-10 py-16">
-            {/* Header */}
-            <header className="mb-12 text-center">
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-black font-songer">
-                    {config.title}
-                </h1>
-                <p className="text-black text-lg mt-6 font-tenorite">
-                    {config.description}
-                </p>
-            </header>
->>>>>>> main
 
             <div className="max-w-6xl mx-auto px-10 py-16">
                 {/* Header */}
