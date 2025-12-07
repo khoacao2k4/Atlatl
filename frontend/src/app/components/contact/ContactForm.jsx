@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FaChevronDown } from "react-icons/fa6";
+import { useGoogleSheetsLogger } from '@/lib/google-sheets/useGoogleSheetsLogger';
 
 // Zod schema for form validation
 const contactSchema = z.object({
@@ -33,13 +34,27 @@ export default function ContactForm() {
     }
   });
 
+  const { logToGoogleSheets, isLoading } = useGoogleSheetsLogger();
+
   // Handle Submit
   const onSubmit = async (data) => {
     console.log("Valid Form Data:", data);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    alert("Form submitted successfully!");
-    reset();
+    
+    // Log to Google Sheets
+    const result = await logToGoogleSheets('ContactFormSubmissions', {
+      name: `${data.firstName} ${data.lastName}`,
+      email: data.email,
+      phone: data.phone,
+      service: data.service,
+      message: data.message || 'N/A'
+    });
+
+    if (result.success) {
+      alert("Form submitted successfully!");
+      reset();
+    } else {
+      alert("Failed to submit. Please try again.");
+    }
   };
 
   // Helper styles
@@ -136,12 +151,12 @@ export default function ContactForm() {
         <div className="flex justify-center pt-4">
           <button 
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isLoading}
             className="bg-bold-blue text-white font-bold py-3 px-8 shadow-md rounded-full uppercase font-songer
                 hover:bg-white hover:text-bold-blue hover:shadow-[0_0px_15px_-3px_rgba(0,0,0,0.3)] 
                 transition-all duration-300 transform hover:-translate-y-0.5 hover:cursor-pointer"
           >
-            {isSubmitting ? "SENDING..." : "SUBMIT"}
+            {isSubmitting || isLoading ? "SENDING..." : "SUBMIT"}
           </button>
         </div>
       </form>
