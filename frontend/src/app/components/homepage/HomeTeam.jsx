@@ -11,7 +11,7 @@ export default async function HomeTeam({ half_toggle = true }) {
         <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold font-songer">
           PEOPLE WITH A PURPOSE
         </h1>
-        <p className="text-lg md:text-xl px-[20%] py-8 text-left sm:text-center">
+        <p className="text-lg md:text-xl px-[10%] py-8 text-center">
           We strive to hire, inspire, and invest in the best talent across our
           respective disciplines and empower our team to thrive in an
           environment of respect. Our ability to celebrate different

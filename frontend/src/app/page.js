@@ -4,6 +4,7 @@ import { getHomepageContent } from "@/lib/strapi";
 import AboutUs from "./components/homepage/AboutUs";
 import Hero from "./components/homepage/Hero";
 import CtaSection from "./components/homepage/CtaSection";
+import ServiceCarousel from "./components/homepage/ServiceCarousel";
 
 export default async function Home() {
   const homepageContent = await getHomepageContent();
@@ -23,6 +24,10 @@ export default async function Home() {
         <HomeTeam />
       </section>
 
+      <section className="py-16 md:py-24 text-white">
+        <ServiceCarousel />
+      </section>
+      
       <section className="py-16 md:py-24 text-white">
         <HomeFootnote />
       </section>
