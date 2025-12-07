@@ -4,6 +4,7 @@ import { getHomepageContent } from "@/lib/strapi";
 import AboutUs from "./components/homepage/AboutUs";
 import Hero from "./components/homepage/Hero";
 import CtaSection from "./components/homepage/CtaSection";
+import ChatbotWidget from "./components/chatbot/Chatbot";
 
 export default async function Home() {
   const homepageContent = await getHomepageContent();
@@ -29,6 +30,10 @@ export default async function Home() {
 
       <section className="bg-darker-light-blue">
         <CtaSection />
+      </section>
+
+      <section>
+        <ChatbotWidget />
       </section>
     </div>
   );
