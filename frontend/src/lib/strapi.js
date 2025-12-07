@@ -111,3 +111,17 @@ export async function getFAQContent() {
   
   return json.data;
 }
+
+export async function getProcessContent() {
+  const path = "/api/processpage";
+  const params = "?populate[0]=step.symbol";
+  const options = { cache: "no-store" };
+
+  const json = await fetchStrapiData(path, params, options);
+  if (!json || !json.data) {
+    console.warn("No process content found or API error.");
+    return null;
+  }
+  
+  return json.data;
+}
