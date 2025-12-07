@@ -7,7 +7,7 @@ export interface FaqQuestionBlock extends Struct.ComponentSchema {
   };
   attributes: {
     answer: Schema.Attribute.RichText & Schema.Attribute.Required;
-    question: Schema.Attribute.String & Schema.Attribute.Required;
+    question: Schema.Attribute.Text & Schema.Attribute.Required;
   };
 }
 
@@ -26,6 +26,20 @@ export interface FaqTopicQuestionBlock extends Struct.ComponentSchema {
         },
         number
       >;
+  };
+}
+
+export interface ProcessProcessStep extends Struct.ComponentSchema {
+  collectionName: 'components_process_process_steps';
+  info: {
+    displayName: 'Process Step';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    symbol: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -67,6 +81,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'faq.question-block': FaqQuestionBlock;
       'faq.topic-question-block': FaqTopicQuestionBlock;
+      'process.process-step': ProcessProcessStep;
       'service.service-block': ServiceServiceBlock;
       'service.service-text-pair': ServiceServiceTextPair;
     }
