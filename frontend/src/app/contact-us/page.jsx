@@ -20,7 +20,7 @@ export default function ContactUsPage() {
           {/* --- LEFT COLUMN: INFO --- */}
           <div className="w-full lg:w-5/12 items-center flex flex-col gap-8">
             <div className="max-w-[350px]">
-              <img src="/images/Atlatl_Logo_blue.svg" alt="Atlatl Advisers" className="w-full object-contain" />
+              <img src="images/Atlatl_Logo_blue.svg" alt="Atlatl Advisers" className="w-full object-contain" />
             </div>
 
             <div className="font-tenorite text-darker-bold-blue text-xl space-y-6 pl-5 -mt-10">
