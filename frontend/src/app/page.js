@@ -1,13 +1,21 @@
 import HomeTeam from "./components/homepage/HomeTeam";
-import HomeFootnote from "./components/homepage/ProcessTable";
-import { getHomepageContent } from "@/lib/strapi";
+import ProcessTable from "./components/homepage/ProcessTable";
+import { getHomepageContent, getProcessContent } from "@/lib/strapi";
 import AboutUs from "./components/homepage/AboutUs";
 import Hero from "./components/homepage/Hero";
 import CtaSection from "./components/homepage/CtaSection";
 import ServiceCarousel from "./components/homepage/ServiceCarousel";
 
 export default async function Home() {
-  const homepageContent = await getHomepageContent();
+  const [homepageContent, processContent] = await Promise.all([
+      getHomepageContent(),
+      getProcessContent(),
+    ]);
+  
+  if (!homepageContent || !processContent) {
+    redirect('/maintenance');
+  }
+
   return (
     <div>
       {/* Hero Section */}
@@ -29,7 +37,7 @@ export default async function Home() {
       </section>
       
       <section className="py-16 md:py-24 text-white">
-        <HomeFootnote />
+        <ProcessTable steps={processContent.step} />
       </section>
 
       <section className="bg-darker-light-blue">
