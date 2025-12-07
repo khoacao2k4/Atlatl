@@ -3,7 +3,7 @@ import Markdown from "./Markdown";
 
 export default function AccordionItem({ question, answer, isOpen, onClick }) {
   return (
-    <div className="border-b border-gray-200 font-work-sans">
+    <div className="border-b border-gray-200 font-tenorite">
       <button
         className="flex items-center justify-between w-full text-left py-6 group cursor-pointer"
         onClick={(e) => {

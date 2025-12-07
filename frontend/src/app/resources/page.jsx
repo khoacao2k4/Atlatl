@@ -4,7 +4,7 @@ import PostsSection from '../components/resource/PostsSection';
 export default function ResourcesPage() {
   return (
     <>
-      <section className="container mx-auto px-6 xl:px-20 py-16 md:py-24 font-work-sans">
+      <section className="container mx-auto px-6 xl:px-20 py-16 md:py-24 font-tenorite">
         {/* Main Section Header */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-songer text-darker-bold-blue font-bold text-center uppercase tracking-wide mb-16">
           Resources
@@ -54,11 +54,11 @@ export default function ResourcesPage() {
       </section>
 
       {/* RECENT BLOG POSTS */}
-      <section className="container mx-auto px-6 xl:px-20 pb-16 md:pb-24 font-work-sans">
+      <section className="container mx-auto px-6 xl:px-20 pb-16 md:pb-24 font-tenorite">
         <PostsSection name={"recent blog posts"}/>
       </section>
 
-      <section className="container mx-auto px-6 xl:px-20 pb-16 md:pb-24 font-work-sans">
+      <section className="container mx-auto px-6 xl:px-20 pb-16 md:pb-24 font-tenorite">
         <PostsSection name={"Tools"}/>
       </section>
     </>

@@ -20,7 +20,7 @@ const feature_list = [
 export default function ClientPortalPage() {
     return (
         <>
-            <section className="container mx-auto px-6 md:px-12 lg:px-20 pt-16 md:pt-24 font-work-sans">
+            <section className="container mx-auto px-6 md:px-12 lg:px-20 pt-16 md:pt-24 font-tenorite">
                 {/* HEADER SECTION */}
                 <div className="flex flex-col items-center text-center mb-16 space-y-8">
 
@@ -45,7 +45,7 @@ export default function ClientPortalPage() {
                 </div>
             </section>
 
-            <section className="pb-16 md:pb-24 bg-white overflow-x-hidden font-work-sans">
+            <section className="pb-16 md:pb-24 bg-white overflow-x-hidden font-tenorite">
                 {/* MAIN CONTENT GRID */}
                 <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
                     {/* LEFT COLUMN: Features List */}

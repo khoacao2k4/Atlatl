@@ -43,7 +43,7 @@ export default function NavDropdown({ item, subItems, navLinkStyles, underlineSt
                     />
                   </span>
                 </span>
-                <span className="font-work-sans text-sm font-semibold leading-tight mt-1">
+                <span className="font-tenorite text-sm font-semibold leading-tight mt-1">
                   {subItem.desc}
                 </span>
               </div>

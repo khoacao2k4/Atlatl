@@ -37,14 +37,14 @@ export default function CalculatorsPage() {
         <div className="min-h-screen bg-light-blue py-16">
             <div className="max-w-6xl mx-auto mb-6 px-10">
                 <div className="bg-white rounded-2xl shadow-2xl p-6">
-                    <label className="block text-sm font-medium text-black mb-2 font-work-sans">
+                    <label className="block text-sm font-medium text-black mb-2 font-tenorite">
                         Select Calculator:
                     </label>
 
                     <select
                         value={selectedCalc}
                         onChange={(e) => setSelectedCalc(e.target.value)}
-                        className="w-full px-4 py-2 border-2 border-bold-blue rounded-lg focus:outline-none focus:ring-2 focus:ring-bold-blue font-work-sans"
+                        className="w-full px-4 py-2 border-2 border-bold-blue rounded-lg focus:outline-none focus:ring-2 focus:ring-bold-blue font-tenorite"
                     >
                         <option value="beneficiaryRmd">RMD Beneficiary Calculator</option>
                         <option value="companyStockDistributionAnalysis">Company Stock Distribution</option>

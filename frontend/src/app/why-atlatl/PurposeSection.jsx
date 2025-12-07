@@ -16,7 +16,7 @@ function ContentBlock({ icon, title, description }) {
           {title}
         </h2>
       </div>
-      <p className="font-work-sans text-sm md:text-base lg:text-lg leading-relaxed">
+      <p className="font-tenorite text-sm md:text-base lg:text-lg leading-relaxed">
         {description}
       </p>
     </div>
@@ -39,7 +39,7 @@ export default function PurposeSection({ media, title, subtitle, vision, mission
             <h1 className="font-songer text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
               {title}
             </h1>
-            <p className="font-work-sans text-sm md:text-base lg:text-lg leading-relaxed">
+            <p className="font-tenorite text-sm md:text-base lg:text-lg leading-relaxed">
               {subtitle}
             </p>
           </div>

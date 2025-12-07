@@ -10,10 +10,10 @@ export default function HeroSection({ title, pronunciation, description, logoSrc
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-8 md:pb-16 lg:pb-20">
           <div className="flex-1">
-            <p className="font-work-sans text-xl md:text-2xl lg:text-4xl xl:text-5xl mb-4 md:mb-6 leading-tight whitespace-pre-line">
+            <p className="font-tenorite text-xl md:text-2xl lg:text-4xl xl:text-5xl mb-4 md:mb-6 leading-tight whitespace-pre-line">
               {pronunciation}
             </p>
-            <p className="font-work-sans text-base md:text-lg lg:text-2xl xl:text-3xl leading-relaxed md:pr-8">
+            <p className="font-tenorite text-base md:text-lg lg:text-2xl xl:text-3xl leading-relaxed md:pr-8">
               {description}
             </p>
           </div>

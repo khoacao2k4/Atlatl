@@ -34,7 +34,7 @@ export default async function HomeTeam() {
                 {teamMember.suffix && <span className="text-2xl">, {teamMember.suffix}</span>}
               </h2>
               {/* Position */}
-              <p className="font-work-sans text-dark-blue font-medium text-sm md:text-xl tracking-wide group-hover:text-bold-blue transition-colors duration-300">
+              <p className="font-tenorite text-dark-blue font-medium text-sm md:text-xl tracking-wide group-hover:text-bold-blue transition-colors duration-300">
                 {teamMember.position}
               </p>
             </Link>

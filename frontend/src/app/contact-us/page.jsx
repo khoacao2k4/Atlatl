@@ -23,7 +23,7 @@ export default function ContactUsPage() {
               <img src="/images/Atlatl_triangle_blue.svg" alt="Atlatl Advisers" className="w-full object-contain" />
             </div>
 
-            <div className="font-work-sans text-darker-bold-blue text-xl space-y-6 pl-5 -mt-10">
+            <div className="font-tenorite text-darker-bold-blue text-xl space-y-6 pl-5 -mt-10">
               <p>
                 {PHONE_NUMBER} <br />
                 {EMAIL_ADDRESS}

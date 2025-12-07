@@ -12,7 +12,7 @@ export default function Hero({ media }) {
             <br />
             OUR <span className="text-bold-blue">EXPERTISE.</span>
           </h1>
-          <p className="mt-6 text-black text-lg font-work-sans">
+          <p className="mt-6 text-black text-lg font-tenorite">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>

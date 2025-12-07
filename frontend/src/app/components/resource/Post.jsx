@@ -49,7 +49,7 @@ export function RecentBlogCard({ title, tag, excerpt }) {
                 </h3>
 
                 {/* Excerpt - Truncated to 3 lines */}
-                <p className="text-black/80 text-sm leading-relaxed font-work-sans line-clamp-3">
+                <p className="text-black/80 text-sm leading-relaxed font-tenorite line-clamp-3">
                     {excerpt}
                 </p>
             </div>
@@ -68,7 +68,7 @@ export function FeaturedBlog({ title, tag, excerpt }) {
                 <h3 className="text-3xl font-songer text-black font-bold">
                     {title}
                 </h3>
-                <p className="text-black font-work-sans max-w-lg">
+                <p className="text-black font-tenorite max-w-lg">
                     {excerpt}
                 </p>
             </div>

@@ -31,7 +31,7 @@ export default function Footer() {
   return (
     <footer
       className="
-      relative w-full bg-dark-blue text-white font-work-sans
+      relative w-full bg-dark-blue text-white font-tenorite
       p-12
       flex flex-col gap-10 lg:flex-row lg:justify-around lg:items-start
     "

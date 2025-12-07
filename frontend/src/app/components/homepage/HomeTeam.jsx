@@ -7,7 +7,7 @@ export default async function HomeTeam({ half_toggle = true }) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="flex flex-col justify-center items-center w-full font-work-sans bg-dark-blue text-white text-center">
+      <div className="flex flex-col justify-center items-center w-full font-tenorite bg-dark-blue text-white text-center">
         <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold font-songer">
           PEOPLE WITH A PURPOSE
         </h1>
@@ -26,7 +26,7 @@ export default async function HomeTeam({ half_toggle = true }) {
           return (
             <div
               key={teamMember.id}
-              className={`flex flex-col items-center font-work-sans text-center lg:w-[30%] ${index < Math.floor(teamMembers.length / 2) && half_toggle ? "text-white lg:text-dark-blue" : ""}`}
+              className={`flex flex-col items-center font-tenorite text-center lg:w-[30%] ${index < Math.floor(teamMembers.length / 2) && half_toggle ? "text-white lg:text-dark-blue" : ""}`}
             >
               <img
                 src={fullImageUrl}

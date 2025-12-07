@@ -13,7 +13,7 @@ function CommitmentCard({ item }) {
       <h3 className="font-songer font-bold text-xl md:text-2xl text-center mb-4 lg:min-h-[5rem] flex items-center">
         {item.title}
       </h3>
-      <p className="font-work-sans text-base leading-relaxed text-left">
+      <p className="font-tenorite text-base leading-relaxed text-left">
         {item.description}
       </p>
     </div>

@@ -70,7 +70,7 @@ function Flashcard({ title, children, isOpen, onToggle }) {
         `}
       >
         {/* Content is passed as children */}
-        <div className="text-base sm:text-lg font-work-sans">{children}</div>
+        <div className="text-base sm:text-lg font-tenorite">{children}</div>
       </div>
     </div>
   );
@@ -88,7 +88,7 @@ export default function ProcessTable() {
 
   return (
     <div
-      className="container font-work-sans flex flex-col lg:flex-row justify-start lg:justify-center items-center lg:items-stretch
+      className="container font-tenorite flex flex-col lg:flex-row justify-start lg:justify-center items-center lg:items-stretch
                 gap-5 xl:gap-12 mx-auto px-10"
     >
       <div

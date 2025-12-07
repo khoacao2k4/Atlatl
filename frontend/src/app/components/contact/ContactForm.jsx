@@ -52,7 +52,7 @@ export default function ContactForm() {
 
   return (
     <div className="bg-white shadow-[0_0_50px_-12px] shadow-darker-bold-blue/50 rounded-3xl p-8 md:p-12 border border-gray-100">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 font-work-sans">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 font-tenorite">
         
         {/* Row 1: Names */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

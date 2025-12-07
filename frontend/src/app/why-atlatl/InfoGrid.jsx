@@ -28,7 +28,7 @@ function InfoGridTextBox({ title, content }) {
       <h2 className="font-songer font-bold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-6">
         {title}
       </h2>
-      <p className="font-work-sans text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed">
+      <p className="font-tenorite text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed">
         {content}
       </p>
     </div>

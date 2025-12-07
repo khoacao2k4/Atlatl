@@ -38,11 +38,11 @@ export default function MaintenancePage() {
                 We Are Currently <br /> Under Maintenance
               </h1>
               
-              <p className="text-xl text-darker-bold-blue font-work-sans leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="text-xl text-darker-bold-blue font-tenorite leading-relaxed max-w-xl mx-auto lg:mx-0">
                 We're busy making improvements to your digital experience. We apologize for the inconvenience and appreciate your patience as we build for the future.
               </p>
               
-              <p className="text-lg text-bold-blue font-semibold font-work-sans mt-4">
+              <p className="text-lg text-bold-blue font-semibold font-tenorite mt-4">
                 We'll be back shortly.
               </p>
             </div>
@@ -52,7 +52,7 @@ export default function MaintenancePage() {
               <h2 className="text-2xl font-songer text-darker-bold-blue font-bold mb-6 uppercase">
                 Need to reach us now?
               </h2>
-              <div className="flex flex-col gap-4 font-work-sans text-darker-bold-blue">
+              <div className="flex flex-col gap-4 font-tenorite text-darker-bold-blue">
                 <div className="flex items-center gap-4 justify-center lg:justify-start">
                   <FaPhone className="w-6 h-6 text-bold-blue" />
                   <Link href={`tel:${PHONE_NUMBER}`} className="group">

@@ -18,7 +18,7 @@ export default function AboutUs({ media }) {
         </div>
 
         {/* Right Column: Text Content */}
-        <div className="h-full flex flex-col justify-center gap-6 font-work-sans text-xl lg:text-2xl">
+        <div className="h-full flex flex-col justify-center gap-6 font-tenorite text-xl lg:text-2xl">
           <p>
             Atlatl Advisers is a multi-family office wealth manager and a fully
             independent, fee-only SEC Registered Investment Adviser.

@@ -50,7 +50,7 @@ export default function ResourcesPage() {
               <h3 className="text-3xl font-songer text-darker-bold-blue font-bold">
                 BLOG TITLE
               </h3>
-              <p className="text-darker-bold-blue/80 font-work-sans max-w-lg">
+              <p className="text-darker-bold-blue/80 font-tenorite max-w-lg">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
@@ -111,7 +111,7 @@ export default function ResourcesPage() {
                   <h3 className="text-2xl font-songer text-darker-bold-blue font-bold group-hover:text-bold-blue transition-colors">
                     BLOG TITLE
                   </h3>
-                  <p className="text-sm text-darker-bold-blue/80 font-work-sans line-clamp-3">
+                  <p className="text-sm text-darker-bold-blue/80 font-tenorite line-clamp-3">
                     {post.excerpt}
                   </p>
                 </div>
@@ -151,7 +151,7 @@ export default function ResourcesPage() {
                   <h4 className="text-lg font-bold text-darker-bold-blue font-songer">
                     {tool.title}
                   </h4>
-                  <p className="text-sm text-darker-bold-blue/80 font-work-sans mt-1">
+                  <p className="text-sm text-darker-bold-blue/80 font-tenorite mt-1">
                     {tool.desc}
                   </p>
                 </div>

@@ -24,7 +24,7 @@ export default async function ProcessPage() {
           PROCESS
         </h1>
         {/* --- SUBTITLE --- */}
-        <div className="text-center font-work-sans space-y-8 text-dark-blue ">
+        <div className="text-center font-tenorite space-y-8 text-dark-blue ">
           <p className="text-xl md:text-2xl lg:text-3xl font-bold">
             A thoughtful, personalized approach to building max financial success
           </p>
