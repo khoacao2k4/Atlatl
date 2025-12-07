@@ -43,26 +43,31 @@ export function HumanMessage({ children }) {
     )
 }
 
-export function Chatbot() {
+export function Chatbot( { isOpen, toggleChatbot }  ) {
 
     const [input, setInput] = useState('');    
-    const { messages, sendMessage } = useChat({
+    const { messages, sendMessage, setMessages } = useChat({
         transport: new DefaultChatTransport({
             api: 'http://localhost:3001/api/chat',
         }),
     });
 
+    const handleCancel = () => {
+        setMessages([]);        // clear chat history
+        toggleChatbot();        // hide widget
+    };
+
     return (
-        <div className="rounded-[8px] border-3 border-[#245383] w-80 h-96 bg-[#F5FAFF] relative flex flex-col">
+        <div className={"rounded-[8px] border-3 border-[#245383] w-80 h-96 bg-[#F5FAFF] relative flex flex-col" + (isOpen ? "" : " hidden")}>
             <div className="bg-[#DDEEFF] flex justify-between">
                 <div className="flex items-center gap-2">
                     <img src="/Graphic_Arrow_Navy.png" alt="Atlatl Logo" className="w-8 h-8"/>
                     <h1 className="text-xl font-work-sans text-dark-blue text-bold">Atla</h1>
                 </div>
                 <div className="flex items-center gap-2">
-                    <MdHorizontalRule className="text-dark-blue w-8 h-8"/>
-                    <MdOpenInFull className="text-dark-blue w-8 h-8"/>
-                    <MdOutlineCancel className="text-dark-blue text-bold w-8 h-8"/>
+                    <MdHorizontalRule onClick={toggleChatbot} className="text-dark-blue w-8 h-8 cursor-pointer"/>
+                    <MdOpenInFull className="text-dark-blue w-8 h-8 cursor-pointer"/>
+                    <MdOutlineCancel onClick={handleCancel} className="text-dark-blue text-bold w-8 h-8 cursor-pointer"/>
                 </div>
             </div>
             {/* --- CHAT SECTION --- */}
@@ -136,19 +141,16 @@ export default function ChatbotWidget() {
     const [isOpen, setIsOpen] = useState(false); 
 
     const toggleChatbot = () => {
-        console.log(`Clicked ${isOpen ? "Open": "Closed"}`);
+        // console.log(`Clicked ${isOpen ? "Open": "Closed"}`);
         setIsOpen((isOpen) => !isOpen); 
     }
 
     return (
-        <div>
+        <div className="fixed bottom-6 right-6 flex flex-col-reverse items-end gap-4 z-50">
             <button onClick={toggleChatbot} className="w-14 h-14 rounded-full bg-[#1A73E8] flex items-center justify-center shadow-lg">
-                <MdChatBubbleOutline  className="text-white w-10 h-10" />
+                <MdChatBubbleOutline  className="text-white w-10 h-10 cursor-pointer" />
             </button>
-            {isOpen && (
-                <Chatbot />
-                )
-            }
+            <Chatbot isOpen={isOpen} toggleChatbot={toggleChatbot} />
         </div>
     );
 }
