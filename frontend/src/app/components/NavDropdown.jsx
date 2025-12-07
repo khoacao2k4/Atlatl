@@ -37,13 +37,13 @@ export default function NavDropdown({ item, subItems, navLinkStyles, underlineSt
                   {/* Arrow animation */}
                   <span className="ml-2 opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-sm">
                     <img 
-                      src="/images/logo_blue.svg" 
+                      src="/images/triangle_blue.svg" 
                       alt="toggle"
                       className={`w-3 h-auto object-contain rotate-90`}
                     />
                   </span>
                 </span>
-                <span className="font-work-sans text-sm font-semibold leading-tight mt-1">
+                <span className="font-tenorite text-sm font-semibold leading-tight mt-1">
                   {subItem.desc}
                 </span>
               </div>

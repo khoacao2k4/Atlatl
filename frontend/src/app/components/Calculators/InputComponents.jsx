@@ -5,7 +5,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 // ============================================================================
 
 const INPUT_STYLES = {
-  base: 'w-full px-3 py-2 border-2 rounded-lg font-work-sans transition-all',
+  base: 'w-full px-3 py-2 border-2 rounded-lg font-tenorite transition-all',
   enabled: 'border-bold-blue focus:outline-none focus:ring-2 focus:ring-bold-blue',
   disabled: 'bg-gray-50 border-gray-300 text-gray-600 cursor-not-allowed',
   error: 'border-red-500'
@@ -237,7 +237,7 @@ export const CurrencyInput = React.memo(({
 
   return (
     <div className="relative">
-      <span className={`absolute left-3 top-2.5 font-work-sans ${disabled ? 'text-gray-400' : 'text-gray-600'
+      <span className={`absolute left-3 top-2.5 font-tenorite ${disabled ? 'text-gray-400' : 'text-gray-600'
         }`}>
         $
       </span>
@@ -420,7 +420,7 @@ export const PercentageInput = React.memo(({
         disabled={disabled}
         className={`${getInputClassName(disabled)} pr-8`}
       />
-      <span className={`absolute right-3 top-2.5 font-work-sans ${disabled ? 'text-gray-400' : 'text-gray-600'
+      <span className={`absolute right-3 top-2.5 font-tenorite ${disabled ? 'text-gray-400' : 'text-gray-600'
         }`}>
         %
       </span>

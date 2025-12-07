@@ -37,19 +37,9 @@ const BUTTON_STYLES = {
     secondary: 'px-8 py-3 bg-white text-bold-blue border-2 border-bold-blue font-bold rounded-lg shadow-sm hover:bg-bold-blue hover:text-white transition-colors'
 };
 
-const INPUT_STYLES = {
-    base: 'w-full px-3 py-2 border-2 rounded-lg font-work-sans transition-all',
-    disabled: 'bg-gray-50 border-gray-300 text-gray-600 cursor-not-allowed',
-    enabled: 'border-bold-blue focus:ring-2 focus:ring-bold-blue',
-};
-
-const DEFAULT_SECTION_NAME = 'Default';
-const STORAGE_KEY_EMAIL_SUBMITTED = 'calculatorEmailSubmitted';
-const DECIMAL_PLACES = 2;
-
-// ============================================================================
-// FORMATTING UTILITIES
-// ============================================================================
+const INPUT_BASE_STYLES = 'w-full px-3 py-2 border-2 rounded-lg font-tenorite transition-all';
+const INPUT_DISABLED_STYLES = 'bg-gray-50 border-gray-300 text-gray-600 cursor-not-allowed';
+const INPUT_ENABLED_STYLES = 'border-bold-blue focus:ring-2 focus:ring-bold-blue';
 
 const formatters = {
     [FORMAT_TYPES.CURRENCY]: (value) => {
@@ -94,7 +84,7 @@ const formatValue = (value, format) => {
 // ============================================================================
 
 const FieldLabel = ({ label, required, disabled }) => (
-    <label className="block text-sm font-medium text-black mb-1 font-work-sans">
+    <label className="block text-sm font-medium text-black mb-1 font-tenorite">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
         {disabled && (
@@ -106,30 +96,30 @@ const FieldLabel = ({ label, required, disabled }) => (
 );
 
 const FieldError = ({ message }) => (
-    <p className="text-red-500 text-sm mt-1 font-work-sans">{message}</p>
+    <p className="text-red-500 text-sm mt-1 font-tenorite">{message}</p>
 );
 
 const FieldHint = ({ hint }) => (
-    <p className="text-text-light-blue text-xs mt-1 font-work-sans">{hint}</p>
+    <p className="text-text-light-blue text-xs mt-1 font-tenorite">{hint}</p>
 );
 
 const EmptyResults = () => (
     <div className="text-center py-12 text-text-light-blue">
         <div className="text-6xl mb-4 opacity-50">📈</div>
-        <p className="font-work-sans">Enter values and click Calculate to see results</p>
+        <p className="font-tenorite">Enter values and click Calculate to see results</p>
     </div>
 );
 
 const ResultItem = ({ result, value }) => (
     <div className="border-b border-bold-blue pb-4">
-        <p className="text-sm text-text-light-blue mb-1 font-work-sans">
+        <p className="text-sm text-text-light-blue mb-1 font-tenorite">
             {result.label}
         </p>
         <p className="text-2xl font-bold text-dark-blue font-songer">
             {formatValue(value, result.format)}
         </p>
         {result.description && (
-            <p className="text-xs text-text-light-blue mt-1 font-work-sans">
+            <p className="text-xs text-text-light-blue mt-1 font-tenorite">
                 {result.description}
             </p>
         )}
@@ -139,7 +129,7 @@ const ResultItem = ({ result, value }) => (
 const ResultNotes = ({ notes }) => (
     <div className="mt-6 pt-4 border-t border-bold-blue">
         <h3 className="font-bold mb-3 text-dark-blue font-songer">Notes</h3>
-        <ul className="space-y-2 text-sm font-work-sans">
+        <ul className="space-y-2 text-sm font-tenorite">
             {notes.map((note, idx) => (
                 <li key={idx} className="text-text-light-blue flex">
                     <span className="mr-2">•</span> {note}
@@ -152,7 +142,7 @@ const ResultNotes = ({ notes }) => (
 const ResultBreakdown = ({ breakdown }) => (
     <div className="mt-6 pt-4 border-t border-bold-blue">
         <h3 className="font-bold mb-3 text-dark-blue font-songer">Breakdown</h3>
-        <div className="space-y-2 text-sm font-work-sans">
+        <div className="space-y-2 text-sm font-tenorite">
             {breakdown.map((item, idx) => (
                 <div key={idx} className="flex justify-between">
                     <span className="text-text-light-blue">{item.label}</span>
@@ -486,12 +476,25 @@ export const CalculatorBase = ({ config }) => {
     );
 
     return (
+<<<<<<< HEAD
         <>
             <EmailGateOverlay
                 isOpen={showEmailGate}
                 onSubmit={handleEmailSubmit}
                 onCancel={handleEmailCancel}
             />
+=======
+        <div className="max-w-6xl mx-auto px-10 py-16">
+            {/* Header */}
+            <header className="mb-12 text-center">
+                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-black font-songer">
+                    {config.title}
+                </h1>
+                <p className="text-black text-lg mt-6 font-tenorite">
+                    {config.description}
+                </p>
+            </header>
+>>>>>>> main
 
             <div className="max-w-6xl mx-auto px-10 py-16">
                 {/* Header */}

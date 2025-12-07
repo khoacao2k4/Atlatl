@@ -116,7 +116,7 @@ export default function Navbar() {
       <div className="z-50">
         <Link href="/">
           <img
-            src="/logo.png"
+            src="/images/atlatl-logo.png"
             alt="Logo"
             className="w-[113px] h-[113px] object-contain"
           />
@@ -183,7 +183,7 @@ export default function Navbar() {
                   {/* Arrow (Absolute Positioned to keep text centered) */}
                   <div className="absolute -right-8 top-1/2 -translate-y-1/2">
                     <img 
-                      src="/images/logo_blue.svg" 
+                      src="/images/triangle_blue.svg" 
                       alt="toggle"
                       className={`w-4 h-auto object-contain transition-transform duration-300 
                         ${isCurrentMenuOpen && "rotate-180"}`}

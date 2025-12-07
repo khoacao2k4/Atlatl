@@ -10,7 +10,7 @@ export default function RoadmapTextSection({ stepNum, title, children }) {
         </div>
         
         {/* Description Text */}
-        <div className="font-work-sans w-full text-center md:text-left text-base md:text-lg text-gray-700">
+        <div className="font-tenorite w-full text-center md:text-left text-base md:text-lg text-gray-700">
           {children}
         </div>
       </div>

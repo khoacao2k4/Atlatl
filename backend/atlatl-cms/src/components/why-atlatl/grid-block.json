@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_why_atlatl_grid_blocks",
+  "info": {
+    "displayName": "Grid Block"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files",
+        "videos",
+        "images"
+      ]
+    }
+  },
+  "config": {}
+}

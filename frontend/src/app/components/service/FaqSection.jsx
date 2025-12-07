@@ -20,7 +20,7 @@ export default function FaqSection({ faqBlocks }) {
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-songer text-darker-bold-blue font-bold uppercase mb-6">
           Frequently Asked Questions
         </h2>
-        <p className="text-lg text-darker-bold-blue font-work-sans max-w-4xl mx-auto leading-relaxed">
+        <p className="text-lg text-darker-bold-blue font-tenorite max-w-4xl mx-auto leading-relaxed">
           Explore our FAQ page to find insightful answers to commonly asked
           questions about financial advisers, investment strategies, portfolio
           management, and financial planning.

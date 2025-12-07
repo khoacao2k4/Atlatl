@@ -65,7 +65,7 @@ export const AutoChart = ({ config, results }) => {
     const CustomTooltip = ({ active, payload }) => {
         if (active && payload && payload.length) {
             return (
-                <div className="bg-white border-2 border-bold-blue rounded-xl shadow-2xl p-4 font-work-sans">
+                <div className="bg-white border-2 border-bold-blue rounded-xl shadow-2xl p-4 font-tenorite">
                     {payload[0].payload.label && (
                         <p className="font-bold text-black mb-2">
                             {payload[0].payload.label}
@@ -143,7 +143,7 @@ export const AutoChart = ({ config, results }) => {
                     </ResponsiveContainer>
 
                     {getDescription() && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">
+                        <p className="text-sm text-text-light-blue mt-2 text-center font-tenorite">
                             {getDescription()}
                         </p>
                     )}
@@ -180,7 +180,7 @@ export const AutoChart = ({ config, results }) => {
                     </ResponsiveContainer>
 
                     {getDescription() && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">
+                        <p className="text-sm text-text-light-blue mt-2 text-center font-tenorite">
                             {getDescription()}
                         </p>
                     )}
@@ -226,7 +226,7 @@ export const AutoChart = ({ config, results }) => {
                     </ResponsiveContainer>
 
                     {getDescription() && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">
+                        <p className="text-sm text-text-light-blue mt-2 text-center font-tenorite">
                             {getDescription()}
                         </p>
                     )}
@@ -262,7 +262,7 @@ export const AutoChart = ({ config, results }) => {
                     </ResponsiveContainer>
 
                     {config.showLegend !== false && (
-                        <div className="space-y-3 font-work-sans">
+                        <div className="space-y-3 font-tenorite">
                             {data.map((item, index) => (
                                 <div key={index} className="flex items-center gap-3">
                                     <div
@@ -281,7 +281,7 @@ export const AutoChart = ({ config, results }) => {
                     )}
 
                     {getDescription() && (
-                        <p className="text-sm text-text-light-blue mt-2 text-center font-work-sans">
+                        <p className="text-sm text-text-light-blue mt-2 text-center font-tenorite">
                             {getDescription()}
                         </p>
                     )}
@@ -289,6 +289,6 @@ export const AutoChart = ({ config, results }) => {
             );
 
         default:
-            return <p className="text-red-500 font-work-sans">Unknown chart type: {config.type}</p>;
+            return <p className="text-red-500 font-tenorite">Unknown chart type: {config.type}</p>;
     }
 };

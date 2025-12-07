@@ -40,27 +40,17 @@
       "required": true,
       "default": false
     },
-    "featured_order": {
-      "type": "integer",
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "featured"
-            },
-            true
-          ]
-        }
-      },
-      "required": true,
-      "min": 0
-    },
     "suffix": {
       "type": "string"
     },
     "description": {
       "type": "richtext",
       "required": false
+    },
+    "order": {
+      "type": "integer",
+      "required": true,
+      "min": 1
     }
   }
 }

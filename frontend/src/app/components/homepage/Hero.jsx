@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Hero({ media }) {
   return (
-    <div className="container mx-auto px-10">
+    <div className="container mx-auto px-10 xl:px-[10%]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Left Column: Text Content & Buttons */}
         <div className="flex flex-col justify-center text-center md:text-left font-songer">
@@ -12,9 +12,8 @@ export default function Hero({ media }) {
             <br />
             OUR <span className="text-bold-blue">EXPERTISE.</span>
           </h1>
-          <p className="mt-6 text-black text-lg font-work-sans">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <p className="mt-6 text-black text-lg font-tenorite">
+            Atlatl Advisers helps you build, protect, and grow your wealth with confidence.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
             <Link 
