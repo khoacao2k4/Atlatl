@@ -1,7 +1,7 @@
 "use client" 
 
 import { useState, useEffect } from "react" 
-import { MdChatBubbleOutline, MdHorizontalRule, MdOpenInFull, MdOutlineCancel, MdPersonOutline } from "react-icons/md";
+import { MdChatBubbleOutline, MdHorizontalRule, MdOpenInFull, MdCloseFullscreen, MdOutlineCancel, MdPersonOutline } from "react-icons/md";
 import { FiArrowUp } from "react-icons/fi";
 import { useChat } from "@ai-sdk/react"; 
 import { DefaultChatTransport, TextStreamChatTransport } from 'ai';
@@ -45,8 +45,9 @@ export function HumanMessage({ children }) {
 
 export function Chatbot( { isOpen, toggleChatbot }  ) {
 
-    const [input, setInput] = useState('');    
-    const { messages, sendMessage, setMessages } = useChat({
+    const [input, setInput] = useState('');
+    const [isLarge, setIsLarge] = useState(false);  
+    const { messages, sendMessage, setMessages, status } = useChat({
         transport: new DefaultChatTransport({
             api: 'http://localhost:3001/api/chat',
         }),
@@ -57,8 +58,12 @@ export function Chatbot( { isOpen, toggleChatbot }  ) {
         toggleChatbot();        // hide widget
     };
 
+    const toggleLarge = () => {
+        setIsLarge((isLarge) => !isLarge);
+    }
+
     return (
-        <div className={"rounded-[8px] border-3 border-[#245383] w-80 h-96 bg-[#F5FAFF] relative flex flex-col" + (isOpen ? "" : " hidden")}>
+        <div className={"rounded-[8px] border-3 border-[#245383] bg-[#F5FAFF] relative flex flex-col" + (isOpen ? "" : " hidden") + (isLarge ? " w-128 h-128" : " w-80 h-96")}>
             <div className="bg-[#DDEEFF] flex justify-between">
                 <div className="flex items-center gap-2">
                     <img src="/Graphic_Arrow_Navy.png" alt="Atlatl Logo" className="w-8 h-8"/>
@@ -66,7 +71,8 @@ export function Chatbot( { isOpen, toggleChatbot }  ) {
                 </div>
                 <div className="flex items-center gap-2">
                     <MdHorizontalRule onClick={toggleChatbot} className="text-dark-blue w-8 h-8 cursor-pointer"/>
-                    <MdOpenInFull className="text-dark-blue w-8 h-8 cursor-pointer"/>
+                    <MdOpenInFull onClick={toggleLarge} className={"text-dark-blue w-8 h-8 cursor-pointer" + (isLarge ? " hidden" : "")}/>
+                    <MdCloseFullscreen onClick={toggleLarge} className={"text-dark-blue w-8 h-8 cursor-pointer" + (isLarge ? "" : " hidden")}/>
                     <MdOutlineCancel onClick={handleCancel} className="text-dark-blue text-bold w-8 h-8 cursor-pointer"/>
                 </div>
             </div>
@@ -128,6 +134,7 @@ export function Chatbot( { isOpen, toggleChatbot }  ) {
                     <button
                     type="submit"
                     className="ml-3 w-9 h-9 rounded-[400px] bg-gray-200 flex items-center justify-center hover:bg-gray-300"
+                    disabled={status === "streaming"}
                     >
                     <FiArrowUp className="w-4 h-4 text-gray-600" />
                     </button>
