@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useGoogleSheetsLogger } from '@/lib/google-sheets/useGoogleSheetsLogger';
 
 const XIcon = () => (
     <svg
@@ -19,29 +20,36 @@ const XIcon = () => (
 export const EmailGateOverlay = ({ isOpen, onSubmit, onCancel }) => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
+    const { logToGoogleSheets, isLoading } = useGoogleSheetsLogger();
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!email.trim()) {
             setEmailError('Email is required');
             return;
         }
-
         if (!validateEmail(email)) {
             setEmailError('Please enter a valid email address');
             return;
         }
 
-        console.log('Email submitted:', email);
-        onSubmit(email);
-        setEmail('');
-        setEmailError('');
+        const result = await logToGoogleSheets('EmailSignups', {
+            email: email,
+            source: 'Newsletter Signup'
+        });
+        if (result.success) {
+            console.log('Email logged to Google Sheets');
+            onSubmit(email);
+            setEmail('');
+            setEmailError('');
+        } else {
+            setEmailError('Failed to submit. Please try again.');
+        }
     };
 
     const handleCancel = () => {
@@ -98,9 +106,10 @@ export const EmailGateOverlay = ({ isOpen, onSubmit, onCancel }) => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
                         <button
                             type="submit"
-                            className="px-12 py-4 bg-bold-blue text-white font-bold rounded-full text-base font-songer tracking-wide hover:bg-opacity-90 transition-all shadow-lg"
+                            disabled={isLoading}
+                            className="px-12 py-4 bg-bold-blue text-white font-bold rounded-full text-base font-songer tracking-wide hover:bg-opacity-90 transition-all shadow-lg disabled:opacity-50"
                         >
-                            SIGN UP
+                            {isLoading ? 'SUBMITTING...' : 'SIGN UP'}
                         </button>
                         <button
                             type="button"
