@@ -13,8 +13,7 @@ export default function Hero({ media }) {
             OUR <span className="text-bold-blue">EXPERTISE.</span>
           </h1>
           <p className="mt-6 text-black text-lg font-tenorite">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Atlatl Advisers helps you build, protect, and grow your wealth with confidence.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
             <Link 

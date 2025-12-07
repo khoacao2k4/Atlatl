@@ -78,8 +78,8 @@ export default function ServicesCarousel() {
         Our Services
       </h1>
       <p className="text-lg md:text-xl px-[10%] py-8 text-center text-darker-bold-blue">
-        Our team delivers a full suite of planning and advisory services built to
-        support individuals, families, and businesses.
+        Our team delivers a full suite of planning and advisory services built to support individuals, families, and businesses. 
+        We integrate financial, tax, and investment strategies with your long-term goals to help you move forward with confidence.
       </p>
 
       {/* CAROUSEL WRAPPER */}
