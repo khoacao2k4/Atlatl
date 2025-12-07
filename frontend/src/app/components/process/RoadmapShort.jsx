@@ -1,13 +1,15 @@
 import RoadmapShortSection from "./RoadmapShortSection"
 
-export default function RoadmapShort() {
+export default function RoadmapShort({steps}) {
     return (
         <div className="flex flex-wrap flex-row justify-evenly mt-12">
-            <RoadmapShortSection title="DISCOVER" />
-            <RoadmapShortSection title="PLAN" />
-            <RoadmapShortSection title="AGREE" />
-            <RoadmapShortSection title="IMPLEMENT" />
-            <RoadmapShortSection title="REVIEW" />
+            {steps.map((step,idx) => (
+                <RoadmapShortSection 
+                    key={"roadmap-short-" + idx} 
+                    title={step.title} 
+                    media={step.symbol} 
+                />
+            ))}
         </div>
     )
 }
