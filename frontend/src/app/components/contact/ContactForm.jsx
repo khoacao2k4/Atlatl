@@ -44,7 +44,7 @@ export default function ContactForm() {
 
   // Helper styles
   const baseInputStyles = "w-full border rounded-lg px-4 py-3 text-darker-bold-blue focus:outline-none focus:ring-2 focus:ring-bold-blue focus:border-transparent transition-all";
-  const labelStyles = "block text-darker-bold-blue font-semibold text-sm mb-2";
+  const labelStyles = "block text-darker-bold-blue font-semibold text-base mb-2";
 
   // Helper to dynamically add red border if error exists
   const getInputStyles = (error) => 

@@ -18,13 +18,13 @@ export default function Hero({ media }) {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
             <Link 
-              href="/services" className="bg-bold-blue text-white py-3 px-8 shadow-md rounded-full
+              href="/services" className="bg-bold-blue text-white py-3 px-8 shadow-md rounded-full text-center
                 hover:bg-white hover:text-bold-blue hover:shadow-[0_0px_15px_-3px_rgba(0,0,0,0.3)] 
                 transition-all duration-300 transform hover:-translate-y-0.5 hover:cursor-pointer">
               Explore Services
             </Link>
             <Link href="/contact-us" 
-              className="bg-white text-bold-blue py-3 px-8 rshadow-md rounded-full border-2 border-bold-blue
+              className="bg-white text-bold-blue py-3 px-8 rshadow-md rounded-full border-2 border-bold-blue text-center
                 hover:bg-bold-blue hover:text-white hover:shadow-xl 
                 transition-all duration-300 transform hover:-translate-y-0.5 hover:cursor-pointer
                 ">

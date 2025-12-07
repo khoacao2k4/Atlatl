@@ -17,7 +17,7 @@ export default function NavDropdown({ item, subItems, navLinkStyles, underlineSt
       </Link>
 
       {/* Dropdown Container */}
-      <div className="absolute top-full -left-20 w-[400px] bg-white rounded-2xl shadow-xl 
+      <div className="absolute top-full -left-20 min-w-[350px] bg-white rounded-2xl shadow-xl 
                       opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                       transition-all duration-300 transform group-hover:translate-y-0 translate-y-4
                       border border-blue-100 overflow-hidden z-50">
