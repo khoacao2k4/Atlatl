@@ -42,9 +42,9 @@ async function fetchStrapiData(path, urlParams = "", options = {}) {
  */
 export async function getTeamMembers(isFeatured = true) {
   const path = "/api/team-members";
-  let params = "?fields[0]=name&fields[1]=position&fields[2]=slug&fields[3]=suffix&populate=*"
+  let params = "?fields[0]=name&fields[1]=position&fields[2]=slug&fields[3]=suffix&populate=*&sort=order:asc";
   if (isFeatured) {
-    params += "&fields[4]=featured_order&filters[featured][$eq]=true&sort=featured_order:asc";
+    params += "&filters[featured][$eq]=true";
   }
   const options = { cache: "no-store" };
   const json = await fetchStrapiData(path, params, options);

@@ -2,7 +2,7 @@ import { getMediaComponent } from "@/lib/helper";
 
 export default function AboutUs({ media }) {
   return (
-    <div className="container mx-auto rounded-2xl px-10">
+    <div className="container mx-auto rounded-2xl px-10 xl:px-[10%]">
       <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-12 text-left font-songer">
         ABOUT ATLATL ADVISERS
       </h2>
