@@ -19,18 +19,18 @@ export default function CalculatorsPage() {
     const [selectedCalc, setSelectedCalc] = useState('beneficiaryRmd');
 
     const calculators = {
-        beneficiaryRmd,
-        companyStockDistributionAnalysis,
+        beneficiaryRmd: { ...beneficiaryRmd, requireEmailGate: true },
+        companyStockDistributionAnalysis: { ...companyStockDistributionAnalysis, requireEmailGate: true },
         roth401kVsTraditional401k,
         armVsFixedRateMortgage,
-        _1031Exchange,
+        _1031Exchange:{..._1031Exchange, requireEmailGate: true},
         amt,
         biweeklyMortgagePayment,
         collegeSavings,
         investmentProperty,
         leaseVsBuy,
         mortgageRefinance,
-        rothIraConversion,
+        rothIraConversion: {...rothIraConversion, requireEmailGate: true},
     };
 
     return (
