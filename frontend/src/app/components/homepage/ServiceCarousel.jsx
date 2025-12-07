@@ -36,7 +36,7 @@ export default function ServicesCarousel() {
   });
 
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
-  const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
