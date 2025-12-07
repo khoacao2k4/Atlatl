@@ -1,3 +1,4 @@
+import { getMediaComponent } from "@/lib/helper";
 import Image from "next/image";
 
 function ContentBlock({ icon, title, description }) {
@@ -22,20 +23,15 @@ function ContentBlock({ icon, title, description }) {
   );
 }
 
-export default function PurposeSection({ videoSrc, title, subtitle, vision, mission }) {
+export default function PurposeSection({ media, title, subtitle, vision, mission }) {
   return (
     <section className="bg-dark-blue text-white px-4 md:px-16 lg:px-40 py-10 md:py-16 lg:py-20">
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
         <div className="w-full lg:w-1/2">
-          <video
-            src={videoSrc}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover rounded-3xl"
-            style={{ maxHeight: "53.5rem" }}
-          />
+        {getMediaComponent(
+          media,
+          "PurposeSection", false, "w-full h-full object-cover rounded-3xl max-h-[53.5rem]"
+        )}
         </div>
 
         <div className="w-full lg:w-1/2 flex flex-col justify-center gap-6 lg:gap-8 lg:pl-8">

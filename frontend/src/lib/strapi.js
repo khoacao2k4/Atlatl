@@ -125,3 +125,17 @@ export async function getProcessContent() {
   
   return json.data;
 }
+
+export async function getWhyAtlatlContent() {
+  const path = "/api/whyatlatlpage";
+  const params = "?populate[0]=infogrid.media&populate[1]=bannerMedia&populate[2]=purposeMedia";
+  const options = { cache: "no-store" };
+
+  const json = await fetchStrapiData(path, params, options);
+  if (!json || !json.data) {
+    console.warn("No Why Atlatl content found or API error.");
+    return null;
+  }
+  
+  return json.data;
+}

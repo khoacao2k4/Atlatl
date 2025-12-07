@@ -76,6 +76,19 @@ export interface ServiceServiceTextPair extends Struct.ComponentSchema {
   };
 }
 
+export interface WhyAtlatlGridBlock extends Struct.ComponentSchema {
+  collectionName: 'components_why_atlatl_grid_blocks';
+  info: {
+    displayName: 'Grid Block';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    media: Schema.Attribute.Media<'files' | 'videos' | 'images'> &
+      Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -84,6 +97,7 @@ declare module '@strapi/strapi' {
       'process.process-step': ProcessProcessStep;
       'service.service-block': ServiceServiceBlock;
       'service.service-text-pair': ServiceServiceTextPair;
+      'why-atlatl.grid-block': WhyAtlatlGridBlock;
     }
   }
 }

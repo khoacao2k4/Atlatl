@@ -10,7 +10,7 @@ function CommitmentCard({ item }) {
         height={50}
         className="w-12 h-12 mb-4"
       />
-      <h3 className="font-songer font-bold text-xl md:text-2xl text-center mb-4 min-h-[5rem] flex items-center">
+      <h3 className="font-songer font-bold text-xl md:text-2xl text-center mb-4 lg:min-h-[5rem] flex items-center">
         {item.title}
       </h3>
       <p className="font-work-sans text-base leading-relaxed text-left">
