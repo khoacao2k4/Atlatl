@@ -5,6 +5,7 @@ import AboutUs from "./components/homepage/AboutUs";
 import Hero from "./components/homepage/Hero";
 import CtaSection from "./components/homepage/CtaSection";
 import ServiceCarousel from "./components/homepage/ServiceCarousel";
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
   const [homepageContent, processContent] = await Promise.all([
