@@ -33,7 +33,7 @@ export const getMediaComponent = (
       return (
         <div className={`${className} aspect-square overflow-hidden`}>
           {/* The inner video just needs to fill and cover */}
-          <video className="w-full h-full object-cover" autoPlay loop muted>
+          <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
             <source src={mediaURL} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -43,7 +43,7 @@ export const getMediaComponent = (
 
     // For a normal video, apply all classes directly
     return (
-      <video className={className} autoPlay loop muted>
+      <video className={className} autoPlay loop muted playsInline>
         <source src={mediaURL} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
