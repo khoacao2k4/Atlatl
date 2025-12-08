@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const PlaceholderImage = ({ className }) => (
     <div className={`relative overflow-hidden flex items-center justify-center ${className}`}>
         <img src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/400/600`} alt="Placeholder" className="w-full h-full object-cover" />
@@ -13,18 +15,20 @@ const tagColors = {
 export function PostBlock({ title, tag, excerpt }) {
     const tagColor = tagColors[tag] || tagColors["blog"];
     return (
-        <div className="flex items-start gap-4 sm:gap-6 w-full p-4 rounded-2xl transition-shadow duration-300 hover:shadow-lg cursor-pointer">
-            <PlaceholderImage className="shrink-0 aspect-[8/7] max-w-[128px] rounded-2xl" />
-            <div className="flex flex-col items-start gap-2 pt-1">
-                <span className={`text-white text-sm font-bold px-3 py-1 rounded-full capitalize`}
-                    style={{ backgroundColor: tagColor }}>
-                    {tag}
-                </span>
-                <h3 className="text-lg sm:text-2xl font-songer text-foreground uppercase leading-tight line-clamp-2 text-ellipsis overflow-hidden">
-                    {title}
-                </h3>
+        <Link href="/calculators">
+            <div className="flex items-start gap-4 sm:gap-6 w-full p-4 rounded-2xl transition-shadow duration-300 hover:shadow-lg cursor-pointer">
+                <PlaceholderImage className="shrink-0 aspect-[8/7] max-w-[128px] rounded-2xl" />
+                <div className="flex flex-col items-start gap-2 pt-1">
+                    <span className={`text-white text-sm font-bold px-3 py-1 rounded-full capitalize`}
+                        style={{ backgroundColor: tagColor }}>
+                        {tag}
+                    </span>
+                    <h3 className="text-lg sm:text-2xl font-songer text-foreground uppercase leading-tight line-clamp-2 text-ellipsis overflow-hidden">
+                        {title}
+                    </h3>
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 
