@@ -42,9 +42,9 @@ async function fetchStrapiData(path, urlParams = "", options = {}) {
  */
 export async function getTeamMembers(isFeatured = true) {
   const path = "/api/team-members";
-  let params = "?fields[0]=name&fields[1]=position&fields[2]=slug&fields[3]=suffix&populate=*"
+  let params = "?fields[0]=name&fields[1]=position&fields[2]=slug&fields[3]=suffix&populate=*&sort=order:asc";
   if (isFeatured) {
-    params += "&fields[4]=featured_order&filters[featured][$eq]=true&sort=featured_order:asc";
+    params += "&filters[featured][$eq]=true";
   }
   const options = { cache: "no-store" };
   const json = await fetchStrapiData(path, params, options);
@@ -106,6 +106,34 @@ export async function getFAQContent() {
   const json = await fetchStrapiData(path, params, options);
   if (!json || !json.data) {
     console.warn("No FAQ content found or API error.");
+    return null;
+  }
+  
+  return json.data;
+}
+
+export async function getProcessContent() {
+  const path = "/api/processpage";
+  const params = "?populate[0]=step.symbol";
+  const options = { cache: "no-store" };
+
+  const json = await fetchStrapiData(path, params, options);
+  if (!json || !json.data) {
+    console.warn("No process content found or API error.");
+    return null;
+  }
+  
+  return json.data;
+}
+
+export async function getWhyAtlatlContent() {
+  const path = "/api/whyatlatlpage";
+  const params = "?populate[0]=infogrid.media&populate[1]=bannerMedia&populate[2]=purposeMedia";
+  const options = { cache: "no-store" };
+
+  const json = await fetchStrapiData(path, params, options);
+  if (!json || !json.data) {
+    console.warn("No Why Atlatl content found or API error.");
     return null;
   }
   

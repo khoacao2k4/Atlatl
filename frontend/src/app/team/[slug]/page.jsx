@@ -14,7 +14,7 @@ export default async function TeamPage({ params }) {
   const fullName = memberInfo.suffix ? memberInfo.name + ", " + memberInfo.suffix : memberInfo.name;
 
   return (
-    <div className="w-full bg-white font-work-sans text-dark-blue">
+    <div className="w-full bg-white font-tenorite text-dark-blue">
       {/* Main Container */}
       <div className="container mx-auto px-6 py-12 lg:py-20 flex flex-col lg:flex-row gap-12 lg:gap-20">
 
@@ -45,7 +45,7 @@ export default async function TeamPage({ params }) {
           <hr className="border-t border-dark-blue opacity-30 my-8 w-full" />
 
           {/* Bio Description */}
-          <div className="text-lg text-dark-blue font-work-sans leading-relaxed">
+          <div className="text-lg text-dark-blue font-tenorite leading-relaxed">
             <Markdown>
               {memberInfo.description}
             </Markdown>

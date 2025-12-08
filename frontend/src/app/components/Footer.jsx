@@ -1,19 +1,18 @@
-"use client";
-
 import Link from "next/link";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { FaRegEnvelope, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { APPLE_STORE_URL, GOOGLE_PLAY_URL, PHONE_NUMBER, EMAIL_ADDRESS, OFFICE_ADDRESS, GOOGLE_MAP_LINK } from "@/lib/constant";
 
 export default function Footer() {
   const quickLinkItems = [
     { name: "Home", href: "/" },
     { name: "Why Atlatl", href: "/why-atlatl" },
-    { name: "Our Services", href: "/" },
-    { name: "Meet The Team", href: "/" },
-    { name: "Client Experience", href: "/" },
-    { name: "Contact Us", href: "/" },
-    { name: "FAQ", href: "/" },
-    { name: "Blog", href: "/" },
+    { name: "Our Services", href: "/services" },
+    { name: "Meet The Team", href: "/team" },
+    { name: "Client Experience", href: "/client-experience" },
+    { name: "Contact Us", href: "/contact-us" },
+    { name: "FAQ", href: "/resources/faq" },
+    { name: "Blog", href: "/resources" },
   ];
 
   const moreInfoItems = [
@@ -32,7 +31,7 @@ export default function Footer() {
   return (
     <footer
       className="
-      relative w-full bg-dark-blue text-white font-work-sans
+      relative w-full bg-dark-blue text-white font-tenorite
       p-12
       flex flex-col gap-10 lg:flex-row lg:justify-around lg:items-start
     "
@@ -41,23 +40,23 @@ export default function Footer() {
       <div className="flex flex-col gap-2">
         <h1 className={headingStyles}>ATLATL ADVISERS</h1>
         <ul className="flex flex-col gap-2 text-base">
-          <li className={listItemStyles}>
+          <li className={listItemStyles + " hover:underline underline-offset-4"}>
             <FaLocationDot size={20}/>
-            <div>
-              2921 Landmark Pl, Suite 501, Madison, WI 53713
-            </div>
+            <Link href={GOOGLE_MAP_LINK} target="_blank" rel="noopener noreferrer" className="group">
+              {OFFICE_ADDRESS}
+            </Link>
           </li>
           <li className={listItemStyles}>
             <FaRegEnvelope size={20}/>
-            <Link href="mailto:info@atlantladvisers.com" className="group">
-              info@atlantladvisers.com
+            <Link href={`mailto:${EMAIL_ADDRESS}`} className="group">
+              {EMAIL_ADDRESS}
               <span className={underlineStyles} />
             </Link>
           </li>
           <li className={listItemStyles}>
             <FaPhone size={20}/>
-            <Link href="tel:6083514500" className="group">
-              608-351-4500
+            <Link href={`tel:${PHONE_NUMBER}`} className="group">
+              {PHONE_NUMBER}
               <span className={underlineStyles} />
             </Link>
           </li>
@@ -132,9 +131,13 @@ export default function Footer() {
         flex flex-col gap-2
         "
       >
-        <div className="flex justify-center gap-5">
-          <img src="/app-store.svg" alt="App Store" className="w-[150px]" />
-          <img src="/google-play.svg" alt="Google Play" className="w-[200px]" />
+        <div className="flex justify-center items-center gap-5">
+          <Link href={APPLE_STORE_URL} target="_blank" rel="noopener noreferrer">
+            <img src="/images/app-store.svg" alt="App Store" className="w-[150px]" />
+          </Link>
+          <Link href={GOOGLE_PLAY_URL} target="_blank" rel="noopener noreferrer">
+            <img src="/images/google-play.svg" alt="Google Play" className="w-[200px]" />
+          </Link>
         </div>
         <p>© 2025 Atlatl Advisers. All Rights Reserved.</p>
       </div>

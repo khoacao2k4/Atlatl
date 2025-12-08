@@ -33,7 +33,7 @@ export default function CtaSection() {
       {/* Arrow Image - Positioned absolutely in the bottom left */}
       {/* Adjust bottom and left values to fine-tune its position based on your exact image dimensions */}
       {/* <img
-        src="/images/logo_blue.svg"
+        src="/images/triangle_blue.svg"
         alt="Logo"
         className="absolute bottom-0 left-0 w-[150px] md:w-[25vw] lg:w-[300px] h-auto"
         width={300}

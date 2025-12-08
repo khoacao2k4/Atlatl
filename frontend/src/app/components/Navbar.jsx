@@ -2,19 +2,57 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { FiMenu, FiX, FiBookOpen, FiInfo, FiChevronDown, FiChevronUp } from "react-icons/fi";
-import { BsCalculator } from "react-icons/bs";
+import { FiMenu, FiX, FiBookOpen, FiInfo } from "react-icons/fi";
+import { IoPersonOutline } from "react-icons/io5";
 import NavDropdown from "./NavDropdown";
+import { FiKey } from "react-icons/fi";
+import { RiLoopLeftFill } from "react-icons/ri";
+
+const resourceItems = [
+    { 
+      name: "BLOGS & TOOLS", 
+      desc: "The latest news and calculators", 
+      href: "/resources", 
+      icon: <FiBookOpen className="w-6 h-6 md:w-8 md:h-8" /> 
+    },
+    { 
+      name: "FAQ", 
+      desc: "Quick answers to your common questions", 
+      href: "/resources/faq", 
+      icon: <FiInfo className="w-6 h-6 md:w-8 md:h-8" /> 
+    },
+  ];
+
+  const aboutUsItems = [
+    {
+      name: "MEET THE TEAM",
+      desc: "Experts Dedicated to Your Growth",
+      href: "/team",
+      icon: <IoPersonOutline className="w-6 h-6 md:w-8 md:h-8" />
+    },
+    {
+      name: "WHY ATLATL",
+      desc: "Why Clients Choose Atlatl",
+      href: "/why-atlatl",
+      icon: <FiKey className="w-6 h-6 md:w-8 md:h-8" />
+    },
+    {
+      name: "PROCESS",
+      desc: "The Atlatl Way of Working",
+      href: "/process",
+      icon: <RiLoopLeftFill className="w-6 h-6 md:w-8 md:h-8" />
+    },
+  ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   
   // State for mobile resources dropdown toggle
-  const [isMobileResourcesOpen, setIsMobileResourcesOpen] = useState(false);
+  const [openMobileMenu, setOpenMobileMenu] = useState(null);
 
   const closeMenu = () => {
     setIsOpen(false);
-    setIsMobileResourcesOpen(false); // Reset mobile sub-menu on close
+    setOpenMobileMenu(null); // Reset mobile sub-menu on close
   };
 
   useEffect(() => {
@@ -31,43 +69,26 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
+  const toggleMobileSubMenu = (menuName) => {
+    setOpenMobileMenu(prevName => prevName === menuName ? null : menuName);
+  };
+
   // Close mobile menu on window resize to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
         setIsOpen(false);
+        setOpenMobileMenu(null); // Close any open mobile sub-menu on resize
       }
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // Define Sub-menu items for Resources
-  const resourceItems = [
-    { 
-      name: "BLOGS", 
-      desc: "The latest news, updates and info", 
-      href: "/blogs", 
-      icon: <FiBookOpen className="w-6 h-6 md:w-8 md:h-8" /> 
-    },
-    { 
-      name: "RESOURCES", 
-      desc: "Calculators, more", 
-      href: "/resources", 
-      icon: <BsCalculator className="w-6 h-6 md:w-8 md:h-8" /> 
-    },
-    { 
-      name: "FAQ", 
-      desc: "Quick answers to your common questions", 
-      href: "/resources/faq", 
-      icon: <FiInfo className="w-6 h-6 md:w-8 md:h-8" /> 
-    },
-  ];
-
+ 
   const menuItems = [
-    { name: "ABOUT US", href: "/why-atlatl" },
+    { name: "ABOUT US", href: "", subMenu: aboutUsItems }, // Mark this as having a submenu
     { name: "SERVICES", href: "/services" },
-    { name: "RESOURCES", href: "/resources", hasSubMenu: true }, // Mark this as having a submenu
+    { name: "RESOURCES", href: '', subMenu: resourceItems }, // Mark this as having a submenu
     { name: "CONTACT US", href: "/contact-us" },
   ];
 
@@ -95,7 +116,7 @@ export default function Navbar() {
       <div className="z-50">
         <Link href="/">
           <img
-            src="/logo.png"
+            src="/images/atlatl-logo.png"
             alt="Logo"
             className="w-[113px] h-[113px] object-contain"
           />
@@ -105,12 +126,12 @@ export default function Navbar() {
       {/* 2. Desktop Menu */}
       <div className="hidden lg:flex items-center gap-10">
         {menuItems.map((item, index) => {
-          if (item.hasSubMenu) {
+          if ("subMenu" in item) {
             return (
               <NavDropdown 
                 key={"dropdown-" + index}
                 item={item}
-                subItems={resourceItems}
+                subItems={item.subMenu}
                 navLinkStyles={navLinkStyles}
                 underlineStyles={underlineStyles}
               />
@@ -125,7 +146,7 @@ export default function Navbar() {
             );
           }
         })}
-        <Link href="/log-in" className={loginButtonStyles}>
+        <Link href="/client-experience" className={loginButtonStyles}>
           LOGIN
         </Link>
       </div>
@@ -141,18 +162,20 @@ export default function Navbar() {
       {/* 4. Mobile Menu Overlay */}
       <div
         className={`
-          fixed inset-0 bg-white z-40 flex flex-col pt-[25vh] items-center gap-8
+          fixed inset-0 bg-white z-40 flex flex-col pt-[25vh] items-center gap-12
           transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         {menuItems.map((item, index) => {
-          if (item.hasSubMenu) {
+          const isCurrentMenuOpen = openMobileMenu === item.name;
+
+          if ("subMenu" in item) {
             // --- MOBILE RESOURCES ACCORDION ---
             return (
               <div key={index} className="flex flex-col items-center w-full">
                 <button 
-                  onClick={() => setIsMobileResourcesOpen(!isMobileResourcesOpen)}
+                  onClick={() => toggleMobileSubMenu(item.name)}
                   className={`${navLinkStyles} relative`}
                 >
                   {item.name}
@@ -160,19 +183,19 @@ export default function Navbar() {
                   {/* Arrow (Absolute Positioned to keep text centered) */}
                   <div className="absolute -right-8 top-1/2 -translate-y-1/2">
                     <img 
-                      src="/images/logo_blue.svg" 
+                      src="/images/triangle_blue.svg" 
                       alt="toggle"
                       className={`w-4 h-auto object-contain transition-transform duration-300 
-                        ${isMobileResourcesOpen && "rotate-180"}`}
+                        ${isCurrentMenuOpen && "rotate-180"}`}
                     />
                   </div>
                 </button>
                 
                 <div className={`
                     flex flex-col gap-4 w-full transition-all duration-300 ease-in-out overflow-hidden
-                    ${isMobileResourcesOpen ? "max-h-[200px] opacity-100 mt-4 mb-2" : "max-h-0 opacity-0"}
+                    ${isCurrentMenuOpen ? "max-h-[200px] opacity-100 mt-4 mb-2" : "max-h-0 opacity-0"}
                 `}>
-                   {resourceItems.map((subItem, subIndex) => (
+                   {item.subMenu.map((subItem, subIndex) => (
                       <Link 
                         key={subIndex} 
                         href={subItem.href}

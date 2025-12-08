@@ -1,21 +1,26 @@
 import ReactMarkdown from 'react-markdown';
 
-export default function Markdown({ children }) {
+export default function Markdown({
+    children,
+    classNameUl = 'list-disc list-outside ml-6 mb-4 space-y-2',
+    classNameOl = 'list-decimal list-outside ml-6 mb-4 space-y-2',
+    classNameLi = 'pl-1',
+    classNameP = 'mb-4',
+}) {
     return (
         <ReactMarkdown
             components={{
                 ul: ({ node, ...props }) => (
-                    <ul className="list-disc list-outside ml-6 mb-4 space-y-2" {...props} />
+                    <ul className={classNameUl} {...props} />
                 ),
-                // Custom styling for Ordered Lists (if you ever use them)
                 ol: ({ node, ...props }) => (
-                    <ol className="list-decimal list-outside ml-6 mb-4 space-y-2" {...props} />
+                    <ol className={classNameOl} {...props} />
                 ),
                 li: ({ node, ...props }) => (
-                    <li className="pl-1" {...props} />
+                    <li className={classNameLi} {...props} />
                 ),
                 p: ({ node, ...props }) => (
-                    <p className="mb-4" {...props} />
+                    <p className={classNameP} {...props} />
                 ),
             }}
         >
