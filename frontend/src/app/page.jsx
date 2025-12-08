@@ -4,6 +4,7 @@ import { getHomepageContent, getProcessContent } from "@/lib/strapi";
 import AboutUs from "./components/homepage/AboutUs";
 import Hero from "./components/homepage/Hero";
 import CtaSection from "./components/homepage/CtaSection";
+import ChatbotWidget from "./components/chatbot/Chatbot";
 import ServiceCarousel from "./components/homepage/ServiceCarousel";
 import { redirect } from 'next/navigation';
 
@@ -43,6 +44,10 @@ export default async function Home() {
 
       <section className="bg-darker-light-blue">
         <CtaSection />
+      </section>
+
+      <section>
+        <ChatbotWidget />
       </section>
     </div>
   );
