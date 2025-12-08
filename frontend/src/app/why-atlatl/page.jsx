@@ -106,6 +106,7 @@ export default async function WhyAtlatlPage() {
       <CallToActionBanner 
         title={pageData.ctaBanner.title}
         subtitle={pageData.ctaBanner.subtitle}
+        showMobile={false}
       />
       
       <InfoGrid items={pageData.infoGrid} />
@@ -113,6 +114,12 @@ export default async function WhyAtlatlPage() {
       <CommitmentSection 
         title={pageData.commitment.title}
         items={pageData.commitment.items}
+      />
+
+      <CallToActionBanner 
+        title={pageData.ctaBanner.title}
+        subtitle={pageData.ctaBanner.subtitle}
+        showMobile={true}
       />
       
       <PurposeSection 

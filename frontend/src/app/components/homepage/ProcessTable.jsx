@@ -61,7 +61,7 @@ export default function ProcessTable({steps}) {
   return (
     <div
       className="container font-tenorite flex flex-col lg:flex-row justify-start lg:justify-center items-center lg:items-stretch
-                gap-5 xl:gap-12 mx-auto px-10"
+                gap-5 xl:gap-12 mx-auto px-[5%]"
     >
       <div
         className="
@@ -95,7 +95,7 @@ export default function ProcessTable({steps}) {
         <h1
           className="
           font-songer font-bold 
-          text-3xl sm:text-5xl lg:text-6xl
+          text-4xl sm:text-5xl lg:text-6xl
           border-b-2 border-white py-5"
         >
           THE PROCESS
@@ -103,7 +103,7 @@ export default function ProcessTable({steps}) {
         <h3
           className="
           font-songer font-bold 
-          text-3xl lg:text-4xl
+          text-2xl sm:text-3xl lg:text-4xl
           my-10"
         >
           A THOUGHTFUL, PERSONALIZED APPROACH TO BUILDING LASTING FINANCIAL
