@@ -43,7 +43,7 @@ export default function InfoGrid({ items }) {
   }
 
   return (
-    <section className="flex flex-col gap-6 md:gap-12 px-4 md:px-16 lg:px-20 pb-20 md:pb-32 lg:pb-40">
+    <section className="flex flex-col gap-6 md:gap-12 px-4 md:px-16 lg:px-20 pb-10 md:pb-32 lg:pb-40">
       {pairs.map((pair, pairIndex) => {
         // 2. Check the type of the first item in the pair
         const firstIsMedia = pair[0].type === "media";

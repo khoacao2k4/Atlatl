@@ -28,12 +28,12 @@ export default function FaqSection({ faqBlocks }) {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-12 gap-y-4 mb-8 border-b border-gray-200 pb-1">
+      <div className="flex flex-row flex-nowrap overflow-x-auto justify-start md:justify-center gap-x-6 md:gap-x-12 gap-y-4 mb-8 border-b border-gray-200 pb-1">
         {faqBlocks.map((block, idx) => (
           <button
             key={"faq_tab_" + idx}
             onClick={() => setActiveTab(idx)}
-            className={`font-songer text-lg font-bold uppercase pb-3 transition-all duration-300 relative
+            className={`font-songer text-lg font-bold uppercase pb-3 transition-all duration-300 relative flex-shrink-0
               ${activeTab === idx
                 ? 'text-bold-blue font-semibold'
                 : 'text-darker-bold-blue hover:text-black cursor-pointer'

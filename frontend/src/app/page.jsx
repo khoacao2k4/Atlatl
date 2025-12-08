@@ -30,8 +30,8 @@ export default async function Home() {
         <AboutUs media={homepageContent?.aboutUsMedia} />
       </section>
 
-      <section className="py-16 md:py-24 bg-gradient-to-b from-dark-blue from-55% to-white to-55% text-dark-blue">
-        <HomeTeam />
+      <section className="py-16 md:py-24 bg-dark-blue text-white">
+        <HomeTeam half_toggle={false} />
       </section>
 
       <section className="py-16 md:py-24 text-white">
