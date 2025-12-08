@@ -114,7 +114,7 @@ export default function Navbar() {
     <nav className="w-full h-[100px] bg-white flex items-center justify-between px-6 lg:px-12 z-100">      
       {/* 1. Logo */}
       <div className="z-110">
-        <Link href="/">
+        <Link href="/" onClick={closeMenu}>
           <img
             src="/images/atlatl-logo.png"
             alt="Logo"
