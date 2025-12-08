@@ -27,7 +27,7 @@ export default function CommitmentSection({ title, items }) {
         {title}
       </h1>
 
-      <section className="w-full bg-gradient-to-b from-darker-light-blue from-50% to-dark-blue to-50% py-4 md:py-12">
+      <section className="w-full bg-gradient-to-b from-darker-light-blue from-50% to-dark-blue to-50% pb-12">
         <div className="flex flex-wrap justify-center gap-8 px-4 md:px-8">
           {items.map((item, index) => (
             <CommitmentCard key={index} item={item} />

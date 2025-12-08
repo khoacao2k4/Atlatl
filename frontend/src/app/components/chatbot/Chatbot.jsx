@@ -68,7 +68,7 @@ export function Chatbot( { isOpen, toggleChatbot }  ) {
         <div className={"rounded-[8px] border-3 border-[#245383] bg-[#F5FAFF] relative flex flex-col" + (isLarge ? " w-96 h-128 lg:w-128 lg:h-128" : " w-80 h-96")}>
             <div className="bg-[#DDEEFF] flex justify-between">
                 <div className="flex items-center gap-2">
-                    <img src="/Graphic_Arrow_Navy.png" alt="Atlatl Logo" className="w-8 h-8"/>
+                    <img src="/images/triangle_blue.svg" alt="Atlatl Logo" className="w-8 h-8"/>
                     <h1 className="text-xl font-work-sans text-dark-blue text-bold">Atla</h1>
                 </div>
                 <div className="flex items-center gap-2">

@@ -13,13 +13,19 @@ export async function POST(req: NextRequest) {
     if (contentType.includes("application/json")) {
       const body = await req.json();
       const text: string = body.text;
-      const result = await createResource({ content: text });
+      const name: string = body.name; 
+      const result = await createResource({ name: name, content: text });
       return NextResponse.json({ success: true, result });
     }
 
     else if (contentType.includes("multipart/form-data")) {
       const formData = await req.formData();
       const file = formData.get("file");
+      const name_req = formData.get("name") as string | null;
+
+      if (!name_req) {
+        return NextResponse.json({ error: "Missing name" }, { status: 400 });
+      }
 
       if (!file || !(file instanceof File)) {
         return NextResponse.json(
@@ -67,7 +73,7 @@ export async function POST(req: NextRequest) {
 
       console.log(text); 
 
-      const dbResult = await createResource({ content: text });
+      const dbResult = await createResource({ name: name_req, content: text });
       return NextResponse.json({ success: true, text });      
     }
 

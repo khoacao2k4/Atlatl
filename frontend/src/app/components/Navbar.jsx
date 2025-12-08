@@ -111,10 +111,10 @@ export default function Navbar() {
   `;
 
   return (
-    <nav className="w-full h-[100px] bg-white flex items-center justify-between px-6 lg:px-12 z-50">      
+    <nav className="w-full h-[100px] bg-white flex items-center justify-between px-6 lg:px-12 z-100">      
       {/* 1. Logo */}
-      <div className="z-50">
-        <Link href="/">
+      <div className="z-110">
+        <Link href="/" onClick={closeMenu}>
           <img
             src="/images/atlatl-logo.png"
             alt="Logo"
@@ -154,7 +154,7 @@ export default function Navbar() {
       {/* 3. Mobile hamburger button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden z-50 text-3xl text-black"
+        className="lg:hidden z-110 text-3xl text-black"
       >
         {isOpen ? <FiX /> : <FiMenu />}
       </button>
@@ -162,7 +162,7 @@ export default function Navbar() {
       {/* 4. Mobile Menu Overlay */}
       <div
         className={`
-          fixed inset-0 bg-white z-40 flex flex-col pt-[25vh] items-center gap-12
+          fixed inset-0 bg-white z-100 flex flex-col pt-[25vh] items-center gap-12
           transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
