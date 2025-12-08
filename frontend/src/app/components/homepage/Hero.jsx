@@ -38,7 +38,7 @@ export default function Hero({ media }) {
             media,
             "Hero",
             true,
-            "rounded-[1px] w-full h-auto max-w-[360px] lg:max-w-md shadow-2xl object-cover"
+            "rounded-[100px] w-full h-auto max-w-[360px] lg:max-w-md shadow-2xl object-cover"
           )}
         </div>
       </div>
