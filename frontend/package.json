@@ -28,6 +28,7 @@
     "drizzle-zod": "^0.8.3",
     "embla-carousel-react": "^8.6.0",
     "googleapis": "^167.0.0",
+    "mammoth": "^1.11.0",
     "nanoid": "^5.1.6",
     "next": "15.5.7",
     "ollama-ai-provider-v2": "^1.5.5",
@@ -39,6 +40,7 @@
     "react-markdown": "^10.1.0",
     "recharts": "^3.4.1",
     "tailwind-merge": "^3.4.0",
+    "unpdf": "^1.4.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
