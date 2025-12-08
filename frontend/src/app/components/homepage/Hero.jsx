@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Hero({ media }) {
   return (
-    <div className="container mx-auto px-5 xl:px-[10%]">
+    <div className="container mx-auto px-5 xl:px-[5%] 2xl:px-[10%]">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Left Column: Text Content & Buttons */}
         <div className="flex flex-col justify-center text-center md:text-left font-songer">
