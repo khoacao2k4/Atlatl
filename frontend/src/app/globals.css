@@ -21,6 +21,15 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Tenorite';
+  src: url('/fonts/Tenorite-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 118%;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -33,6 +42,7 @@
   --color-darker-bold-blue: #245383;
   --font-songer: "SONGER SemiExpanded";
   --font-work-sans: "Work-Sans";
+  --font-tenorite: "Tenorite";
 }
 
 

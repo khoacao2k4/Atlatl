@@ -28,6 +28,8 @@
     "drizzle-zod": "^0.8.3",
     "env-nextjs": "^1.0.1",
     "nanoid": "^5.1.6",
+    "embla-carousel-react": "^8.6.0",
+    "googleapis": "^167.0.0",
     "next": "15.5.7",
     "ollama-ai-provider-v2": "^1.5.5",
     "postgres": "^3.4.7",

@@ -10,9 +10,9 @@ export default function TabContent({ tabContent }) {
 
     return (
         <section className="bg-white py-16 md:py-24">
-            <div className="container mx-auto px-10 lg:px-20 font-work-sans">
+            <div className="container mx-auto px-10 lg:px-20 font-tenorite">
                 {/* --- Main Heading --- */}
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-songer text-darker-bold-blue
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-songer text-darker-bold-blue
                             font-bold text-center uppercase tracking-wide mb-16">
                     {tabContent.name}
                 </h1>

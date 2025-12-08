@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "processpages",
+  "info": {
+    "singularName": "processpage",
+    "pluralName": "processpages",
+    "displayName": "process-page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "step": {
+      "type": "component",
+      "component": "process.process-step",
+      "repeatable": true,
+      "required": false,
+      "min": 1
+    }
+  }
+}

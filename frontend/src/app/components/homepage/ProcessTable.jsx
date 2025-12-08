@@ -3,34 +3,6 @@
 import { FiPlusCircle } from "react-icons/fi";
 import { useState } from "react";
 
-// Data for the flashcards
-const flashcardData = [
-  {
-    title: "DISCOVERY",
-    content:
-      "Our process begins with a personalized discovery meeting, where we take the time to understand you - your goals, priorities, and long-term vision. Through in-depth conversations, we explore what matters most to you while also introducing you to Atlatl Advisers and how we can help guide your financial journey.",
-  },
-  {
-    title: "PLAN",
-    content:
-      "In our second meeting, we'll review your initial financial plan, providing personalized recommedations to optimize your overall strategy. This includes guidance on estate planning, tax efficiency, and insurance solutions to help protect and grow your wealth.",
-  },
-  {
-    title: "AGREE",
-    content:
-      "Together, we develop a comprehensive strategy that balances both sides of your financial picture, providing solutions to help you achieve your goals at every state of your life.",
-  },
-  {
-    title: "IMPLEMENT",
-    content:
-      "Once we establish the framework of our partnership, we'll guide you through a seamless onboarding process, integrating you into our client portals and putting your tailored financial plan into action.",
-  },
-  {
-    title: "REVIEW",
-    content:
-      "Once your comprehensive financial plan is in place, we will meet regularly to review your investments and address key areas such as tax strategies, estate planning, and insurance to ensure your plan remains aligned with your goals.",
-  },
-];
 
 function Flashcard({ title, children, isOpen, onToggle }) {
   return (
@@ -70,13 +42,13 @@ function Flashcard({ title, children, isOpen, onToggle }) {
         `}
       >
         {/* Content is passed as children */}
-        <div className="text-base sm:text-lg font-work-sans">{children}</div>
+        <div className="text-base sm:text-lg font-tenorite">{children}</div>
       </div>
     </div>
   );
 }
 
-export default function ProcessTable() {
+export default function ProcessTable({steps}) {
   // State to track which card is open (by its title)
   const [openCard, setOpenCard] = useState(null);
 
@@ -88,7 +60,7 @@ export default function ProcessTable() {
 
   return (
     <div
-      className="container font-work-sans flex flex-col lg:flex-row justify-start lg:justify-center items-center lg:items-stretch
+      className="container font-tenorite flex flex-col lg:flex-row justify-start lg:justify-center items-center lg:items-stretch
                 gap-5 xl:gap-12 mx-auto px-10"
     >
       <div
@@ -100,14 +72,14 @@ export default function ProcessTable() {
         "
       >
         <div className="h-full px-5 sm:px-10">
-          {flashcardData.map((card) => (
+          {steps.map((step, idx) => (
             <Flashcard
-              key={card.title}
-              title={card.title}
-              isOpen={openCard === card.title} // Pass down if it's open
-              onToggle={() => handleToggle(card.title)} // Pass down the handler
+              key={`flashcard-${idx}`}
+              title={step.title}
+              isOpen={openCard === step.title} // Pass down if it's open
+              onToggle={() => handleToggle(step.title)} // Pass down the handler
             >
-              {card.content}
+              {step.description}
             </Flashcard>
           ))}
         </div>

@@ -17,7 +17,7 @@ export default function NavDropdown({ item, subItems, navLinkStyles, underlineSt
       </Link>
 
       {/* Dropdown Container */}
-      <div className="absolute top-full -left-20 w-[400px] bg-white rounded-2xl shadow-xl 
+      <div className="absolute top-full -left-20 min-w-[350px] bg-white rounded-2xl shadow-xl 
                       opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                       transition-all duration-300 transform group-hover:translate-y-0 translate-y-4
                       border border-blue-100 overflow-hidden z-50">
@@ -37,13 +37,13 @@ export default function NavDropdown({ item, subItems, navLinkStyles, underlineSt
                   {/* Arrow animation */}
                   <span className="ml-2 opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all text-sm">
                     <img 
-                      src="/images/logo_blue.svg" 
+                      src="/images/triangle_blue.svg" 
                       alt="toggle"
                       className={`w-3 h-auto object-contain rotate-90`}
                     />
                   </span>
                 </span>
-                <span className="font-work-sans text-sm font-semibold leading-tight mt-1">
+                <span className="font-tenorite text-sm font-semibold leading-tight mt-1">
                   {subItem.desc}
                 </span>
               </div>
