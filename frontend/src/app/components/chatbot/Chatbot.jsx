@@ -49,7 +49,8 @@ export function Chatbot( { isOpen, toggleChatbot }  ) {
     const [isLarge, setIsLarge] = useState(false);  
     const { messages, sendMessage, setMessages, status } = useChat({
         transport: new DefaultChatTransport({
-            api: 'http://localhost:3001/api/chat',
+            // api: 'http://localhost:3001/api/chat',
+            api: '/api/chat',
         }),
     });
 
