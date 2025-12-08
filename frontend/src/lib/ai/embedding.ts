@@ -1,11 +1,13 @@
 import { embed, embedMany } from 'ai';
-import { ollama } from 'ollama-ai-provider-v2';
+// import { ollama } from 'ollama-ai-provider-v2';
 import { db } from '../db';
 import { cosineDistance, desc, gt, sql } from 'drizzle-orm';
 import { embeddings } from '../db/schema/embeddings';
+import { google } from '@ai-sdk/google';
 
 // const embeddingModel = openai.embedding('text-embedding-ada-002');
-const embeddingModel = ollama.embedding('mxbai-embed-large'); 
+// const embeddingModel = ollama.embedding('mxbai-embed-large'); 
+const embeddingModel = google.textEmbedding("text-embedding-004");
 
 const special_words = ["Ph.D.", "J.D."];
 const MAX_TOKENS = 32;
