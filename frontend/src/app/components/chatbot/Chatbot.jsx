@@ -64,7 +64,8 @@ export function Chatbot( { isOpen, toggleChatbot }  ) {
     }
 
     return (
-        <div className={"rounded-[8px] border-3 border-[#245383] bg-[#F5FAFF] relative flex flex-col" + (isOpen ? "" : " hidden") + (isLarge ? " w-128 h-128" : " w-80 h-96")}>
+        // <div className={"rounded-[8px] border-3 border-[#245383] bg-[#F5FAFF] relative flex flex-col" + (isOpen ? "" : " hidden") + (isLarge ? " w-96 h-128 lg:w-128 lg:h-128" : " w-80 h-96")}>
+        <div className={"rounded-[8px] border-3 border-[#245383] bg-[#F5FAFF] relative flex flex-col" + (isLarge ? " w-96 h-128 lg:w-128 lg:h-128" : " w-80 h-96")}>
             <div className="bg-[#DDEEFF] flex justify-between">
                 <div className="flex items-center gap-2">
                     <img src="/Graphic_Arrow_Navy.png" alt="Atlatl Logo" className="w-8 h-8"/>
@@ -158,7 +159,21 @@ export default function ChatbotWidget() {
             <button onClick={toggleChatbot} className="w-14 h-14 rounded-full bg-[#1A73E8] flex items-center justify-center shadow-lg">
                 <MdChatBubbleOutline  className="text-white w-10 h-10 cursor-pointer" />
             </button>
-            <Chatbot isOpen={isOpen} toggleChatbot={toggleChatbot} />
+            <div 
+                className={`
+                    origin-bottom-right
+                    transform
+                    transition-all
+                    duration-300
+                    ease-out
+                    ${isOpen
+                        ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+                        : "opacity-0 translate-y-4 scale-95 pointer-events-none"
+                    }
+                `}            
+            >
+                <Chatbot isOpen={isOpen} toggleChatbot={toggleChatbot} />
+            </div>
         </div>
     );
 }
