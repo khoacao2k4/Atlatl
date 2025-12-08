@@ -3,26 +3,9 @@
 import { google } from 'googleapis';
 
 const getGoogleSheetsClient = async () => {
-  // Temporary debugging
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const key = process.env.GOOGLE_PRIVATE_KEY;
   const sheetId = process.env.GOOGLE_SHEET_ID;
-  
-  console.log('=== GOOGLE SHEETS DEBUG ===');
-  console.log('Email:', email);
-  console.log('Email length:', email?.length);
-  console.log('Email has quotes:', email?.startsWith('"'));
-  console.log('Email trimmed equals original:', email === email?.trim());
-  
-  console.log('Sheet ID:', sheetId);
-  console.log('Sheet ID length:', sheetId?.length);
-  console.log('Sheet ID has quotes:', sheetId?.startsWith('"'));
-  
-  console.log('Key first 30 chars:', key?.substring(0, 30));
-  console.log('Key last 30 chars:', key?.substring(key?.length - 30));
-  console.log('Key has quotes:', key?.startsWith('"'));
-  console.log('Key length:', key?.length);
-  console.log('=========================');
   
   const privateKey = key?.replace(/\\n/g, '\n');
   
@@ -51,7 +34,8 @@ export async function logToGoogleSheets(sheetName, data) {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
-      hour12: true
+      hour12: true,
+      timeZone: 'America/Chicago'
     });
 
     let values;

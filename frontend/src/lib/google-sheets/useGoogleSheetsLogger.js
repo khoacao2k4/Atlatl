@@ -6,8 +6,6 @@ export const useGoogleSheetsLogger = () => {
   const [error, setError] = useState(null);
 
   const logToGoogleSheets = async (sheetName, data) => {
-    console.log('Sheet name:', sheetName);
-    console.log('Data:', data);
     setIsLoading(true);
     setError(null);
 
