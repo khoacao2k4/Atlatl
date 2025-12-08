@@ -9,6 +9,11 @@ import PurposeSection from "./PurposeSection";
 import { getWhyAtlatlContent } from "@/lib/strapi";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Why Atlatl Advisers",
+};
+
+
 export default async function WhyAtlatlPage() {
   const whyAtlatlContent = await getWhyAtlatlContent();
   

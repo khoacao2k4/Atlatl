@@ -223,7 +223,7 @@ export default function Navbar() {
           }
         })}
         
-        <Link href="/log-in" className={loginButtonStyles} onClick={closeMenu}>
+        <Link href="/client-experience" className={loginButtonStyles} onClick={closeMenu}>
           LOGIN
         </Link>
       </div>

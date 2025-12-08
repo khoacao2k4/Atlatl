@@ -8,6 +8,10 @@ import ChatbotWidget from "./components/chatbot/Chatbot";
 import ServiceCarousel from "./components/homepage/ServiceCarousel";
 import { redirect } from 'next/navigation';
 
+export const metadata = {
+  title: "Atlatl Advisers - Home",
+};
+
 export default async function Home() {
   const [homepageContent, processContent] = await Promise.all([
       getHomepageContent(),

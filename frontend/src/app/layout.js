@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Atlatl Advisers",
-  description: "Atlatl Advisers provides expert business strategy, process optimization, and AI-driven solutions to help organizations operate smarter and scale efficiently.",
+  title: {
+    template: 'Atlatl Advisers - %s', // %s is replaced by the specific page title
+    default: 'Atlatl Advisers', // Used if a page doesn't specify a title
+  },
+  description: 'Experts Dedicated to Your Growth',
 };
 
 export default function RootLayout({ children }) {
