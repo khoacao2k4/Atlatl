@@ -2,19 +2,11 @@
 
 import { google } from 'googleapis';
 
-const getGoogleSheetsClient = async () => {
-  let privateKey = process.env.GOOGLE_PRIVATE_KEY;
-  
-  if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
-    privateKey = privateKey.slice(1, -1);
-  }
-  
-  privateKey = privateKey.replace(/\\n/g, '\n');
-  
+const getGoogleSheetsClient = async () => {  
   const auth = new google.auth.GoogleAuth({
     credentials: {
       client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      private_key: privateKey,
+      private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     },
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
