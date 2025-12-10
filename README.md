@@ -1,27 +1,140 @@
 # Atlatl Advisers
 
-A modern financial advisory platform built with Next.js, featuring AI-powered chatbot assistance, interactive financial calculators, and comprehensive content management. Developed as a CS 620 Capstone Project.
+A modern financial advisory platform built with Next.js, featuring AI-powered chatbot assistance, interactive financial calculators, and comprehensive content management using strapi. Developed as a CS 620 Capstone Project in Fall 2025, taught by Professor Leah Ujda.
+
+## Team Members
+- Emilia
+- Khoa
+- Kiet
+- Tejas
 
 ## 🚀 Features
 
-- **AI-Powered Chatbot**: Intelligent chatbot using RAG (Retrieval-Augmented Generation) for personalized financial advice
+- **AI-Powered Chatbot**: Intelligent chatbot using RAG (Retrieval-Augmented Generation) trained on Atlatl database
 - **Financial Calculators**: Interactive tools for financial planning and analysis
 - **Newsletter & Contact Management**: Automated signup tracking via Google Sheets API
 - **Content Management**: Strapi CMS for dynamic content and resource management
 - **Black Diamond Integration**: Secure authentication and login system
-- **Responsive Design**: Mobile-first, modern UI built with React
+- **Responsive Design**: Mobile-first, modern UI built with React and Tailwind CSS
 
 ## 📁 Project Structure
 
 ```
 Atlatl/
-├── frontend/              # Next.js application
-│   ├── components/        # React components
-│   ├── pages/            # Next.js pages and API routes
-│   └── ...               # Styles, utilities, config
-├── backend/
-│   └── atlatl-cms/       # Strapi CMS backend
-└── ai-sdk-rag-starter/   # RAG-powered chatbot service
+├── frontend/                      # Next.js App
+│   ├── src/
+│   │   ├── app/                   # App Router pages & routes
+│   │   │   ├── layout.js
+│   │   │   ├── page.jsx
+│   │   │   ├── globals.css
+│   │   │   ├── favicon.ico
+│   │   │   ├── not-found.jsx
+│   │   │   ├── about-us/page.jsx
+│   │   │   ├── services/page.jsx
+│   │   │   ├── why-atlatl/
+│   │   │   │   ├── page.jsx
+│   │   │   │   ├── HeroSection.jsx
+│   │   │   │   ├── VideoSection.jsx
+│   │   │   │   ├── InfoGrid.jsx
+│   │   │   │   ├── PurposeSection.jsx
+│   │   │   │   ├── CommitmentSection.jsx
+│   │   │   │   └── CallToActionBanner.jsx
+│   │   │   ├── process/page.jsx
+│   │   │   ├── team/
+│   │   │   │   ├── page.jsx
+│   │   │   │   └── [slug]/page.jsx
+│   │   │   ├── resources/
+│   │   │   │   ├── page.jsx
+│   │   │   │   ├── faq/page.jsx
+│   │   │   ├── calculators/page.jsx
+│   │   │   ├── contact-us/page.jsx
+│   │   │   ├── client-experience/page.jsx
+│   │   │   ├── log-in/page.jsx
+│   │   │   ├── admin/page.jsx
+│   │   │   ├── maintenance/page.jsx
+│   │   │   └── api/
+│   │   │       ├── chat/route.ts
+│   │   │       ├── upload/route.ts
+│   │   │       └── admin-login/route.ts
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── NavDropdown.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── Markdown.jsx
+│   │   │   ├── AccordionItem.jsx
+│   │   │   ├── homepage/
+│   │   │   │   ├── Hero.jsx
+│   │   │   │   ├── AboutUs.jsx
+│   │   │   │   ├── ServiceCarousel.jsx
+│   │   │   │   ├── ProcessTable.jsx
+│   │   │   │   ├── HomeTeam.jsx
+│   │   │   │   └── CtaSection.jsx
+│   │   │   ├── chatbot/Chatbot.jsx
+│   │   │   ├── contact/ContactForm.jsx
+│   │   │   ├── calculators/
+│   │   │   │   ├── CalculatorBase.jsx
+│   │   │   │   ├── EmailGateOverlay.jsx
+│   │   │   │   ├── InputComponents.jsx
+│   │   │   │   ├── AutoChart.jsx
+│   │   │   │   ├── utils.js
+│   │   │   │   └── configs/
+│   │   │   │       └── ...multiple calculator configs...
+│   │   │   ├── service/
+│   │   │   │   ├── TabContent.jsx
+│   │   │   │   └── FaqSection.jsx
+│   │   │   ├── resource/
+│   │   │   │   ├── PostsSection.jsx
+│   │   │   │   └── Post.jsx
+│   │   │   └── process/
+│   │   │       ├── RoadMap.jsx
+│   │   │       ├── RoadmapShort.jsx
+│   │   │       ├── RoadmapSection.jsx
+│   │   │       ├── RoadmapShortSection.jsx
+│   │   │       ├── RoadmapTextSection.jsx
+│   │   │       ├── RoadmapImageSection.jsx
+│   │   │       └── RoadmapConnector.jsx
+│   │   ├── lib/
+│   │   │   ├── utils.ts
+│   │   │   ├── strapi.js
+│   │   │   ├── constant.js
+│   │   │   ├── helper.js
+│   │   │   ├── env.mjs
+│   │   │   ├── google-sheets/
+│   │   │   │   ├── actions.js
+│   │   │   │   └── useGoogleSheetsLogger.js
+│   │   │   ├── ai/embedding.ts
+│   │   │   ├── actions/resources.ts
+│   │   │   └── db/
+│   │   │       ├── index.ts
+│   │   │       ├── migrate.ts
+│   │   │       ├── schema/
+│   │   │       └── migrations/
+│   ├── public/                     # Static assets
+│   │   ├── images/
+│   │   └── fonts/
+│   ├── package.json
+│   ├── next.config.mjs
+│   └── README.md
+│
+├── backend/atlatl-cms/             # Strapi Backend
+│   ├── src/
+│   │   ├── index.ts
+│   │   ├── api/
+│   │   │   ├── homepage/
+│   │   │   ├── servicepage/
+│   │   │   ├── whyatlatlpage/
+│   │   │   ├── processpage/
+│   │   │   ├── team-member/
+│   │   │   └── ...more content-types...
+│   │   ├── components/
+│   │   ├── middlewares/
+│   │   ├── extensions/
+│   │   └── admin/
+│   ├── config/
+│   ├── public/
+│   ├── package.json
+│   └── README.md
+
 ```
 
 ## 🛠 Tech Stack
@@ -65,13 +178,7 @@ npm install
 ```
 
 Create a `.env.local` file:
-```env
-NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
-GOOGLE_SHEETS_CLIENT_EMAIL=your-service-account@project.iam.gserviceaccount.com
-GOOGLE_SHEETS_PRIVATE_KEY=your-private-key
-GOOGLE_SHEETS_SPREADSHEET_ID=your-spreadsheet-id
-NEXT_PUBLIC_CHATBOT_API_URL=http://localhost:3001
-```
+Not shared here for security reasons
 
 3. **Setup Strapi CMS**:
 ```bash
@@ -80,14 +187,7 @@ npm install
 ```
 
 Create a `.env` file:
-```env
-HOST=0.0.0.0
-PORT=1337
-APP_KEYS=your-app-keys
-API_TOKEN_SALT=your-api-token-salt
-ADMIN_JWT_SECRET=your-admin-jwt-secret
-JWT_SECRET=your-jwt-secret
-```
+Not shared here for security reasons
 
 4. **Setup AI Chatbot Service**:
 ```bash
@@ -173,9 +273,10 @@ Black Diamond is embedded in the application as a third-party widget/iframe for 
 
 ## 👥 Development Team
 
-- [Tejas Gupta](https://github.com/tejasgupta-dev)
+- Emila
 - [Khoa Cao](https://github.com/khoacao2k4)
 - [Kiet Pham](https://github.com/kietphamvt)
+- [Tejas Gupta](https://github.com/tejasgupta-dev)
 
 ## 📝 Content Management
 
