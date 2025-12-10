@@ -86,11 +86,9 @@ Black Diamond is embedded in the application as a third-party widget/iframe for 
 ## Content Management
 
 Strapi CMS allows for:
-- Blog post creation and management
-- Resource library updates
 - Team member profiles
 - Service descriptions
-- Dynamic page content
+- Dynamic pages' text/media content
 
 ## Architecture Diagram
 
@@ -174,7 +172,7 @@ cd frontend
 npm install
 ```
 
-`.env.local` file not shared here for security reasons
+`.env.local` file not shared here for security reasons, but you can follow `.env.example`
 
 **3. Setup Strapi CMS**:
 ```bash
@@ -182,7 +180,7 @@ cd ../backend/atlatl-cms
 npm install
 ```
 
-`.env.local` file not shared here for security reasons
+`.env.local` file not shared here for security reasons, but you can follow `.env.example`
 
 **4. Setup AI Chatbot Service**:
 ```bash
@@ -230,6 +228,22 @@ npm run develop
 ```
 Access Strapi admin at `http://localhost:1337/admin`
 
+_1.1. Configure the read token_: 
+
+Frontend need a token from Strapi in order to be authorized to fetch the content. After booting up:
+
+- Signup/login into admin panel
+- Go to settings
+- Go to API tokens section
+- Create one for "Read only" access, then copy the token
+- Set environment variables to `.env` in `frontend` folder:
+
+```
+# .env
+STRAPI_API_TOKEN=<TOKEN_YOU_COPIED>
+NEXT_PUBLIC_STRAPI_API_URL=http://localhost:1337
+```
+
 **2. Start AI Chatbot Service** (Terminal 2):
 ```bash
 cd ai-sdk-rag-starter
@@ -260,14 +274,7 @@ npm start
 ## Deployment
 
 ### Frontend (Vercel)
-The Next.js frontend is deployed on Vercel:
-
-```bash
-cd frontend
-vercel --prod
-```
-
-Or connect your GitHub repository to Vercel for automatic deployments on push.
+The Next.js frontend is deployed on Vercel. You can connect your GitHub repository to Vercel for automatic deployments on push.
 
 **Vercel Environment Variables:**
 - Add all `NEXT_PUBLIC_*` variables
@@ -280,11 +287,16 @@ The Strapi CMS is deployed on Strapi Cloud:
 1. Connect your GitHub repository to Strapi Cloud
 2. Configure environment variables in Strapi Cloud dashboard
 3. Deploy automatically on push to main branch
+4. To connect to the frontend, please do the same step (copying token step) above, and set the environement variables in Vercel project settings:
 
-**Strapi Cloud Environment Variables:**
-- Database configuration
-- API keys and secrets
-- CORS settings for Vercel frontend domain
+```
+# .env
+STRAPI_API_TOKEN=<TOKEN_YOU_COPIED>
+NEXT_PUBLIC_STRAPI_API_URL=<LINK_TO_ADMIN_PANEL>
+```
+
+Please note the link to admin panel should be public one, e.g (`https://accessible-life-xxxxxxxxxxxxx.strapiapp.com`)
+
 
 ### Environment Variables
 Ensure all production environment variables are configured in:
