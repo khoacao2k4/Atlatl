@@ -3,10 +3,10 @@
 A modern financial advisory platform built with Next.js, featuring AI-powered chatbot assistance, interactive financial calculators, and comprehensive content management using strapi. Developed as a CS 620 Capstone Project in Fall 2025, taught by Professor Leah Ujda.
 
 ## Team Members
-- Emilia
-- Khoa
-- Kiet
-- Tejas
+- [Emilia ](https://github.com/ecaantero)
+- [Khoa](https://github.com/khoacao2k4)
+- [Kiet](https://github.com/kietphamvt)
+- [Tejas](https://github.com/tejasgupta-dev)
 
 ## 🚀 Features
 
@@ -137,12 +137,12 @@ Atlatl/
 
 ```
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
-- **Framework**: Next.js
+- **Framework**: Next.js, React
 - **Language**: JavaScript
-- **UI Library**: React
+- **UI Library**: Tailwind CSS
 - **APIs**: Google Sheets API (newsletter/contact form logging)
 
 ### Backend
@@ -177,8 +177,7 @@ cd frontend
 npm install
 ```
 
-Create a `.env.local` file:
-Not shared here for security reasons
+`.env.local` file not shared here for security reasons
 
 3. **Setup Strapi CMS**:
 ```bash
@@ -186,8 +185,7 @@ cd ../backend/atlatl-cms
 npm install
 ```
 
-Create a `.env` file:
-Not shared here for security reasons
+`.env.local` file not shared here for security reasons
 
 4. **Setup AI Chatbot Service**:
 ```bash
@@ -238,8 +236,8 @@ npm start
 ## 📊 Google Sheets Integration
 
 The application automatically logs form submissions to Google Sheets:
-- **Newsletter Signups**: Tracked in a dedicated tab
-- **Contact Form Submissions**: Tracked in a separate tab
+- **Newsletter Signups**: Tracked under Newsletter tab
+- **Contact Form Submissions**: Tracked under Contact tab
 
 ### Setup Google Sheets API:
 1. Create a Google Cloud Project
@@ -265,18 +263,10 @@ Interactive calculators for:
 - Mortgage calculations
 - Loan amortization
 - Tax estimations
-- (Add your specific calculators here)
 
 ## 🔐 Black Diamond Integration
 
 Black Diamond is embedded in the application as a third-party widget/iframe for client portal access.
-
-## 👥 Development Team
-
-- Emila
-- [Khoa Cao](https://github.com/khoacao2k4)
-- [Kiet Pham](https://github.com/kietphamvt)
-- [Tejas Gupta](https://github.com/tejasgupta-dev)
 
 ## 📝 Content Management
 
