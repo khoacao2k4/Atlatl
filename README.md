@@ -3,7 +3,7 @@
 A modern financial advisory platform built with Next.js, featuring AI-powered chatbot assistance, interactive financial calculators, and comprehensive content management using Strapi. Developed as a CS 620 Capstone Project in Fall 2025, taught by [Professor Leah Ujda](https://cdis.wisc.edu/staff/ujda-leah/).
 
 ## Team Members
-- [Emilia ](https://github.com/ecaantero) - ecantero@wisc.edu
+- [Emilia](https://github.com/ecaantero) - ecantero@wisc.edu
 - [Khoa](https://github.com/khoacao2k4) - kqcao@wisc.edu
 - [Kiet](https://github.com/kietphamvt) - kvpham@wisc.edu
 - [Tejas](https://github.com/tejasgupta-dev) - tgupta39@wisc.edu
@@ -44,8 +44,9 @@ For a detailed file structure of each application, please refer to the project d
 - **Database**: (configured via Strapi)
 
 ### AI Features
-- **Chatbot**: RAG-based conversational AI
+- **React + Tailwind CSS**: The layout and appearance of the chatbot
 - **AI SDK**: Custom integration for financial advisory assistance
+- **NeonDB**: Postgres Cloud Database integrated within Vercel for storing information embeddings. 
 
 ## Google Sheets Integration
 
@@ -189,7 +190,34 @@ cd ../../ai-sdk-rag-starter
 npm install
 ```
 
-Configure AI service environment variables as needed.
+Configure AI service environment variables as needed. 
+Here is the standard configurations: 
+
+_4.1. Configure the database_: 
+- Go to Vercel > Storage > Create Database > Neon
+- After creating Neon DB, you should have access to all environment variables (.env.local). Copy this to your own .env
+_4.2. Configure the Gemini_: 
+- Go to Gemini API and create an API token
+- Add this to your own .env file
+```
+# .env
+GOOGLE_GENERATIVE_AI_API_KEY=<YOUR_API_KEY>
+```
+_4.3. Prompt Engineering_: 
+- Go to ```/frontend/src/app/api/chat```
+- You will see lines of code like this
+```
+  const result = streamText({
+    model: google("gemini-2.5-flash"),
+    system: `You are a helpful assistant named Atla. If the user greets you and make small talk, reply normally. Else, do the following: 
+    Check your knowledge base before answering any questions.
+    Only respond to questions using information from tool calls.
+    if no relevant information is found in the tool calls, respond, "Sorry, I don't know."`,
+```
+- You can change anything between the two backquotes ` ` to engineer the chatbot to do as you instructed.
+_4.4. Adding and removing from the knowledge base_:
+- To add knowledge to your database, go to ```website/admin```, login, then add the information. Information can be plain text, a docx file, or a pdf file. After pressing submit, the internal process will put this information into the knowledge base
+- To remove knowledge from your database, go to Vercel, then connect to NeonDB, and manually delete it on the resource table. 
 
 ### Running the Application
 
@@ -260,7 +288,7 @@ The Strapi CMS is deployed on Strapi Cloud:
 
 ### Environment Variables
 Ensure all production environment variables are configured in:
-- **Vercel Dashboard** for frontend
+- **Vercel Dashboard** for frontend and the chatbot
 - **Strapi Cloud Dashboard** for CMS backend
 
 ## How the Code Works
@@ -313,7 +341,7 @@ User Query → Embedding Generation → Vector Search → Context Retrieval → 
 
 **Components**:
 - `embedding.ts`: Generates vector embeddings from text
-- Database with vector storage for knowledge base
+- Database with vector storage for knowledge base can be viewed and edit on Vercel.
 - API route (`api/chat/route.ts`) orchestrates the RAG process
 - Chatbot UI component manages conversation state
 
@@ -475,7 +503,7 @@ User Input → Validation → Calculation Logic → Results Display → Chart Ge
 
 ## License
 
-This project is part of a university capstone program for CS 620.
+This project is part of the University of Wisconsin - Madison Capstone Program for CS 620.
 
 ## Contact
 
