@@ -3,7 +3,7 @@ import { fetchAPI, getStrapiURL } from '@/lib/strapi2';
 
 async function getPageData(slug) {
   try {
-    const populateQuery = `filters[slug][$eq]=${slug}&populate[seo][populate]=*&populate[blocks][on][blocks.hero][populate]=*&populate[blocks][on][blocks.about-us][populate]=*&populate[blocks][on][blocks.team-preview][populate][team_members][populate]=*&populate[blocks][on][blocks.team-preview][populate][button]=*&populate[blocks][on][blocks.carousel][populate]=*&populate[blocks][on][blocks.process-table][populate]=*&populate[blocks][on][blocks.call-to-action][populate]=*`;
+    const populateQuery = `filters[slug][$eq]=team-page&populate[seo][populate]=*&populate[blocks][on][blocks.hero][populate]=*&populate[blocks][on][blocks.about-us][populate]=*&populate[blocks][on][blocks.team-preview][populate][team_members][populate]=*&populate[blocks][on][blocks.team-preview][populate][button]=*&populate[blocks][on][blocks.team][populate][teamMembers][populate]=*&populate[blocks][on][blocks.carousel][populate]=*&populate[blocks][on][blocks.process-table][populate]=*&populate[blocks][on][blocks.call-to-action][populate]=*`;
     
     const data = await fetchAPI(
       `/api/pages?${populateQuery}`,

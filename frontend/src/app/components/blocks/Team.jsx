@@ -14,7 +14,7 @@ export default function Team({ title, teamMembers, theme }) {
           {title}
         </h2>
         
-        <div className="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+        <div className="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-16">
           {teamMembers && teamMembers.map((teamMember) => {
             const profileLink = `/team/${teamMember.slug}`;
             
