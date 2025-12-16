@@ -491,6 +491,44 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiPagePage extends Struct.CollectionTypeSchema {
+  collectionName: 'pages';
+  info: {
+    displayName: 'Page';
+    pluralName: 'pages';
+    singularName: 'page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    blocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.hero',
+        'blocks.about-us',
+        'blocks.team-preview',
+        'blocks.carousel',
+        'blocks.process-table',
+        'blocks.call-to-action',
+        'blocks.team',
+      ]
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'seo.seo', true>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProcesspageProcesspage extends Struct.SingleTypeSchema {
   collectionName: 'processpages';
   info: {
@@ -566,6 +604,17 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
   attributes: {
     avatar: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
+    blocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.team',
+        'blocks.team-preview',
+        'blocks.process-table',
+        'blocks.hero',
+        'blocks.carousel',
+        'blocks.call-to-action',
+        'blocks.about-us',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1151,6 +1200,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::faq.faq': ApiFaqFaq;
       'api::homepage.homepage': ApiHomepageHomepage;
+      'api::page.page': ApiPagePage;
       'api::processpage.processpage': ApiProcesspageProcesspage;
       'api::servicepage.servicepage': ApiServicepageServicepage;
       'api::team-member.team-member': ApiTeamMemberTeamMember;

@@ -1,0 +1,53 @@
+{
+  "collectionName": "components_blocks_process_tables",
+  "info": {
+    "displayName": "ProcessTable"
+  },
+  "options": {},
+  "attributes": {
+    "step": {
+      "type": "component",
+      "component": "process.step",
+      "repeatable": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "text": {
+      "type": "blocks"
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "LIGHT",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "BRAND"
+      ]
+    },
+    "leftTable": {
+      "type": "enumeration",
+      "default": "NEUTRAL",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
+    },
+    "rightTable": {
+      "type": "enumeration",
+      "default": "DARK",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

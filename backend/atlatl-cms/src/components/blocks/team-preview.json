@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_team_previews",
+  "info": {
+    "displayName": "TeamPreview"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "team_members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-member.team-member"
+    },
+    "button": {
+      "type": "component",
+      "component": "elements.button",
+      "repeatable": false
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "DARK",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

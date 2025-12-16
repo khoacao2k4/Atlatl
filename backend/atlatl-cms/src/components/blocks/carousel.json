@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_carousels",
+  "info": {
+    "displayName": "Carousel"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "card": {
+      "type": "component",
+      "component": "elements.short-text",
+      "repeatable": true
+    },
+    "button": {
+      "type": "component",
+      "component": "elements.button",
+      "repeatable": false
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "LIGHT",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

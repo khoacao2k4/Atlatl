@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_blocks_teams",
+  "info": {
+    "displayName": "Team"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "teamMembers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-member.team-member"
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "LIGHT",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

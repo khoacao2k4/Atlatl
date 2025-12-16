@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_blocks_aboutuses",
+  "info": {
+    "displayName": "AboutUs"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
+    "text": {
+      "type": "blocks"
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "DARK",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

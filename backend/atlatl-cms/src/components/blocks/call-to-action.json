@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_blocks_call_to_actions",
+  "info": {
+    "displayName": "CallToAction"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "button": {
+      "type": "component",
+      "component": "elements.button",
+      "repeatable": false
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "BRAND",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

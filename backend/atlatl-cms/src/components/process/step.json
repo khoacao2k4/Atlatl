@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_process_steps",
+  "info": {
+    "displayName": "Step"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "symbol": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    }
+  },
+  "config": {}
+}

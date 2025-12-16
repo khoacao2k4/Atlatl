@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_elements_buttons",
+  "info": {
+    "displayName": "Button"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    },
+    "style": {
+      "type": "enumeration",
+      "enum": [
+        "FILLED",
+        "OUTLINED"
+      ]
+    },
+    "shape": {
+      "type": "enumeration",
+      "enum": [
+        "ROUNDED",
+        "RECTANGULAR"
+      ]
+    }
+  },
+  "config": {}
+}
