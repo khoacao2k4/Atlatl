@@ -27,7 +27,12 @@ export default function BlockRenderer({ blocks }) {
           return null;
         }
 
-        return <Component key={block.id} {...block} />;
+        return (
+          <Component
+            key={`${block.__component}-${block.id}`}
+            {...block}
+          />
+        );
       })}
     </>
   );

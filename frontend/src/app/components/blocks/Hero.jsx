@@ -3,8 +3,10 @@ import Link from "next/link";
 import { getTheme, getButtonClasses, BackgroundImages } from "@/lib/theme-config";
 
 export default function Hero({
-  titleTop,
-  titleBottom,
+  titleTopUnhighlighted,
+  titleTopHighlighted,
+  titleBottomUnhighlighted,
+  titleBottomHighlighted,
   description,
   theme,
   media,
@@ -21,11 +23,21 @@ export default function Hero({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col justify-center text-center md:text-left font-songer">
             <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight ${styles.text}`}>
-              {titleTop.split(' ')[0]} <span className="text-bold-blue">{titleTop.split(' ')[1]}</span>
-              <br />
-              {titleBottom.split(' ')[0]} <span className="text-bold-blue">{titleBottom.split(' ')[1]}</span>
+              {(titleTopUnhighlighted || titleTopHighlighted) && (
+                <>
+                  {titleTopUnhighlighted && <>{titleTopUnhighlighted} </>}
+                  {titleTopHighlighted && <span className="text-bold-blue">{titleTopHighlighted}</span>}
+                  {(titleBottomUnhighlighted || titleBottomHighlighted) && <br />}
+                </>
+              )}
+              {(titleBottomUnhighlighted || titleBottomHighlighted) && (
+                <>
+                  {titleBottomUnhighlighted && <>{titleBottomUnhighlighted} </>}
+                  {titleBottomHighlighted && <span className="text-bold-blue">{titleBottomHighlighted}</span>}
+                </>
+              )}
             </h1>
-            <p className={`mt-6 text-lg font-tenorite ${styles.text}`}>
+            <p className={`mt-6 text-base lg:text-lg leading-relaxed font-tenorite ${styles.text}`}>
               {description}
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">

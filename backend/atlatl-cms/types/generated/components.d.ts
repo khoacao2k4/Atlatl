@@ -55,8 +55,10 @@ export interface BlocksHero extends Struct.ComponentSchema {
     secondaryButton: Schema.Attribute.Component<'elements.button', false>;
     theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'BRAND']> &
       Schema.Attribute.DefaultTo<'LIGHT'>;
-    titleBottom: Schema.Attribute.String;
-    titleTop: Schema.Attribute.String;
+    titleBottomHighlighted: Schema.Attribute.String;
+    titleBottomUnhighlighted: Schema.Attribute.String;
+    titleTopHighlighted: Schema.Attribute.String;
+    titleTopUnhighlighted: Schema.Attribute.String;
   };
 }
 

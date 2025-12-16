@@ -5,13 +5,19 @@
   },
   "options": {},
   "attributes": {
-    "titleTop": {
-      "type": "string",
-      "regex": "^[\\w'-]+\\s[\\w'-]+\\.?$"
+    "titleTopUnhighlighted": {
+      "type": "string"
     },
-    "titleBottom": {
+    "titleTopHighlighted": {
       "type": "string",
-      "regex": "^[\\w'-]+\\s[\\w'-]+\\.?$"
+      "required": false
+    },
+    "titleBottomUnhighlighted": {
+      "type": "string"
+    },
+    "titleBottomHighlighted": {
+      "type": "string",
+      "required": false
     },
     "description": {
       "type": "text"
