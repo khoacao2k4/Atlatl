@@ -5,16 +5,16 @@
   },
   "options": {},
   "attributes": {
-    "step": {
-      "type": "component",
-      "component": "process.step",
-      "repeatable": true
-    },
     "title": {
       "type": "string"
     },
     "description": {
       "type": "text"
+    },
+    "step": {
+      "type": "component",
+      "component": "process.step",
+      "repeatable": true
     },
     "text": {
       "type": "blocks"

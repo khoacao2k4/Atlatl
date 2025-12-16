@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_blocks_carousels",
+  "collectionName": "components_blocks_faqs",
   "info": {
-    "displayName": "Carousel"
+    "displayName": "FAQ"
   },
   "options": {},
   "attributes": {
@@ -9,16 +9,11 @@
       "type": "string"
     },
     "description": {
-      "type": "text"
+      "type": "blocks"
     },
-    "button": {
+    "topic": {
       "type": "component",
-      "component": "elements.button",
-      "repeatable": false
-    },
-    "card": {
-      "type": "component",
-      "component": "elements.short-text",
+      "component": "faq.topic-question-block",
       "repeatable": true
     },
     "theme": {

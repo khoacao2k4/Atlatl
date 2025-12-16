@@ -3,18 +3,58 @@ import { fetchAPI, getStrapiURL } from '@/lib/strapi2';
 
 async function getPageData(slug) {
   try {
-    const populateQuery = `filters[slug][$eq]=${slug}&populate[seo][populate]=*&populate[blocks][on][blocks.hero][populate]=*&populate[blocks][on][blocks.title-media-text][populate]=*&populate[blocks][on][blocks.team-preview][populate][team_members][populate]=*&populate[blocks][on][blocks.team-preview][populate][button]=*&populate[blocks][on][blocks.team][populate][teamMembers][populate]=*&populate[blocks][on][blocks.carousel][populate]=*&populate[blocks][on][blocks.process-table][populate]=*&populate[blocks][on][blocks.call-to-action][populate]=*&populate[blocks][on][blocks.definition][populate]=*&populate[blocks][on][blocks.centered-media][populate]=*&populate[blocks][on][blocks.card-row][populate][card][populate][media][fields]=id,name,url,mime,width,height&populate[blocks][on][blocks.media-list-split][populate][media][fields]=id,name,url,mime,width,height&populate[blocks][on][blocks.media-list-split][populate][item][populate][media][fields]=id,name,url,mime,width,height&populate[blocks][on][blocks.media-text-split][populate][row][populate][media][fields]=id,name,url,mime,width,height`;
-    
+    const populateQuery =
+      `filters[slug][$eq]=${slug}` +
+
+      // SEO
+      `&populate[seo][populate]=*` +
+
+      // ===== EXISTING BLOCKS =====
+      `&populate[blocks][on][blocks.hero][populate]=*` +
+      `&populate[blocks][on][blocks.title-media-text][populate]=*` +
+
+      `&populate[blocks][on][blocks.team-preview][populate][team_members][populate]=*` +
+      `&populate[blocks][on][blocks.team-preview][populate][button]=*` +
+
+      `&populate[blocks][on][blocks.team][populate][teamMembers][populate]=*` +
+      `&populate[blocks][on][blocks.carousel][populate]=*` +
+      `&populate[blocks][on][blocks.process-table][populate]=*` +
+      `&populate[blocks][on][blocks.call-to-action][populate]=*` +
+      `&populate[blocks][on][blocks.definition][populate]=*` +
+      `&populate[blocks][on][blocks.centered-media][populate]=*` +
+
+      // Card Row
+      `&populate[blocks][on][blocks.card-row][populate][card][populate][media][fields]=id,url,mime,width,height,alternativeText` +
+
+      // Media List Split
+      `&populate[blocks][on][blocks.media-list-split][populate][media][fields]=id,url,mime,width,height,alternativeText` +
+      `&populate[blocks][on][blocks.media-list-split][populate][item][populate][media][fields]=id,url,mime,width,height,alternativeText` +
+
+      // Media Text Split
+      `&populate[blocks][on][blocks.media-text-split][populate][row][populate][media][fields]=id,url,mime,width,height,alternativeText` +
+
+      // ===== NEW BLOCKS =====
+
+      // Dynamic Paragraphs
+      `&populate[blocks][on][blocks.dynamic-paragraph][populate][media][fields]=id,url,mime,width,height,alternativeText` +
+      `&populate[blocks][on][blocks.dynamic-paragraph][populate][button][populate]=*` +
+      `&populate[blocks][on][blocks.dynamic-paragraph][populate][Content][populate]=*` +
+
+      // FAQ Block
+      `&populate[blocks][on][blocks.faq][populate][topic][populate][questionblocks][populate]=*`;
+
     const data = await fetchAPI(
       `/api/pages?${populateQuery}`,
       { next: { revalidate: 1 } }
     );
+
     return data.data[0] || null;
   } catch (error) {
     console.error('Error fetching page data:', error);
     return null;
   }
 }
+
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

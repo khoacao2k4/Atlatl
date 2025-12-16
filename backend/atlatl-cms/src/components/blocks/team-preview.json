@@ -11,15 +11,15 @@
     "description": {
       "type": "text"
     },
-    "team_members": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::team-member.team-member"
-    },
     "button": {
       "type": "component",
       "component": "elements.button",
       "repeatable": false
+    },
+    "team_members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-member.team-member"
     },
     "theme": {
       "type": "enumeration",

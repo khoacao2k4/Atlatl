@@ -1,24 +1,30 @@
 {
-  "collectionName": "components_blocks_carousels",
+  "collectionName": "components_blocks_dynamic_paragraphs",
   "info": {
-    "displayName": "Carousel"
+    "displayName": "DynamicParagraph"
   },
   "options": {},
   "attributes": {
     "title": {
       "type": "string"
     },
-    "description": {
-      "type": "text"
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
     },
     "button": {
       "type": "component",
       "component": "elements.button",
       "repeatable": false
     },
-    "card": {
+    "Content": {
       "type": "component",
-      "component": "elements.short-text",
+      "component": "elements.dynamic-paragraph-content",
       "repeatable": true
     },
     "theme": {

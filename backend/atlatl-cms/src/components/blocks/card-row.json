@@ -5,13 +5,13 @@
   },
   "options": {},
   "attributes": {
+    "title": {
+      "type": "string"
+    },
     "card": {
       "type": "component",
       "component": "elements.card",
       "repeatable": true
-    },
-    "title": {
-      "type": "string"
     },
     "themeTop": {
       "type": "enumeration",

@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_elements_dynamic_paragraph_contents",
+  "info": {
+    "displayName": "DynamicParagraphContent"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "paragraph": {
+      "type": "blocks"
+    }
+  },
+  "config": {}
+}

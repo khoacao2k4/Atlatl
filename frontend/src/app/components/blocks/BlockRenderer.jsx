@@ -10,6 +10,8 @@ import CenteredMedia from './CenteredMedia';
 import MediaTextSplit from './MediaTextSplit';
 import CardRow from './CardRow';
 import MediaListSplit from './MediaListSplit';
+import DynamicParagraph from './DynamicParagraph';
+import FAQ from './FAQ';
 
 const componentMap = {
   'blocks.hero': Hero,
@@ -24,6 +26,8 @@ const componentMap = {
   'blocks.media-text-split': MediaTextSplit,
   'blocks.card-row': CardRow,
   'blocks.media-list-split': MediaListSplit,
+  'blocks.dynamic-paragraph': DynamicParagraph,
+  'blocks.faq': FAQ,
 };
 
 export default function BlockRenderer({ blocks }) {

@@ -81,6 +81,38 @@ export interface BlocksDefinition extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksDynamicParagraph extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_dynamic_paragraphs';
+  info: {
+    displayName: 'DynamicParagraph';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'elements.button', false>;
+    Content: Schema.Attribute.Component<
+      'elements.dynamic-paragraph-content',
+      true
+    >;
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+      Schema.Attribute.DefaultTo<'LIGHT'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksFaq extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_faqs';
+  info: {
+    displayName: 'FAQ';
+  };
+  attributes: {
+    description: Schema.Attribute.Blocks;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+      Schema.Attribute.DefaultTo<'LIGHT'>;
+    title: Schema.Attribute.String;
+    topic: Schema.Attribute.Component<'faq.topic-question-block', true>;
+  };
+}
+
 export interface BlocksHero extends Struct.ComponentSchema {
   collectionName: 'components_blocks_heroes';
   info: {
@@ -220,6 +252,18 @@ export interface ElementsCard extends Struct.ComponentSchema {
     media: Schema.Attribute.Media<'files' | 'videos' | 'images'>;
     theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'DARK'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsDynamicParagraphContent
+  extends Struct.ComponentSchema {
+  collectionName: 'components_elements_dynamic_paragraph_contents';
+  info: {
+    displayName: 'DynamicParagraphContent';
+  };
+  attributes: {
+    paragraph: Schema.Attribute.Blocks;
     title: Schema.Attribute.String;
   };
 }
@@ -383,6 +427,8 @@ declare module '@strapi/strapi' {
       'blocks.carousel': BlocksCarousel;
       'blocks.centered-media': BlocksCenteredMedia;
       'blocks.definition': BlocksDefinition;
+      'blocks.dynamic-paragraph': BlocksDynamicParagraph;
+      'blocks.faq': BlocksFaq;
       'blocks.hero': BlocksHero;
       'blocks.media-list-split': BlocksMediaListSplit;
       'blocks.media-text-split': BlocksMediaTextSplit;
@@ -392,6 +438,7 @@ declare module '@strapi/strapi' {
       'blocks.title-media-text': BlocksTitleMediaText;
       'elements.button': ElementsButton;
       'elements.card': ElementsCard;
+      'elements.dynamic-paragraph-content': ElementsDynamicParagraphContent;
       'elements.item': ElementsItem;
       'elements.media-text-split-row': ElementsMediaTextSplitRow;
       'elements.short-text': ElementsShortText;
