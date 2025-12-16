@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_blocks_card_rows",
+  "info": {
+    "displayName": "CardRow"
+  },
+  "options": {},
+  "attributes": {
+    "card": {
+      "type": "component",
+      "component": "elements.card",
+      "repeatable": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "themeTop": {
+      "type": "enumeration",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
+    },
+    "themeBottom": {
+      "type": "enumeration",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

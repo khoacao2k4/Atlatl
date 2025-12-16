@@ -35,7 +35,12 @@
         "blocks.carousel",
         "blocks.process-table",
         "blocks.call-to-action",
-        "blocks.team"
+        "blocks.team",
+        "blocks.image-text-block",
+        "blocks.definition",
+        "blocks.centered-media",
+        "blocks.card-row",
+        "blocks.media-list-split"
       ]
     }
   }

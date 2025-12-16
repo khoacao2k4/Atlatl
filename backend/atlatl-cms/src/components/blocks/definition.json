@@ -1,14 +1,26 @@
 {
-  "collectionName": "components_blocks_aboutuses",
+  "collectionName": "components_blocks_definitions",
   "info": {
-    "displayName": "TitleMediaText"
+    "displayName": "Definition"
   },
   "options": {},
   "attributes": {
     "title": {
       "type": "string"
     },
-    "media": {
+    "headword": {
+      "type": "string"
+    },
+    "pronunciation": {
+      "type": "string"
+    },
+    "partOfSpeech": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "illustration": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
@@ -16,9 +28,6 @@
         "files",
         "videos"
       ]
-    },
-    "text": {
-      "type": "blocks"
     },
     "theme": {
       "type": "enumeration",

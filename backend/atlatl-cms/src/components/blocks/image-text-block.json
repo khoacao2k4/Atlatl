@@ -1,13 +1,10 @@
 {
-  "collectionName": "components_blocks_aboutuses",
+  "collectionName": "components_blocks_image_text_blocks",
   "info": {
-    "displayName": "TitleMediaText"
+    "displayName": "MediaTextSplit"
   },
   "options": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
     "media": {
       "type": "media",
       "multiple": false,
@@ -17,18 +14,30 @@
         "videos"
       ]
     },
-    "text": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
       "type": "blocks"
+    },
+    "mediaFirst": {
+      "type": "boolean",
+      "default": false
     },
     "theme": {
       "type": "enumeration",
-      "default": "DARK",
+      "default": "NEUTRAL",
       "enum": [
         "LIGHT",
         "DARK",
         "NEUTRAL",
         "BRAND"
       ]
+    },
+    "card": {
+      "type": "component",
+      "component": "elements.big-card",
+      "repeatable": false
     }
   },
   "config": {}

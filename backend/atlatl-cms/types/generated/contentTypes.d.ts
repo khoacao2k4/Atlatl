@@ -511,6 +511,11 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.process-table',
         'blocks.call-to-action',
         'blocks.team',
+        'blocks.image-text-block',
+        'blocks.definition',
+        'blocks.centered-media',
+        'blocks.card-row',
+        'blocks.media-list-split',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

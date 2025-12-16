@@ -1,13 +1,10 @@
 {
-  "collectionName": "components_blocks_aboutuses",
+  "collectionName": "components_blocks_centered_medias",
   "info": {
-    "displayName": "TitleMediaText"
+    "displayName": "CenteredMedia"
   },
   "options": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
     "media": {
       "type": "media",
       "multiple": false,
@@ -17,12 +14,19 @@
         "videos"
       ]
     },
-    "text": {
-      "type": "blocks"
-    },
-    "theme": {
+    "themeTop": {
       "type": "enumeration",
-      "default": "DARK",
+      "default": "LIGHT",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
+    },
+    "themeBottom": {
+      "type": "enumeration",
+      "default": "LIGHT",
       "enum": [
         "LIGHT",
         "DARK",

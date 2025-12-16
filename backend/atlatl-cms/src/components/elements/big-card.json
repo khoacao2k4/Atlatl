@@ -1,12 +1,15 @@
 {
-  "collectionName": "components_blocks_aboutuses",
+  "collectionName": "components_elements_big_cards",
   "info": {
-    "displayName": "TitleMediaText"
+    "displayName": "BigCard"
   },
   "options": {},
   "attributes": {
     "title": {
       "type": "string"
+    },
+    "description": {
+      "type": "blocks"
     },
     "media": {
       "type": "media",
@@ -17,12 +20,8 @@
         "videos"
       ]
     },
-    "text": {
-      "type": "blocks"
-    },
     "theme": {
       "type": "enumeration",
-      "default": "DARK",
       "enum": [
         "LIGHT",
         "DARK",

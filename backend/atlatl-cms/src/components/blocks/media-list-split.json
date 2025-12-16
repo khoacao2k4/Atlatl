@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_blocks_media_list_splits",
+  "info": {
+    "displayName": "MediaListSplit"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "media": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "item": {
+      "type": "component",
+      "component": "elements.item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
