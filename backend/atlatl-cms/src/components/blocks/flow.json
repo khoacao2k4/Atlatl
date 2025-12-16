@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_blocks_flows",
+  "info": {
+    "displayName": "Flow"
+  },
+  "options": {},
+  "attributes": {
+    "block": {
+      "type": "component",
+      "component": "elements.flow-block",
+      "repeatable": true
+    },
+    "reverseOrder": {
+      "type": "boolean",
+      "default": false
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "LIGHT",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

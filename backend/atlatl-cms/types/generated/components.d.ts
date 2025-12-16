@@ -113,6 +113,19 @@ export interface BlocksFaq extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksFlow extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_flows';
+  info: {
+    displayName: 'Flow';
+  };
+  attributes: {
+    block: Schema.Attribute.Component<'elements.flow-block', true>;
+    reverseOrder: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+      Schema.Attribute.DefaultTo<'LIGHT'>;
+  };
+}
+
 export interface BlocksHero extends Struct.ComponentSchema {
   collectionName: 'components_blocks_heroes';
   info: {
@@ -229,6 +242,20 @@ export interface BlocksTitleMediaText extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksTitleTextMultipleMedia extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_title_text_multiple_medias';
+  info: {
+    displayName: 'TitleTextMultipleMedia';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos', true>;
+    paragraph: Schema.Attribute.Blocks;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsButton extends Struct.ComponentSchema {
   collectionName: 'components_elements_buttons';
   info: {
@@ -264,6 +291,19 @@ export interface ElementsDynamicParagraphContent
   };
   attributes: {
     paragraph: Schema.Attribute.Blocks;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsFlowBlock extends Struct.ComponentSchema {
+  collectionName: 'components_elements_flow_blocks';
+  info: {
+    displayName: 'FlowBlock';
+  };
+  attributes: {
+    description: Schema.Attribute.Blocks;
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Number: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
 }
@@ -429,6 +469,7 @@ declare module '@strapi/strapi' {
       'blocks.definition': BlocksDefinition;
       'blocks.dynamic-paragraph': BlocksDynamicParagraph;
       'blocks.faq': BlocksFaq;
+      'blocks.flow': BlocksFlow;
       'blocks.hero': BlocksHero;
       'blocks.media-list-split': BlocksMediaListSplit;
       'blocks.media-text-split': BlocksMediaTextSplit;
@@ -436,9 +477,11 @@ declare module '@strapi/strapi' {
       'blocks.team': BlocksTeam;
       'blocks.team-preview': BlocksTeamPreview;
       'blocks.title-media-text': BlocksTitleMediaText;
+      'blocks.title-text-multiple-media': BlocksTitleTextMultipleMedia;
       'elements.button': ElementsButton;
       'elements.card': ElementsCard;
       'elements.dynamic-paragraph-content': ElementsDynamicParagraphContent;
+      'elements.flow-block': ElementsFlowBlock;
       'elements.item': ElementsItem;
       'elements.media-text-split-row': ElementsMediaTextSplitRow;
       'elements.short-text': ElementsShortText;

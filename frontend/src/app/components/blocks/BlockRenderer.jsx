@@ -12,6 +12,8 @@ import CardRow from './CardRow';
 import MediaListSplit from './MediaListSplit';
 import DynamicParagraph from './DynamicParagraph';
 import FAQ from './FAQ';
+import TitleTextMultipleMedia from './TitleTextMultipleMedia';
+import Flow from './Flow';
 
 const componentMap = {
   'blocks.hero': Hero,
@@ -28,6 +30,8 @@ const componentMap = {
   'blocks.media-list-split': MediaListSplit,
   'blocks.dynamic-paragraph': DynamicParagraph,
   'blocks.faq': FAQ,
+  'blocks.title-text-multiple-media': TitleTextMultipleMedia,
+  'blocks.flow': Flow,
 };
 
 export default function BlockRenderer({ blocks }) {

@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_blocks_title_text_multiple_medias",
+  "info": {
+    "displayName": "TitleTextMultipleMedia"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "paragraph": {
+      "type": "blocks"
+    },
+    "media": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}

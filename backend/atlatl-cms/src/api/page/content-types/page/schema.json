@@ -42,7 +42,9 @@
         "blocks.title-media-text",
         "blocks.media-text-split",
         "blocks.faq",
-        "blocks.dynamic-paragraph"
+        "blocks.dynamic-paragraph",
+        "blocks.title-text-multiple-media",
+        "blocks.flow"
       ]
     }
   }

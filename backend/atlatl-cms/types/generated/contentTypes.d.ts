@@ -518,6 +518,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.media-text-split',
         'blocks.faq',
         'blocks.dynamic-paragraph',
+        'blocks.title-text-multiple-media',
+        'blocks.flow',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
