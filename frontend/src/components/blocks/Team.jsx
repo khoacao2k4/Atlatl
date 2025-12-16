@@ -10,7 +10,7 @@ export default function Team({ title, teamMembers, theme }) {
       <BackgroundImages images={styles.backgroundImages} />
 
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className={`text-4xl lg:text-6xl font-bold font-songer ${styles.title} mb-12 uppercase tracking-wide text-center`}>
+        <h2 className={`text-4xl lg:text-6xl font-bold font-songer ${styles.text} mb-12 uppercase tracking-wide text-center`}>
           {title}
         </h2>
         

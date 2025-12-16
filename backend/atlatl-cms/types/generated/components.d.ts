@@ -121,7 +121,9 @@ export interface BlocksFlow extends Struct.ComponentSchema {
   attributes: {
     block: Schema.Attribute.Component<'elements.flow-block', true>;
     reverseOrder: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<
+      ['LIGHT', 'DARK', 'NEUTRAL', 'BRAND', 'BLUE']
+    > &
       Schema.Attribute.DefaultTo<'LIGHT'>;
   };
 }
@@ -136,7 +138,9 @@ export interface BlocksHero extends Struct.ComponentSchema {
     media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     primaryButton: Schema.Attribute.Component<'elements.button', false>;
     secondaryButton: Schema.Attribute.Component<'elements.button', false>;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<
+      ['LIGHT', 'DARK', 'NEUTRAL', 'BRAND', 'BLUE']
+    > &
       Schema.Attribute.DefaultTo<'LIGHT'>;
     titleBottomHighlighted: Schema.Attribute.String;
     titleBottomUnhighlighted: Schema.Attribute.String;
@@ -183,7 +187,9 @@ export interface BlocksMediaTextSplit extends Struct.ComponentSchema {
   };
   attributes: {
     row: Schema.Attribute.Component<'elements.media-text-split-row', true>;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<
+      ['LIGHT', 'DARK', 'NEUTRAL', 'BRAND', 'BLUE']
+    > &
       Schema.Attribute.DefaultTo<'NEUTRAL'>;
   };
 }
@@ -361,7 +367,9 @@ export interface ElementsMediaTextSplitRow extends Struct.ComponentSchema {
     description: Schema.Attribute.Blocks;
     media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     mediaFirst: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<
+      ['LIGHT', 'DARK', 'NEUTRAL', 'BRAND', 'BLUE']
+    > &
       Schema.Attribute.DefaultTo<'DARK'>;
     title: Schema.Attribute.String;
   };

@@ -31,7 +31,8 @@
         "LIGHT",
         "DARK",
         "NEUTRAL",
-        "BRAND"
+        "BRAND",
+        "BLUE"
       ]
     }
   },
