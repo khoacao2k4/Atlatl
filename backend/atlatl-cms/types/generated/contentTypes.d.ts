@@ -614,16 +614,6 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
   attributes: {
     avatar: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
-    blocks: Schema.Attribute.DynamicZone<
-      [
-        'blocks.team',
-        'blocks.team-preview',
-        'blocks.process-table',
-        'blocks.hero',
-        'blocks.carousel',
-        'blocks.call-to-action',
-      ]
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

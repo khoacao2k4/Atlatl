@@ -1,5 +1,5 @@
-import { PostBlock, RecentBlogCard, FeaturedBlog } from '../components/resource/Post';
-import PostsSection from '../components/resource/PostsSection';
+import { PostBlock, RecentBlogCard, FeaturedBlog } from '../../components/resource/Post';
+import PostsSection from '../../components/resource/PostsSection';
 
 export default function ResourcesPage() {
   return (

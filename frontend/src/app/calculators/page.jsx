@@ -1,19 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CalculatorBase } from '../components/Calculators/CalculatorBase';
-import { config as _1031Exchange } from '../components/Calculators/configs/1031-exchange/config';
-import { config as amt } from '../components/Calculators/configs/amt/config';
-import { config as armVsFixedRateMortgage } from '../components/Calculators/configs/arm-vs-fixed-rate-mortgage/config';
-import { config as beneficiaryRmd } from '../components/Calculators/configs/beneficiary-rmd/config';
-import { config as biweeklyMortgagePayment } from '../components/Calculators/configs/biweekly-mortgage-payment/config';
-import { config as collegeSavings } from '../components/Calculators/configs/college-savings/config';
-import { config as companyStockDistributionAnalysis } from '../components/Calculators/configs/company-stock-distribution-analysis/config';
-import { config as investmentProperty } from '../components/Calculators/configs/investment-property/config';
-import { config as leaseVsBuy } from '../components/Calculators/configs/lease-vs-buy/config';
-import { config as mortgageRefinance } from '../components/Calculators/configs/mortgage-refinance/config';
-import { config as roth401kVsTraditional401k } from '../components/Calculators/configs/roth-401k-vs-traditional-401k/config';
-import { config as rothIraConversion } from '../components/Calculators/configs/roth-ira-conversion/config';
+import { CalculatorBase } from '../../components/calculators/CalculatorBase';
+import { config as _1031Exchange } from '../../components/calculators/configs/1031-exchange/config';
+import { config as amt } from '../../components/calculators/configs/amt/config';
+import { config as armVsFixedRateMortgage } from '../../components/calculators/configs/arm-vs-fixed-rate-mortgage/config';
+import { config as beneficiaryRmd } from '../../components/calculators/configs/beneficiary-rmd/config';
+import { config as biweeklyMortgagePayment } from '../../components/calculators/configs/biweekly-mortgage-payment/config';
+import { config as collegeSavings } from '../../components/calculators/configs/college-savings/config';
+import { config as companyStockDistributionAnalysis } from '../../components/calculators/configs/company-stock-distribution-analysis/config';
+import { config as investmentProperty } from '../../components/calculators/configs/investment-property/config';
+import { config as leaseVsBuy } from '../../components/calculators/configs/lease-vs-buy/config';
+import { config as mortgageRefinance } from '../../components/calculators/configs/mortgage-refinance/config';
+import { config as roth401kVsTraditional401k } from '../../components/calculators/configs/roth-401k-vs-traditional-401k/config';
+import { config as rothIraConversion } from '../../components/calculators/configs/roth-ira-conversion/config';
 
 export default function CalculatorsPage() {
     const [selectedCalc, setSelectedCalc] = useState('beneficiaryRmd');

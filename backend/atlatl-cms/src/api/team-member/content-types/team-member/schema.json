@@ -51,17 +51,6 @@
       "type": "integer",
       "required": true,
       "min": 1
-    },
-    "blocks": {
-      "type": "dynamiczone",
-      "components": [
-        "blocks.team",
-        "blocks.team-preview",
-        "blocks.process-table",
-        "blocks.hero",
-        "blocks.carousel",
-        "blocks.call-to-action"
-      ]
     }
   }
 }

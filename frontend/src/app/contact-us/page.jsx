@@ -1,5 +1,5 @@
-import ContactForm from "@/app/components/contact/ContactForm";
-import CtaSection from "@/app/components/homepage/CtaSection";
+import ContactForm from "@/components/contact/ContactForm";
+import CtaSection from "@/components/homepage/CtaSection";
 import Link from "next/link";
 import { PHONE_NUMBER, EMAIL_ADDRESS, OFFICE_ADDRESS } from "@/lib/constant";
 
