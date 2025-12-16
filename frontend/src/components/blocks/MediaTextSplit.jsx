@@ -27,12 +27,12 @@ function MediaTextSplitTextBox({ title, description, rowTheme }) {
 
   return (
     <div
-      className={`${styles.bg} ${styles.text} w-full h-full rounded-3xl p-6 md:p-12 lg:p-16 xl:py-32 flex flex-col justify-center`}
+      className={`${styles.bg} w-full h-full rounded-3xl p-6 md:p-12 lg:p-16 xl:py-32 flex flex-col justify-center`}
     >
-      <h2 className="font-songer font-bold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-6">
+      <h2 className={`font-songer font-bold text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-6 ${styles.title}`}>
         {title}
       </h2>
-      <div className="font-tenorite text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed">
+      <div className={`font-tenorite text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed ${styles.text}`}>
         {description?.map((block, idx) => (
           <p key={idx} className={idx > 0 ? "mt-4" : ""}>
             {block.children?.map((child) => child.text).join("")}
@@ -48,18 +48,18 @@ export default function MediaTextSplit({ title, description, row, theme }) {
 
   return (
     <section
-      className={`${sectionStyles.bg} ${sectionStyles.text} flex flex-col gap-6 md:gap-12 px-4 md:px-16 lg:px-20 pb-10 md:pb-32 lg:pb-40`}
+      className={`${sectionStyles.bg} flex flex-col gap-6 md:gap-12 px-4 md:px-16 lg:px-20 pb-10 md:pb-32 lg:pb-40`}
     >
       {/* Optional header */}
       {(title || description) && (
         <div className="text-center mb-6 md:mb-12">
           {title && (
-            <h2 className="font-songer font-bold text-3xl md:text-4xl lg:text-5xl mb-4">
+            <h2 className={`font-songer font-bold text-3xl md:text-4xl lg:text-5xl mb-4 ${sectionStyles.title}`}>
               {title}
             </h2>
           )}
           {description && (
-            <div className="font-tenorite text-lg md:text-xl lg:text-2xl">
+            <div className={`font-tenorite text-lg md:text-xl lg:text-2xl ${sectionStyles.text}`}>
               {description.map((block, idx) => (
                 <p key={idx} className={idx > 0 ? "mt-4" : ""}>
                   {block.children?.map((child) => child.text).join("")}

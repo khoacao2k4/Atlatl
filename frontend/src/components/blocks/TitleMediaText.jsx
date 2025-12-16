@@ -12,7 +12,7 @@ export default function TitleMediaText({ title, text = '', theme, media }) {
 
       <div className="container mx-auto rounded-2xl px-5 xl:px-[5%] 2xl:px-[10%] text-center relative z-10">
         <h2
-          className={`text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-12 text-left font-songer uppercase tracking-wide ${styles.text}`}
+          className={`text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-12 text-left font-songer uppercase tracking-wide ${styles.title}`}
         >
           {title}
         </h2>

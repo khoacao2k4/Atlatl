@@ -10,7 +10,7 @@ export default function Team({ title, teamMembers, theme }) {
       <BackgroundImages images={styles.backgroundImages} />
 
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className={`text-4xl lg:text-6xl font-bold font-songer ${styles.text} mb-12 uppercase tracking-wide text-center`}>
+        <h2 className={`text-4xl lg:text-6xl font-bold font-songer ${styles.title} mb-12 uppercase tracking-wide text-center`}>
           {title}
         </h2>
         
@@ -33,12 +33,12 @@ export default function Team({ title, teamMembers, theme }) {
                   )}
                 </div>
                 
-                <h3 className={`font-songer ${styles.text} text-2xl font-bold uppercase tracking-wider mb-1 group-hover:text-bold-blue transition-colors duration-300`}>
+                <h3 className={`font-songer text-2xl font-bold uppercase tracking-wider mb-1 group-hover:text-bold-blue transition-colors duration-300 ${styles.text}`}>
                   {teamMember.name}
                   {teamMember.suffix && <span className="text-2xl">, {teamMember.suffix}</span>}
                 </h3>
                 
-                <p className={`font-tenorite ${styles.text} font-medium text-sm md:text-xl tracking-wide group-hover:text-bold-blue transition-colors duration-300`}>
+                <p className={`font-tenorite font-medium text-sm md:text-xl tracking-wide group-hover:text-bold-blue transition-colors duration-300 ${styles.text}`}>
                   {teamMember.position}
                 </p>
               </Link>

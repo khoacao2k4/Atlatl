@@ -58,7 +58,7 @@ export default function Carousel({ title, description, theme, card, button }) {
       <BackgroundImages images={styles.backgroundImages} />
 
       <div className="relative z-10 w-full flex flex-col items-center">
-        <h1 className={`text-4xl md:text-5xl lg:text-6xl font-songer font-bold text-center uppercase tracking-wide ${styles.text}`}>
+        <h1 className={`text-4xl md:text-5xl lg:text-6xl font-songer font-bold text-center uppercase tracking-wide ${styles.title}`}>
           {title}
         </h1>
         <p className={`text-lg md:text-xl px-[10%] py-8 text-center ${styles.text}`}>

@@ -156,6 +156,8 @@ export interface BlocksLoginTable extends Struct.ComponentSchema {
     link: Schema.Attribute.Component<'elements.link', true>;
     media: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     points: Schema.Attribute.Component<'elements.short-text', true>;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+      Schema.Attribute.DefaultTo<'LIGHT'>;
     title: Schema.Attribute.String;
   };
 }
@@ -292,7 +294,9 @@ export interface ElementsCard extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Blocks;
     media: Schema.Attribute.Media<'files' | 'videos' | 'images'>;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<
+      ['LIGHT', 'DARK', 'BLUE', 'NEUTRAL', 'BRAND']
+    > &
       Schema.Attribute.DefaultTo<'DARK'>;
     title: Schema.Attribute.String;
   };

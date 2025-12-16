@@ -22,7 +22,7 @@ export default function FAQ({ title, description, topic, theme }) {
         {/* Header */}
         <div className="text-center mb-16">
           {title && (
-            <h2 className={`text-4xl md:text-5xl lg:text-6xl font-songer font-bold uppercase mb-6 ${styles.text}`}>
+            <h2 className={`text-4xl md:text-5xl lg:text-6xl font-songer font-bold uppercase mb-6 ${styles.title}`}>
               {title}
             </h2>
           )}

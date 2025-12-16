@@ -35,6 +35,16 @@
       "type": "component",
       "component": "elements.link",
       "repeatable": true
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "LIGHT",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
     }
   },
   "config": {}

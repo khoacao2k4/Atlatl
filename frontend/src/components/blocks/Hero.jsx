@@ -22,17 +22,17 @@ export default function Hero({
       <div className="container mx-auto px-5 xl:px-[5%] 2xl:px-[10%] relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col justify-center text-center md:text-left font-songer">
-            <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight ${styles.text}`}>
+            <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight`}>
               {(titleTopUnhighlighted || titleTopHighlighted) && (
                 <>
-                  {titleTopUnhighlighted && <>{titleTopUnhighlighted} </>}
+                  {titleTopUnhighlighted && <span className={styles.textMuted}>{titleTopUnhighlighted} </span>}
                   {titleTopHighlighted && <span className="text-bold-blue">{titleTopHighlighted}</span>}
                   {(titleBottomUnhighlighted || titleBottomHighlighted) && <br />}
                 </>
               )}
               {(titleBottomUnhighlighted || titleBottomHighlighted) && (
                 <>
-                  {titleBottomUnhighlighted && <>{titleBottomUnhighlighted} </>}
+                  {titleBottomUnhighlighted && <span className={styles.textMuted}>{titleBottomUnhighlighted} </span>}
                   {titleBottomHighlighted && <span className="text-bold-blue">{titleBottomHighlighted}</span>}
                 </>
               )}

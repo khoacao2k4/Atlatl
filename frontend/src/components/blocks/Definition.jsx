@@ -17,7 +17,7 @@ export default function Definition({
       <BackgroundImages images={styles.backgroundImages} />
 
       <div className="container mx-auto px-[10%] relative z-10">
-        <h1 className={`font-songer text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center pt-20 md:pt-28 lg:pt-36 pb-8 md:pb-12 ${styles.text}`}>
+        <h1 className={`font-songer text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center pt-20 md:pt-28 lg:pt-36 pb-8 md:pb-12 ${styles.title}`}>
           {title}
         </h1>
 

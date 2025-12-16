@@ -10,7 +10,7 @@ export default function TeamPreview({ title, description, theme, button, team_me
       <BackgroundImages images={styles.backgroundImages} />
 
       <div className="flex flex-col justify-center items-center w-full font-tenorite text-center relative z-10">
-        <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-bold font-songer uppercase tracking-wide ${styles.text}`}>
+        <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-bold font-songer uppercase tracking-wide ${styles.title}`}>
           {title}
         </h1>
         <p className={`text-lg md:text-xl px-[10%] py-8 text-center ${styles.text}`}>

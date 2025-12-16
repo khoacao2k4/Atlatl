@@ -1,19 +1,43 @@
 export const themeStyles = {
   LIGHT: {
     bg: 'bg-white',
-    text: 'text-gray-900'
+    title: 'text-dark-blue',
+    text: 'text-darker-bold-blue',
+    textMuted: 'text-black',
+    button: 'bg-bold-blue text-white',
+    buttonHover: 'hover:bg-darker-bold-blue',
   },
   DARK: {
     bg: 'bg-dark-blue',
-    text: 'text-white'
+    text: 'text-white',
+    textMuted: 'text-black',
+    title: 'text-white',
+    button: 'bg-bold-blue text-white',
+    buttonHover: 'hover:bg-light-blue hover:text-dark-blue',
+  },
+  BLUE: {
+    bg: 'bg-darker-bold-blue',
+    text: 'text-white',
+    textMuted: 'text-gray-300',
+    title: 'text-white',
+    button: 'bg-bold-blue text-white',
+    buttonHover: 'hover:bg-light-blue hover:text-dark-blue',
   },
   NEUTRAL: {
     bg: 'bg-darker-light-blue',
-    text: 'text-dark-blue'
+    text: 'text-dark-blue',
+    textMuted: 'text-darker-bold-blue',
+    title: 'text-dark-blue',
+    button: 'bg-bold-blue text-white',
+    buttonHover: 'hover:bg-dark-blue',
   },
   BRAND: {
     bg: 'bg-white',
     text: 'text-dark-blue',
+    textMuted: 'text-darker-bold-blue',
+    title: 'text-dark-blue',
+    button: 'bg-bold-blue text-white',
+    buttonHover: 'hover:bg-darker-bold-blue',
     backgroundImages: [
       {
         src: '/images/vector_60.svg',

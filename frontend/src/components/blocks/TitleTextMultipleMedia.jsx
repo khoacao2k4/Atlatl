@@ -18,7 +18,7 @@ export default function TitleTextMultipleMedia({
       <section className="container mx-auto px-6 xl:px-20 relative z-10">
         {/* Title */}
         {title && (
-          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-songer font-bold text-center uppercase tracking-wide mb-16 ${styles.text}`}>
+          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-songer font-bold text-center uppercase tracking-wide mb-16 ${styles.title}`}>
             {title}
           </h1>
         )}
@@ -35,7 +35,7 @@ export default function TitleTextMultipleMedia({
         {/* Paragraph (Blocks content) */}
         {paragraph && (
           <div className={`text-center font-tenorite space-y-8 mt-8 ${styles.text}`}>
-            <div className="text-xl text-gray-700 max-w-8xl mx-auto">
+            <div className="text-xl max-w-8xl mx-auto">
               <BlocksRenderer content={paragraph} />
             </div>
           </div>

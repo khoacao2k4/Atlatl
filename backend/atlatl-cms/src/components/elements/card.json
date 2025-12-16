@@ -26,6 +26,7 @@
       "enum": [
         "LIGHT",
         "DARK",
+        "BLUE",
         "NEUTRAL",
         "BRAND"
       ]
