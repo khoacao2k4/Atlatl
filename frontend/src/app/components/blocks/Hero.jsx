@@ -1,4 +1,4 @@
-import { getMediaComponent } from "@/lib/strapi2";
+import { getMediaComponent } from "@/lib/strapi";
 import Link from "next/link";
 import { getTheme, getButtonClasses, BackgroundImages } from "@/lib/theme-config";
 

@@ -8,6 +8,15 @@ const nextConfig = {
         pathname: '/**/**/**'
         }]
     },
+    async redirects() {
+        return [
+            {
+                source: '/home',
+                destination: '/',
+                permanent: true,
+            },
+        ]
+    },
 };
 
 export default nextConfig;

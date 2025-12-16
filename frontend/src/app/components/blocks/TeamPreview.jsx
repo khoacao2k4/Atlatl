@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getStrapiURL } from "@/lib/strapi2";
+import { getStrapiURL } from "@/lib/strapi";
 import { getTheme, getButtonClasses, BackgroundImages } from "@/lib/theme-config";
 
 export default function TeamPreview({ title, description, theme, button, team_members, half_toggle = true }) {

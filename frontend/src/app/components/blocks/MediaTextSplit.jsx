@@ -1,4 +1,4 @@
-import { getMediaComponent } from "@/lib/strapi2";
+import { getMediaComponent } from "@/lib/strapi";
 import { getTheme } from "@/lib/theme-config";
 
 function MediaTextSplitMedia({ media }) {

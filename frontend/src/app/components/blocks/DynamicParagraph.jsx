@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { getMediaComponent } from '@/lib/strapi2';
+import { getMediaComponent } from '@/lib/strapi';
 import Link from 'next/link';
 import { getButtonClasses, getTheme, BackgroundImages } from '@/lib/theme-config';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';

@@ -1,5 +1,5 @@
 import BlockRenderer from '@/app/components/blocks/BlockRenderer';
-import { fetchAPI, getStrapiURL } from '@/lib/strapi2';
+import { fetchAPI, getStrapiURL } from '@/lib/strapi';
 
 async function getPageData(slug) {
   try {
