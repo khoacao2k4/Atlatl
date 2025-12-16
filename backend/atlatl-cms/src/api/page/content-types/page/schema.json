@@ -30,7 +30,6 @@
       "type": "dynamiczone",
       "components": [
         "blocks.hero",
-        "blocks.about-us",
         "blocks.team-preview",
         "blocks.carousel",
         "blocks.process-table",
@@ -40,7 +39,8 @@
         "blocks.definition",
         "blocks.centered-media",
         "blocks.card-row",
-        "blocks.media-list-split"
+        "blocks.media-list-split",
+        "blocks.title-media-text"
       ]
     }
   }

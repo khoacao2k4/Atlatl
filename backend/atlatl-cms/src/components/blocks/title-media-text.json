@@ -1,5 +1,5 @@
 {
-  "collectionName": "components_blocks_aboutuses",
+  "collectionName": "components_blocks_title_media_texts",
   "info": {
     "displayName": "TitleMediaText"
   },
@@ -18,11 +18,11 @@
       ]
     },
     "text": {
-      "type": "blocks"
+      "type": "richtext"
     },
     "theme": {
       "type": "enumeration",
-      "default": "DARK",
+      "default": "LIGHT",
       "enum": [
         "LIGHT",
         "DARK",

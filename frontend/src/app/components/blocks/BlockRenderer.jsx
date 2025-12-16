@@ -1,5 +1,5 @@
 import Hero from './Hero';
-import AboutUs from './AboutUs';
+import TitleMediaText from './TitleMediaText';
 import TeamPreview from './TeamPreview';
 import Carousel from './Carousel';
 import ProcessTable from './ProcessTable';
@@ -8,7 +8,7 @@ import Team from './Team';
 
 const componentMap = {
   'blocks.hero': Hero,
-  'blocks.about-us': AboutUs,
+  'blocks.title-media-text': TitleMediaText,
   'blocks.team-preview': TeamPreview,
   'blocks.carousel': Carousel,
   'blocks.process-table': ProcessTable,

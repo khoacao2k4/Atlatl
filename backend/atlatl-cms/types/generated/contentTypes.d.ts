@@ -505,7 +505,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     blocks: Schema.Attribute.DynamicZone<
       [
         'blocks.hero',
-        'blocks.about-us',
         'blocks.team-preview',
         'blocks.carousel',
         'blocks.process-table',
@@ -516,6 +515,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.centered-media',
         'blocks.card-row',
         'blocks.media-list-split',
+        'blocks.title-media-text',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -617,7 +617,6 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
         'blocks.hero',
         'blocks.carousel',
         'blocks.call-to-action',
-        'blocks.about-us',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

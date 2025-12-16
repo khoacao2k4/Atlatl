@@ -60,8 +60,7 @@
         "blocks.process-table",
         "blocks.hero",
         "blocks.carousel",
-        "blocks.call-to-action",
-        "blocks.about-us"
+        "blocks.call-to-action"
       ]
     }
   }

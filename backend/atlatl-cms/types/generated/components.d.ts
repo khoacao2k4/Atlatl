@@ -1,19 +1,5 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface BlocksAboutUs extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_aboutuses';
-  info: {
-    displayName: 'TitleMediaText';
-  };
-  attributes: {
-    media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
-    text: Schema.Attribute.Blocks;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
-      Schema.Attribute.DefaultTo<'DARK'>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlocksCallToAction extends Struct.ComponentSchema {
   collectionName: 'components_blocks_call_to_actions';
   info: {
@@ -200,6 +186,20 @@ export interface BlocksTeamPreview extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksTitleMediaText extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_title_media_texts';
+  info: {
+    displayName: 'TitleMediaText';
+  };
+  attributes: {
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    text: Schema.Attribute.RichText;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+      Schema.Attribute.DefaultTo<'LIGHT'>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsBigCard extends Struct.ComponentSchema {
   collectionName: 'components_elements_big_cards';
   info: {
@@ -376,7 +376,6 @@ export interface WhyAtlatlGridBlock extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'blocks.about-us': BlocksAboutUs;
       'blocks.call-to-action': BlocksCallToAction;
       'blocks.card-row': BlocksCardRow;
       'blocks.carousel': BlocksCarousel;
@@ -388,6 +387,7 @@ declare module '@strapi/strapi' {
       'blocks.process-table': BlocksProcessTable;
       'blocks.team': BlocksTeam;
       'blocks.team-preview': BlocksTeamPreview;
+      'blocks.title-media-text': BlocksTitleMediaText;
       'elements.big-card': ElementsBigCard;
       'elements.button': ElementsButton;
       'elements.card': ElementsCard;
