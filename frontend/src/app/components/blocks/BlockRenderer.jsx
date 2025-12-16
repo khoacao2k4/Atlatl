@@ -14,6 +14,7 @@ import DynamicParagraph from './DynamicParagraph';
 import FAQ from './FAQ';
 import TitleTextMultipleMedia from './TitleTextMultipleMedia';
 import Flow from './Flow';
+import LoginTable from './LoginTable';
 
 const componentMap = {
   'blocks.hero': Hero,
@@ -32,6 +33,7 @@ const componentMap = {
   'blocks.faq': FAQ,
   'blocks.title-text-multiple-media': TitleTextMultipleMedia,
   'blocks.flow': Flow,
+  'blocks.login-table': LoginTable,
 };
 
 export default function BlockRenderer({ blocks }) {

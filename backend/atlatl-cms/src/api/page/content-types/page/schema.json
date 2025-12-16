@@ -44,7 +44,8 @@
         "blocks.faq",
         "blocks.dynamic-paragraph",
         "blocks.title-text-multiple-media",
-        "blocks.flow"
+        "blocks.flow",
+        "blocks.login-table"
       ]
     }
   }

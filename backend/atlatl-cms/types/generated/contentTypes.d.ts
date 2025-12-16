@@ -520,6 +520,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.dynamic-paragraph',
         'blocks.title-text-multiple-media',
         'blocks.flow',
+        'blocks.login-table',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

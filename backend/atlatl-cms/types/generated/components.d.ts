@@ -145,6 +145,21 @@ export interface BlocksHero extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksLoginTable extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_login_tables';
+  info: {
+    displayName: 'LoginTable';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'elements.button', false>;
+    description: Schema.Attribute.Text;
+    link: Schema.Attribute.Component<'elements.link', true>;
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    points: Schema.Attribute.Component<'elements.short-text', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksMediaListSplit extends Struct.ComponentSchema {
   collectionName: 'components_blocks_media_list_splits';
   info: {
@@ -321,6 +336,18 @@ export interface ElementsItem extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsLink extends Struct.ComponentSchema {
+  collectionName: 'components_elements_links';
+  info: {
+    displayName: 'Link';
+  };
+  attributes: {
+    link: Schema.Attribute.String;
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsMediaTextSplitRow extends Struct.ComponentSchema {
   collectionName: 'components_elements_media_text_split_rows';
   info: {
@@ -471,6 +498,7 @@ declare module '@strapi/strapi' {
       'blocks.faq': BlocksFaq;
       'blocks.flow': BlocksFlow;
       'blocks.hero': BlocksHero;
+      'blocks.login-table': BlocksLoginTable;
       'blocks.media-list-split': BlocksMediaListSplit;
       'blocks.media-text-split': BlocksMediaTextSplit;
       'blocks.process-table': BlocksProcessTable;
@@ -483,6 +511,7 @@ declare module '@strapi/strapi' {
       'elements.dynamic-paragraph-content': ElementsDynamicParagraphContent;
       'elements.flow-block': ElementsFlowBlock;
       'elements.item': ElementsItem;
+      'elements.link': ElementsLink;
       'elements.media-text-split-row': ElementsMediaTextSplitRow;
       'elements.short-text': ElementsShortText;
       'faq.question-block': FaqQuestionBlock;
