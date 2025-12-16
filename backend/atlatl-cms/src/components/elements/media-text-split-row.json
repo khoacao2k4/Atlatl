@@ -1,16 +1,10 @@
 {
-  "collectionName": "components_elements_big_cards",
+  "collectionName": "components_elements_media_text_split_rows",
   "info": {
-    "displayName": "BigCard"
+    "displayName": "MediaTextSplitRow"
   },
   "options": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "blocks"
-    },
     "media": {
       "type": "media",
       "multiple": false,
@@ -20,8 +14,19 @@
         "videos"
       ]
     },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "mediaFirst": {
+      "type": "boolean",
+      "default": true
+    },
     "theme": {
       "type": "enumeration",
+      "default": "DARK",
       "enum": [
         "LIGHT",
         "DARK",

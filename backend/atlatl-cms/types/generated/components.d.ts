@@ -100,22 +100,6 @@ export interface BlocksHero extends Struct.ComponentSchema {
   };
 }
 
-export interface BlocksImageTextBlock extends Struct.ComponentSchema {
-  collectionName: 'components_blocks_image_text_blocks';
-  info: {
-    displayName: 'MediaTextSplit';
-  };
-  attributes: {
-    card: Schema.Attribute.Component<'elements.big-card', false>;
-    description: Schema.Attribute.Blocks;
-    media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
-    mediaFirst: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
-      Schema.Attribute.DefaultTo<'NEUTRAL'>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface BlocksMediaListSplit extends Struct.ComponentSchema {
   collectionName: 'components_blocks_media_list_splits';
   info: {
@@ -125,7 +109,20 @@ export interface BlocksMediaListSplit extends Struct.ComponentSchema {
     description: Schema.Attribute.Blocks;
     item: Schema.Attribute.Component<'elements.item', true>;
     media: Schema.Attribute.Media<'images' | 'files' | 'videos', true>;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']>;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksMediaTextSplit extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_media_text_splits';
+  info: {
+    displayName: 'MediaTextSplit';
+  };
+  attributes: {
+    row: Schema.Attribute.Component<'elements.media-text-split-row', true>;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+      Schema.Attribute.DefaultTo<'NEUTRAL'>;
   };
 }
 
@@ -200,19 +197,6 @@ export interface BlocksTitleMediaText extends Struct.ComponentSchema {
   };
 }
 
-export interface ElementsBigCard extends Struct.ComponentSchema {
-  collectionName: 'components_elements_big_cards';
-  info: {
-    displayName: 'BigCard';
-  };
-  attributes: {
-    description: Schema.Attribute.Blocks;
-    media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']>;
-    title: Schema.Attribute.String;
-  };
-}
-
 export interface ElementsButton extends Struct.ComponentSchema {
   collectionName: 'components_elements_buttons';
   info: {
@@ -234,6 +218,8 @@ export interface ElementsCard extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Blocks;
     media: Schema.Attribute.Media<'files' | 'videos' | 'images'>;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+      Schema.Attribute.DefaultTo<'DARK'>;
     title: Schema.Attribute.String;
   };
 }
@@ -246,6 +232,22 @@ export interface ElementsItem extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Blocks;
     media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsMediaTextSplitRow extends Struct.ComponentSchema {
+  collectionName: 'components_elements_media_text_split_rows';
+  info: {
+    displayName: 'MediaTextSplitRow';
+  };
+  attributes: {
+    description: Schema.Attribute.Blocks;
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    mediaFirst: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
+      Schema.Attribute.DefaultTo<'DARK'>;
     title: Schema.Attribute.String;
   };
 }
@@ -382,16 +384,16 @@ declare module '@strapi/strapi' {
       'blocks.centered-media': BlocksCenteredMedia;
       'blocks.definition': BlocksDefinition;
       'blocks.hero': BlocksHero;
-      'blocks.image-text-block': BlocksImageTextBlock;
       'blocks.media-list-split': BlocksMediaListSplit;
+      'blocks.media-text-split': BlocksMediaTextSplit;
       'blocks.process-table': BlocksProcessTable;
       'blocks.team': BlocksTeam;
       'blocks.team-preview': BlocksTeamPreview;
       'blocks.title-media-text': BlocksTitleMediaText;
-      'elements.big-card': ElementsBigCard;
       'elements.button': ElementsButton;
       'elements.card': ElementsCard;
       'elements.item': ElementsItem;
+      'elements.media-text-split-row': ElementsMediaTextSplitRow;
       'elements.short-text': ElementsShortText;
       'faq.question-block': FaqQuestionBlock;
       'faq.topic-question-block': FaqTopicQuestionBlock;

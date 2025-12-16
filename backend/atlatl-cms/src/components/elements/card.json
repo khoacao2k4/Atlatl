@@ -19,6 +19,16 @@
     },
     "description": {
       "type": "blocks"
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "DARK",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
     }
   },
   "config": {}

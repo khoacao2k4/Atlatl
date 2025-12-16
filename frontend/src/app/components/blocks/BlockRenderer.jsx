@@ -5,6 +5,11 @@ import Carousel from './Carousel';
 import ProcessTable from './ProcessTable';
 import CallToAction from './CallToAction';
 import Team from './Team';
+import Definition from './Definition';
+import CenteredMedia from './CenteredMedia';
+import MediaTextSplit from './MediaTextSplit';
+import CardRow from './CardRow';
+import MediaListSplit from './MediaListSplit';
 
 const componentMap = {
   'blocks.hero': Hero,
@@ -14,6 +19,11 @@ const componentMap = {
   'blocks.process-table': ProcessTable,
   'blocks.call-to-action': CallToAction,
   'blocks.team': Team,
+  'blocks.definition': Definition,
+  'blocks.centered-media': CenteredMedia,
+  'blocks.media-text-split': MediaTextSplit,
+  'blocks.card-row': CardRow,
+  'blocks.media-list-split': MediaListSplit,
 };
 
 export default function BlockRenderer({ blocks }) {

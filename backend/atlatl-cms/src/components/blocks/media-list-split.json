@@ -24,6 +24,15 @@
       "type": "component",
       "component": "elements.item",
       "repeatable": true
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
     }
   },
   "config": {}

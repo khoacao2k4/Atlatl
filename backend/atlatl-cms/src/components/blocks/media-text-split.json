@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_blocks_media_text_splits",
+  "info": {
+    "displayName": "MediaTextSplit"
+  },
+  "options": {},
+  "attributes": {
+    "row": {
+      "type": "component",
+      "component": "elements.media-text-split-row",
+      "repeatable": true
+    },
+    "theme": {
+      "type": "enumeration",
+      "default": "NEUTRAL",
+      "enum": [
+        "LIGHT",
+        "DARK",
+        "NEUTRAL",
+        "BRAND"
+      ]
+    }
+  },
+  "config": {}
+}
