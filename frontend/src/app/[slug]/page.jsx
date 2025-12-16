@@ -17,7 +17,8 @@ async function getPageData(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const page = await getPageData(params.slug);
+  const { slug } = await params;
+  const page = await getPageData(slug);
 
   if (!page?.seo?.[0]) {
     return {
@@ -39,7 +40,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-  const page = await getPageData(params.slug);
+  const { slug } = await params;
+  const page = await getPageData(slug);
 
   if (!page) {
     return (

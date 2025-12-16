@@ -8,7 +8,7 @@ export interface BlocksAboutUs extends Struct.ComponentSchema {
   attributes: {
     media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     text: Schema.Attribute.Blocks;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'DARK'>;
     title: Schema.Attribute.String;
   };
@@ -22,7 +22,7 @@ export interface BlocksCallToAction extends Struct.ComponentSchema {
   attributes: {
     button: Schema.Attribute.Component<'elements.button', false>;
     description: Schema.Attribute.String;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'BRAND'>;
     title: Schema.Attribute.String;
   };
@@ -37,7 +37,7 @@ export interface BlocksCarousel extends Struct.ComponentSchema {
     button: Schema.Attribute.Component<'elements.button', false>;
     card: Schema.Attribute.Component<'elements.short-text', true>;
     description: Schema.Attribute.Text;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'LIGHT'>;
     title: Schema.Attribute.String;
   };
@@ -53,7 +53,7 @@ export interface BlocksHero extends Struct.ComponentSchema {
     media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
     primaryButton: Schema.Attribute.Component<'elements.button', false>;
     secondaryButton: Schema.Attribute.Component<'elements.button', false>;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'LIGHT'>;
     titleBottomHighlighted: Schema.Attribute.String;
     titleBottomUnhighlighted: Schema.Attribute.String;
@@ -79,7 +79,7 @@ export interface BlocksProcessTable extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'DARK'>;
     step: Schema.Attribute.Component<'process.step', true>;
     text: Schema.Attribute.Blocks;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'LIGHT'>;
     title: Schema.Attribute.String;
   };
@@ -95,7 +95,7 @@ export interface BlocksTeam extends Struct.ComponentSchema {
       'oneToMany',
       'api::team-member.team-member'
     >;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'LIGHT'>;
     title: Schema.Attribute.String;
   };
@@ -113,7 +113,7 @@ export interface BlocksTeamPreview extends Struct.ComponentSchema {
       'oneToMany',
       'api::team-member.team-member'
     >;
-    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'BRAND']> &
+    theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'DARK'>;
     title: Schema.Attribute.String;
   };
