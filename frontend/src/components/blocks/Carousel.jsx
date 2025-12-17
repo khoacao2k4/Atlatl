@@ -86,7 +86,7 @@ export default function Carousel({ title, description, theme, card, button }) {
           <button
             onClick={scrollPrev}
             disabled={!prevBtnEnabled}
-            className={`absolute top-1/2 -translate-y-1/2 left-0 md:-left-2 bg-[#3465B5] text-white p-3 rounded-full shadow-lg hover:bg-[#285090] transition-all z-10 
+            className={`absolute top-1/2 -translate-y-1/2 left-0 md:-left-2 bg-[#3465B5] text-white p-3 rounded-full shadow-lg hover:bg-[#285090] transition-all z-10 cursor-pointer
               ${!prevBtnEnabled ? "opacity-0 invisible" : "opacity-100 visible"}`}
           >
             <FiChevronLeft size={24} />
@@ -95,7 +95,7 @@ export default function Carousel({ title, description, theme, card, button }) {
           <button
             onClick={scrollNext}
             disabled={!nextBtnEnabled}
-            className={`absolute top-1/2 -translate-y-1/2 right-0 md:-right-2 bg-[#3465B5] text-white p-3 rounded-full shadow-lg hover:bg-[#285090] transition-all z-10 
+            className={`absolute top-1/2 -translate-y-1/2 right-0 md:-right-2 bg-[#3465B5] text-white p-3 rounded-full shadow-lg hover:bg-[#285090] transition-all z-10 cursor-pointer
               ${!nextBtnEnabled ? "opacity-0 invisible" : "opacity-100 visible"}`}
           >
             <FiChevronRight size={24} />

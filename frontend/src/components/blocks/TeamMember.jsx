@@ -1,5 +1,6 @@
 import { getMediaComponent } from "@/lib/strapi";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import Markdown from "../Markdown";
 
 export default function TeamMember({ member }) {
   if (!member) return null;
@@ -42,11 +43,9 @@ export default function TeamMember({ member }) {
 
           {/* Bio Description */}
           <div className="text-lg text-dark-blue font-tenorite leading-relaxed">
-            {typeof member.description === 'string' ? (
-              <div className="whitespace-pre-wrap">{member.description}</div>
-            ) : (
-              <BlocksRenderer content={member.description} />
-            )}
+            <Markdown>
+              {member.description}
+            </Markdown>
           </div>
         </div>
       </div>

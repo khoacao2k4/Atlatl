@@ -24,16 +24,15 @@ export default function TeamPreview({ title, description, theme, button, team_me
           const fullImageUrl = imageUrl ? getStrapiURL(imageUrl) : null;
           
           return (
-            <Link
-              href={`/team/${teamMember.slug}`}
+            <div
               key={teamMember.id}
-              className={`flex flex-col items-center font-tenorite text-center lg:w-[30%] group cursor-pointer`}
+              className={`flex flex-col items-center font-tenorite text-center lg:w-[30%]`}
             >
               {fullImageUrl && (
                 <div className="w-full mb-4 flex justify-center">
                   <img
                     src={fullImageUrl}
-                    className="h-[220px] sm:h-[260px] lg:h-[300px] object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                    className="h-[220px] sm:h-[260px] lg:h-[300px] object-cover transition-transform duration-500 ease-in-out"
                     alt={teamMember.name}
                   />
                 </div>
@@ -44,7 +43,7 @@ export default function TeamPreview({ title, description, theme, button, team_me
               <div className={`group-hover:text-bold-blue transition-colors duration-300 ${styles.text}`}>
                 {teamMember.position}
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>

@@ -4,10 +4,7 @@ import TeamMember from "@/components/blocks/TeamMember";
 
 async function getTeamMemberData(slug) {
   try {
-    const populateQuery =
-      `filters[slug][$eq]=${slug}` +
-      `&populate[avatar][fields]=id,url,mime,width,height,alternativeText,name,ext` +
-      `&populate[blocks][populate]=*`;
+    const populateQuery = `filters[slug][$eq]=${slug}&populate=*`;
 
     const data = await fetchAPI(
       `/api/team-members?${populateQuery}`,

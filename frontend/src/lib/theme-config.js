@@ -75,7 +75,7 @@ export const getButtonClasses = (button) => {
   const styleClass = buttonStyles[style];
   const shapeClass = buttonShapes[shape];
   
-  return `${styleClass} ${shapeClass} py-3 px-8 shadow-md hover:shadow-[0_0px_15px_-3px_rgba(0,0,0,0.3)] transition-all duration-300 transform hover:-translate-y-0.5 hover:cursor-pointer font-bold font-songer`;
+  return `${styleClass} ${shapeClass} text-center py-3 px-8 shadow-md hover:shadow-[0_0px_15px_-3px_rgba(0,0,0,0.3)] transition-all duration-300 transform hover:-translate-y-0.5 hover:cursor-pointer font-songer`;
 };
 
 export const BackgroundImages = ({ images }) => {
