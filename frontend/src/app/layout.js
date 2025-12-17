@@ -15,7 +15,6 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: {
-    template: 'Atlatl Advisers - %s', // %s is replaced by the specific page title
     default: 'Atlatl Advisers', // Used if a page doesn't specify a title
   },
   description: 'Experts Dedicated to Your Growth',

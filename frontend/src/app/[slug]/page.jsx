@@ -1,5 +1,6 @@
 import BlockRenderer from '@/components/blocks/BlockRenderer';
 import { fetchAPI, getStrapiURL } from '@/lib/strapi';
+import { notFound } from 'next/navigation'
 
 async function getPageData(slug) {
   try {
@@ -47,11 +48,7 @@ export default async function Page({ params }) {
   const page = await getPageData(slug);
 
   if (!page) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-bold">Page Not Found</h1>
-      </div>
-    );
+    notFound();
   }
 
   return (

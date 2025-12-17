@@ -45,7 +45,7 @@ export default function ContactForm() {
     console.log("Valid Form Data:", data);
     
     // Log to Google Sheets
-    const result = await logToGoogleSheets('ContactFormSubmissions', {
+    const result = await logToGoogleSheets('Contact', {
       name: `${data.firstName} ${data.lastName}`,
       email: data.email,
       phone: data.phone,

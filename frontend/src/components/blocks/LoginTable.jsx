@@ -6,6 +6,7 @@ import {
   BackgroundImages,
 } from "@/lib/theme-config";
 import Link from "next/link";
+import Markdown from "../Markdown";
 
 export default function LoginTable({
   title,
@@ -53,24 +54,24 @@ export default function LoginTable({
         </div>
       </section>
 
-      {/* ================= MAIN GRID ================= */}
-      <section className="pb-16 md:pb-24 overflow-x-hidden font-tenorite relative z-10">
+      <section className="pb-16 md:pb-24 bg-white overflow-x-hidden font-tenorite">
+        {/* MAIN CONTENT GRID */}
         <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
-          {/* -------- LEFT COLUMN -------- */}
-          <div className="relative isolate p-8 md:p-12 flex flex-col justify-center">
+            {/* LEFT COLUMN: Features List */}
+            <div className="relative isolate p-8 md:p-12 flex flex-col justify-center">
             {/* Background breakout */}
-            <span
-              aria-hidden
-              className="absolute inset-0 bg-light-blue rounded-3xl
-                lg:left-auto lg:right-0 lg:w-[200vw]
-                lg:rounded-l-none lg:rounded-r-3xl"
+            <span className="absolute inset-y-0 bg-light-blue
+                inset-0 rounded-3xl 
+                lg:right-0 lg:left-auto lg:w-[200vw] lg:rounded-l-none lg:rounded-r-3xl"
             />
 
             {points?.length > 0 && (
-              <ul className="relative list-disc list-outside ml-6 space-y-4 text-darker-bold-blue text-lg md:text-xl font-medium">
-                {points.map((point, idx) => (
-                  <li key={idx}>{point.text}</li>
-                ))}
+              <ul className="space-y-4 text-darker-bold-blue text-lg md:text-xl font-medium relative justify-center flex">
+                <Markdown
+                    classNameUl="list-disc list-outside ml-6 mb-4 space-y-4"
+                >
+                   {points.map((item) => `- ${item.text}`).join("\n")}
+                </Markdown>
               </ul>
             )}
           </div>

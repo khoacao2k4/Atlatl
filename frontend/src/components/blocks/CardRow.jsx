@@ -42,7 +42,7 @@ export default function CardRow({ title, themeTop, themeBottom, card }) {
         </h1>
       </div>
 
-      <section className="w-full pb-12 relative">
+      <section className="w-full py-12 relative">
         <div className={`absolute top-0 left-0 w-full h-1/2 ${topStyles.bg}`}></div>
         <div className={`absolute bottom-0 left-0 w-full h-1/2 ${bottomStyles.bg}`}></div>
         <div className="relative flex flex-wrap justify-center gap-8 px-4 md:px-8">

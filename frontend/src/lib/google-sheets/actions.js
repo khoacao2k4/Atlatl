@@ -39,13 +39,13 @@ export async function logToGoogleSheets(sheetName, data) {
     });
 
     let values;
-    if (sheetName === 'EmailSignups') {
+    if (sheetName === 'Newsletter') {
       values = [[
         formattedTimestamp,
         data.email,
         data.source || 'Unknown'
       ]];
-    } else if (sheetName === 'ContactFormSubmissions') {
+    } else if (sheetName === 'Contact') {
       values = [[
         formattedTimestamp,
         data.name,
@@ -59,7 +59,7 @@ export async function logToGoogleSheets(sheetName, data) {
         ...Object.values(data)
       ]];
     }
-
+    console.log(sheetName);
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
       range: `${sheetName}!A:Z`,

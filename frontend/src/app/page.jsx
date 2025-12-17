@@ -1,5 +1,6 @@
 import BlockRenderer from '@/components/blocks/BlockRenderer';
 import { fetchAPI, getStrapiURL } from '@/lib/strapi';
+import { redirect } from 'next/navigation';
 
 async function getHomePageData() {
   try {
@@ -44,11 +45,7 @@ export default async function HomePage() {
   const page = await getHomePageData();
 
   if (!page) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-bold">Homepage Not Found</h1>
-      </div>
-    );
+    redirect('/maintenance');
   }
 
   return (

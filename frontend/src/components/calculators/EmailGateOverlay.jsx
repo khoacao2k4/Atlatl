@@ -38,7 +38,7 @@ export const EmailGateOverlay = ({ isOpen, onSubmit, onCancel }) => {
             return;
         }
 
-        const result = await logToGoogleSheets('EmailSignups', {
+        const result = await logToGoogleSheets('Newsletter', {
             email: email,
             source: 'Newsletter Signup'
         });
