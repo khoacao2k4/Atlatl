@@ -16,7 +16,7 @@ export default function DynamicParagraph({ title, media, button, Content, theme 
         {/* Main Heading */}
         {title && (
           <h2 className={`text-4xl md:text-5xl lg:text-6xl font-songer
-                      font-bold text-center uppercase tracking-wide mb-16 ${styles.title}`}>
+                      font-bold text-center uppercase tracking-wide mb-16 ${styles.text}`}>
             {title}
           </h2>
         )}

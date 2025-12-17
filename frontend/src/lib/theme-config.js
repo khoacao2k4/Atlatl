@@ -3,6 +3,7 @@ export const themeStyles = {
     bg: 'bg-white',
     title: 'text-dark-blue',
     text: 'text-darker-bold-blue',
+    paragraph: 'text-gray-700',
     textMuted: 'text-black',
     button: 'bg-bold-blue text-white',
     buttonHover: 'hover:bg-darker-bold-blue',
@@ -10,6 +11,7 @@ export const themeStyles = {
   DARK: {
     bg: 'bg-dark-blue',
     text: 'text-white',
+    paragraph: 'text-white',
     textMuted: 'text-black',
     title: 'text-white',
     button: 'bg-bold-blue text-white',
@@ -18,6 +20,7 @@ export const themeStyles = {
   BLUE: {
     bg: 'bg-darker-bold-blue',
     text: 'text-white',
+    paragraph: 'text-white',
     textMuted: 'text-gray-300',
     title: 'text-white',
     button: 'bg-bold-blue text-white',
@@ -26,6 +29,7 @@ export const themeStyles = {
   NEUTRAL: {
     bg: 'bg-darker-light-blue',
     text: 'text-dark-blue',
+    paragraph: 'text-blue-600',
     textMuted: 'text-darker-bold-blue',
     title: 'text-dark-blue',
     button: 'bg-bold-blue text-white',
@@ -34,6 +38,7 @@ export const themeStyles = {
   BRAND: {
     bg: 'bg-white',
     text: 'text-dark-blue',
+    paragraph: 'text-gray-600',
     textMuted: 'text-darker-bold-blue',
     title: 'text-dark-blue',
     button: 'bg-bold-blue text-white',
