@@ -9,14 +9,36 @@ export default function DynamicParagraph({ title, media, button, Content, theme 
   const [activeTab, setActiveTab] = useState(0);
   const styles = getTheme(theme);
 
+  // Determine which media to display based on the active tab
+  const getActiveMedia = () => {
+    if (!media || media.length === 0) return null;
+    
+    const topicCount = Content?.length || 0;
+    const mediaCount = media.length;
+    
+    // If media array is longer or equal, use media[activeTab] up to topicCount
+    if (mediaCount >= topicCount) {
+      return media[activeTab];
+    }
+    
+    // If topics are more than media, cycle through media until last one
+    // then keep showing the last media item
+    if (activeTab < mediaCount) {
+      return media[activeTab];
+    } else {
+      return media[mediaCount - 1];
+    }
+  };
+
+  const activeMedia = getActiveMedia();
+
   return (
     <section className={`py-16 md:py-24 relative ${styles.bg}`}>
       <BackgroundImages images={styles.backgroundImages} />
       <div className="container mx-auto px-[10%] font-tenorite relative z-10">
         {/* Main Heading */}
         {title && (
-          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-songer
-                      font-bold text-center uppercase tracking-wide mb-16 ${styles.text}`}>
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-songer font-bold text-center uppercase tracking-wide mb-16 ${styles.text}`}>
             {title}
           </h2>
         )}
@@ -32,16 +54,17 @@ export default function DynamicParagraph({ title, media, button, Content, theme 
                     <button
                       key={"content_tab_" + idx}
                       onClick={() => setActiveTab(idx)}
-                      className={`flex-shrink-0 text-xl pb-3 transition-all font-bold duration-300 relative 
-                      ${activeTab === idx
+                      className={`flex-shrink-0 text-xl pb-3 transition-all font-bold duration-300 relative ${
+                        activeTab === idx
                           ? 'text-bold-blue font-semibold'
                           : `${styles.text} hover:text-bold-blue cursor-pointer`
-                        }`}
+                      }`}
                     >
                       {content.title}
                       <span
-                        className={`absolute bottom-2.5 left-0 w-full h-[3px] bg-bold-blue transform transition-transform duration-300 origin-left
-                        ${activeTab === idx ? "scale-x-100" : "scale-x-0"}`}
+                        className={`absolute bottom-2.5 left-0 w-full h-[3px] bg-bold-blue transform transition-transform duration-300 origin-left ${
+                          activeTab === idx ? "scale-x-100" : "scale-x-0"
+                        }`}
                       />
                     </button>
                   ))}
@@ -69,11 +92,11 @@ export default function DynamicParagraph({ title, media, button, Content, theme 
           </div>
 
           {/* Right Column: Media */}
-          {media && (
+          {activeMedia && (
             <div className="flex justify-center lg:justify-end">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl max-w-sm w-full max-h-[800px]">
                 {getMediaComponent(
-                  media,
+                  activeMedia,
                   title || "Dynamic Content",
                   false,
                   "object-cover w-full h-full aspect-[3/4] pointer-events-none"

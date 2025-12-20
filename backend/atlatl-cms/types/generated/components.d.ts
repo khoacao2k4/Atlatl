@@ -92,7 +92,7 @@ export interface BlocksDynamicParagraph extends Struct.ComponentSchema {
       'elements.dynamic-paragraph-content',
       true
     >;
-    media: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos', true>;
     theme: Schema.Attribute.Enumeration<['LIGHT', 'DARK', 'NEUTRAL', 'BRAND']> &
       Schema.Attribute.DefaultTo<'LIGHT'>;
     title: Schema.Attribute.String;
