@@ -12,7 +12,7 @@ export default function TitleTextMultipleMedia({
   const styles = getTheme(theme);
 
   return (
-    <div className={`py-10  md:py-22 relative ${styles.bg}`}>
+    <div className={`py-16 md:py-24 relative ${styles.bg}`}>
       <BackgroundImages images={styles.backgroundImages} />
 
       <section className="container mx-auto px-6 xl:px-20 relative z-10">
@@ -25,7 +25,7 @@ export default function TitleTextMultipleMedia({
         )}
 
         {(description || paragraph) && (
-          <div className={`text-center font-tenorite space-y-8 ${styles.title}`}>
+          <div className={`text-center font-tenorite space-y-8 ${styles.text}`}>
             {description && (
               <p className="text-xl md:text-2xl lg:text-3xl font-bold">
                 {description}
@@ -33,7 +33,7 @@ export default function TitleTextMultipleMedia({
             )}
 
             {paragraph && (
-              <div className="text-xl max-w-8xl space-y-1 mx-auto text-gray-700">
+              <div className="text-xl text-gray-700 max-w-8xl mx-auto">
                 <BlocksRenderer content={paragraph} />
               </div>
             )}
@@ -41,21 +41,21 @@ export default function TitleTextMultipleMedia({
         )}
 
         {media && media.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-19 mt-10 md:mt-12">
+          <div className="flex flex-wrap flex-row justify-evenly mt-12">
             {media.map((item, idx) => (
               <div
                 key={`media-${idx}`}
-                className="flex flex-col items-center text-center w-[140px]"
+                className="flex flex-col items-center text-center"
               >
                 {getMediaComponent(
                   item,
-                  `TitleTextMultipleMedia-${idx}`,
+                  item?.alternativeText || `Media-${idx}`,
                   true,
-                  "w-[98px] md:w-[114px] lg:w-[130px] object-contain"
+                  "w-full h-auto object-contain"
                 )}
 
                 {item?.alternativeText && (
-                  <p className="mt-4 text-base md:text-lg lg:text-xl font-songer uppercase tracking-[0.08em] text-dark-blue">
+                  <p className="mt-4 text-base md:text-lg font-tenorite text-center">
                     {item.alternativeText}
                   </p>
                 )}
