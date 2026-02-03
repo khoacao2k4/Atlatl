@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getStrapiURL } from "@/lib/strapi";
+import { getStrapiMedia } from "@/lib/strapi";
 import { getTheme, getButtonClasses, BackgroundImages } from "@/lib/theme-config";
 
 export default function TeamPreview({ title, description, theme, button, team_members, half_toggle = true }) {
@@ -21,7 +21,8 @@ export default function TeamPreview({ title, description, theme, button, team_me
       <div className="w-full flex flex-col lg:flex-row items-center lg:items-start lg:justify-between px-6 lg:px-[15%] gap-12 lg:gap-8 relative z-10">
         {team_members?.map((teamMember, index) => {
           const imageUrl = teamMember.avatar?.url;
-          const fullImageUrl = imageUrl ? getStrapiURL(imageUrl) : null;
+          const fullImageUrl = imageUrl ? getStrapiMedia(imageUrl) : null;
+          console.log(fullImageUrl);
           
           return (
             <div
