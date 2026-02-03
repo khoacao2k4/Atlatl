@@ -150,7 +150,6 @@ export default function ChatbotWidget() {
     const [isOpen, setIsOpen] = useState(false); 
 
     const toggleChatbot = () => {
-        // console.log(`Clicked ${isOpen ? "Open": "Closed"}`);
         setIsOpen((isOpen) => !isOpen); 
     }
 
